@@ -15,7 +15,7 @@
   { "name": "Pilota Fantasma", "team": "O4", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Marco Chierico", "team": "Mach74", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "05", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Matteo Mercuri", "team": "O6", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O6", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "O7", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "O8", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "O9", "category": "open", "races": [0,0,0,0,0,0] },
@@ -25,6 +25,7 @@
   { "name": "Pilota Fantasma", "team": "O13", "category": "open", "races": [0,0,0,0,0,0] } 
 
 ]
+
 
 
 
