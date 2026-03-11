@@ -1,30 +1,31 @@
 [
   { "name": "Matteo Gandini", "team": "GND", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Luisa Rizzo", "team": "Leoonfire", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Paolo Ponzo", "team": "Finz", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Joe Quelnan", "team": "JoeFPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Carmine Arrichiello", "team": "CaFPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Luca Di Meo", "team": "LucaFPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Ennio Di Meo", "team": "EnnioFPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "P1", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "P2", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "P3", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "P4", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "P5", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "P6", "category": "pro", "races": [0,0,0,0,0,0] },
   
     
-  { "name": "Carlo Brugnolo", "team": "Bgarage", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Nicolò Benegiamo", "team": "NickFPV", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Gabriel Chioccetti", "team": "Gabruzz", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Emilio Rapposelli", "team": "Batrap", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O1", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O2", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O3", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O4", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Marco Chierico", "team": "Mach74", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Franco Aiello", "team": "Alien77", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Matteo Mercuri", "team": "TeamTO", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Francisco Diana", "team": "Peko_fpv", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Marco Neri", "team": "Snapflash", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Andrea Piras", "team": "APFPV", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Tullio Girardi", "team": "Jok3r", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Daniele Mascarello", "team": "Maska", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Manuele Ferrari", "team": "Sacred", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Sharon Valaperta", "team": "CaliceAmaro", "category": "open", "races": [0,0,0,0,0,0] } 
+  { "name": "Pilota Fantasma", "team": "05", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Matteo Mercuri", "team": "O6", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O7", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O8", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O9", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O10", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O11", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O12", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Pilota Fantasma", "team": "O13", "category": "open", "races": [0,0,0,0,0,0] } 
 
 ]
+
 
 
 
