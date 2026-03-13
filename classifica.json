@@ -3,13 +3,13 @@
   { "name": "Luisa Rizzo", "team": "Leoonfire", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Joe Quelnan", "team": "JoeFPV", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Luca Di Meo", "team": "LUCA-FPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Pilota Fantasma", "team": "P3", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Gabriel Chiocchetti", "team": "gabruzzz", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "P4", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "P5", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "P6", "category": "pro", "races": [0,0,0,0,0,0] },
   
     
-  { "name": "Pilota Fantasma", "team": "O1", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "O2", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "O3", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Pilota Fantasma", "team": "O4", "category": "open", "races": [0,0,0,0,0,0] },
@@ -25,6 +25,7 @@
   { "name": "Pilota Fantasma", "team": "O13", "category": "open", "races": [0,0,0,0,0,0] } 
 
 ]
+
 
 
 
