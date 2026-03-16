@@ -22,7 +22,8 @@
   { "name": "X X X", "team": "O10", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "X X X", "team": "O11", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "X X X", "team": "O12", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O13", "category": "open", "races": [0,0,0,0,0,0] } 
+  { "name": "X X X", "team": "O13", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "X X X", "team": "O14", "category": "open", "races": [0,0,0,0,0,0] }
 
 ]
 
