@@ -6,7 +6,6 @@
   { "name": "Gabriel Chiocchetti", "team": "gabruzzz", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Carmine Arrichiello", "team": "CA_FPV", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "P6", "category": "pro", "races": [0,0,0,0,0,0] },
   
     
   { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [0,0,0,0,0,0] },
@@ -16,14 +15,7 @@
   { "name": "Marco Chierico", "team": "Mach74", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Benno Unterholzer", "team": "8enjoe", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Mathias Alborghetti", "team": "Mathou", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Massimo Kyle Colombo", "team": "SkyMax", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O8", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O9", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O10", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O11", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O12", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O13", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "X X X", "team": "O14", "category": "open", "races": [0,0,0,0,0,0] }
+  { "name": "Massimo Kyle Colombo", "team": "SkyMax", "category": "open", "races": [0,0,0,0,0,0] }
 
 ]
 
