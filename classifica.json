@@ -7,9 +7,9 @@
   { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Nicolò Benegiamo", "team": "NIKFPV", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Carmine Arrichiello", "team": "CA_FPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  
-    
-  { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [0,0,0,0,0,0] },
+
+  { "name": "Stefano Facchetti", "team": "Fad", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Nicola Debiasi", "team": "debbio_fpv", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Carlo Bruognolo", "team": "BGARAGE", "category": "open", "races": [0,0,0,0,0,0] },
   { "name": "Daniele Mascarello", "team": "Maska", "category": "open", "races": [0,0,0,0,0,0] },
