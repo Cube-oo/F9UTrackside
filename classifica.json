@@ -5,6 +5,8 @@
   { "name": "Luca Di Meo", "team": "LUCA-FPV", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Gabriel Chiocchetti", "team": "gabruzzz", "category": "pro", "races": [0,0,0,0,0,0] },
   { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Nicolò Benegiamo", "team": "NIKFPV", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Carmine Arrichiello", "team": "CA_FPV", "category": "pro", "races": [0,0,0,0,0,0] },
   
     
   { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [0,0,0,0,0,0] },
