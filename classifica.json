@@ -1,25 +1,25 @@
 [
-  { "name": "Matteo Gandini", "team": "GND", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Luisa Rizzo", "team": "LeoOnFire", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Joe Quelnan", "team": "JoeFPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Luca Di Meo", "team": "LUCA-FPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Gabriel Chiocchetti", "team": "gabruzzz", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Nicolò Benegiamo", "team": "NIKFPV", "category": "pro", "races": [0,0,0,0,0,0] },
-  { "name": "Carmine Arrichiello", "team": "CA_FPV", "category": "pro", "races": [0,0,0,0,0,0] },
+  { "name": "Matteo Gandini", "team": "GND", "category": "pro", "races": [7,0,0,0,0,0] },
+  { "name": "Luisa Rizzo", "team": "LeoOnFire", "category": "pro", "races": [1,0,0,0,0,0] },
+  { "name": "Joe Quelnan", "team": "JoeFPV", "category": "pro", "races": [2,0,0,0,0,0] },
+  { "name": "Luca Di Meo", "team": "LUCA-FPV", "category": "pro", "races": [6,0,0,0,0,0] },
+  { "name": "Gabriel Chiocchetti", "team": "gabruzzz", "category": "pro", "races": [5,0,0,0,0,0] },
+  { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [3,0,0,0,0,0] },
+  { "name": "Nicolò Benegiamo", "team": "NIKFPV", "category": "pro", "races": [4,0,0,0,0,0] },
+  { "name": "Carmine Arrichiello", "team": "CA_FPV", "category": "pro", "races": [8,0,0,0,0,0] },
 
   { "name": "Stefano Facchetti", "team": "Fad", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Alessio De Ieso", "team": "AleFPV", "category": "open", "races": [0,0,0,0,0,0] },
+  { "name": "Alessio De Ieso", "team": "AleFPV", "category": "open", "races": [7,0,0,0,0,0] },
   { "name": "Filippo De Carli", "team": "DECA", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Nicola Debiasi", "team": "debbio_fpv", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Carlo Bruognolo", "team": "BGARAGE", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Daniele Mascarello", "team": "Maska", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Fliri Norman", "team": "Pingu", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Marco Chierico", "team": "Mach74", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Benno Unterholzer", "team": "8enjoe", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Mathias Alborghetti", "team": "Mathou", "category": "open", "races": [0,0,0,0,0,0] },
-  { "name": "Massimo Kyle Colombo", "team": "SkyMax", "category": "open", "races": [0,0,0,0,0,0] }
+  { "name": "Enrico Milan", "team": "PUMBA", "category": "open", "races": [3,0,0,0,0,0] },
+  { "name": "Nicola Debiasi", "team": "debbio_fpv", "category": "open", "races": [4,0,0,0,0,0] },
+  { "name": "Carlo Bruognolo", "team": "BGARAGE", "category": "open", "races": [5,0,0,0,0,0] },
+  { "name": "Daniele Mascarello", "team": "Maska", "category": "open", "races": [9,0,0,0,0,0] },
+  { "name": "Fliri Norman", "team": "Pingu", "category": "open", "races": [8,0,0,0,0,0] },
+  { "name": "Marco Chierico", "team": "Mach74", "category": "open", "races": [6,0,0,0,0,0] },
+  { "name": "Benno Unterholzer", "team": "8enjoe", "category": "open", "races": [2,0,0,0,0,0] },
+  { "name": "Mathias Alborghetti", "team": "Mathou", "category": "open", "races": [1,0,0,0,0,0] },
+  { "name": "Massimo Kyle Colombo", "team": "SkyMax", "category": "open", "races": [10,0,0,0,0,0] }
 
 ]
 
