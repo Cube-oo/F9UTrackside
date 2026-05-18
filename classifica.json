@@ -19,10 +19,11 @@
   { "name": "Marco Chierico", "team": "Mach74", "category": "open", "races": [6,4,0,0,0,0] },
   { "name": "Benno Unterholzer", "team": "8enjoe", "category": "open", "races": [2,0,0,0,0,0] },
   { "name": "Mathias Alborghetti", "team": "Mathou", "category": "open", "races": [1,0,0,0,0,0] },
-  { "name": "Massimo Kyle Colombo", "team": "DarkY", "category": "open", "races": [0,10,0,0,0,0] },
+  { "name": "Yuri Arangiaro", "team": "DarkY", "category": "open", "races": [0,10,0,0,0,0] },
   { "name": "Franco Aiello", "team": "Alien77", "category": "open", "races": [7,0,0,0,0,0] },
   { "name": "Alessandro Ibba", "team": "Ibbo", "category": "open", "races": [8,0,0,0,0,0] },
   { "name": "Giuseppe Fois", "team": "SBARBATAX", "category": "open", "races": [9,0,0,0,0,0] }
+  { "name": "Massimo Kyle Colombo", "team": "DarkY", "category": "open", "races": [10,0,0,0,0,0] },
 
 ]
 
