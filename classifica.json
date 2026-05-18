@@ -7,6 +7,7 @@
   { "name": "Matteo Barella", "team": "Barux", "category": "pro", "races": [3,0,0,0,0,0] },
   { "name": "Nicolò Benegiamo", "team": "NIKFPV", "category": "pro", "races": [4,3,0,0,0,0] },
   { "name": "Carmine Arrichiello", "team": "CA_FPV", "category": "pro", "races": [8,7,0,0,0,0] },
+  { "name": "Ennio Di Meo", "team": "ENNIO-FPV", "category": "pro", "races": [0,0,0,0,0,0] },
 
   { "name": "Stefano Facchetti", "team": "Fad", "category": "open", "races": [0,11,0,0,0,0] },
   { "name": "Alessio De Ieso", "team": "AleFPV", "category": "open", "races": [7,6,0,0,0,0] },
@@ -22,8 +23,8 @@
   { "name": "Yuri Arangiaro", "team": "DarkY", "category": "open", "races": [0,10,0,0,0,0] },
   { "name": "Franco Aiello", "team": "Alien77", "category": "open", "races": [7,0,0,0,0,0] },
   { "name": "Alessandro Ibba", "team": "Ibbo", "category": "open", "races": [8,0,0,0,0,0] },
-  { "name": "Giuseppe Fois", "team": "SBARBATAX", "category": "open", "races": [9,0,0,0,0,0] }
-  { "name": "Massimo Kyle Colombo", "team": "DarkY", "category": "open", "races": [10,0,0,0,0,0] },
+  { "name": "Giuseppe Fois", "team": "SBARBATAX", "category": "open", "races": [9,0,0,0,0,0] },
+  { "name": "Massimo Kyle Colombo", "team": "DarkY", "category": "open", "races": [10,0,0,0,0,0] }
 
 ]
 
