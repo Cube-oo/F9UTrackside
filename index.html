@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>F9U Live Results</title>
+  <style>
+    :root {
+      --f9u-blue: #005b96;
+      --f9u-blue-dark: #003f73;
+      --f9u-navy: #001f3f;
+      --f9u-light: #f4f8fb;
+      --f9u-line: #d7e2ec;
+      --f9u-green: #dff5df;
+      --f9u-red: #fff0f0;
+      --f9u-text: #102033;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #ffffff 0%, #f3f7fb 100%);
+      color: var(--f9u-text);
+    }
+
+    .top-strip {
+      height: 36px;
+      background: #172027;
+    }
+
+    header {
+      background: #fff;
+      border-bottom: 1px solid #e5edf5;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 26px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-box {
+      width: 116px;
+      height: 70px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0d4f8b, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #183c69;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      color: #fff;
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-box::before {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 44px;
+      height: 6px;
+      background: #2baa3b;
+    }
+
+    .logo-box::after {
+      content: "";
+      position: absolute;
+      top: 8px;
+      left: 54px;
+      width: 44px;
+      height: 6px;
+      background: #d9232e;
+    }
+
+    .brand-title small {
+      display: block;
+      color: var(--f9u-blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .brand-title h1 {
+      margin: 0;
+      color: var(--f9u-navy);
+      font-size: 26px;
+      line-height: 1.1;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      color: #001c70;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 34px 20px 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--f9u-blue-dark), var(--f9u-blue));
+      color: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 18px 45px rgba(0,91,150,0.25);
+    }
+
+    .hero h2 {
+      margin: 0 0 8px;
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: #dcecf8;
+      font-size: 15px;
+    }
+
+    .status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: center;
+      background: #fff;
+      border: 1px solid var(--f9u-line);
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .status-item {
+      font-size: 13px;
+      color: #4a5b6c;
+    }
+
+    .status-item strong {
+      color: var(--f9u-blue);
+    }
+
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      align-items: center;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid var(--f9u-line);
+      background: #fff;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .dot.green { background: #6fc36f; }
+    .dot.red { background: #ff9b9b; }
+
+    .table-card {
+      background: #fff;
+      border: 1px solid var(--f9u-line);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.08);
+    }
+
+    #race-results {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .race-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 13px;
+      min-width: 1040px;
+    }
+
+    .race-table th {
+      background: var(--f9u-blue);
+      color: #fff;
+      padding: 11px 8px;
+      text-align: center;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.25);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+    }
+
+    .race-table td {
+      border-right: 1px solid var(--f9u-line);
+      border-bottom: 1px solid var(--f9u-line);
+      padding: 8px 7px;
+      text-align: center;
+      white-space: nowrap;
+      background: inherit;
+    }
+
+    .race-table tr.qualified { background: var(--f9u-green); }
+    .race-table tr.eliminated { background: var(--f9u-red); }
+    .race-table tr:hover { background: #dceeff; }
+
+    .position, .best-time {
+      font-weight: 800;
+      color: var(--f9u-blue);
+    }
+
+    .pilot-name {
+      font-weight: 700;
+      text-align: left !important;
+    }
+
+    .pilot-id {
+      font-weight: 700;
+      color: #0b4f88;
+    }
+
+    .sticky-col-1 { position: sticky; left: 0; z-index: 3; min-width: 54px; }
+    .sticky-col-2 { position: sticky; left: 54px; z-index: 3; min-width: 185px; }
+    .sticky-col-3 { position: sticky; left: 239px; z-index: 3; min-width: 95px; }
+    .sticky-col-4 { position: sticky; left: 334px; z-index: 3; min-width: 90px; }
+
+    th.sticky-col-1, th.sticky-col-2, th.sticky-col-3, th.sticky-col-4 {
+      z-index: 7;
+      background: var(--f9u-blue-dark);
+    }
+
+    td.sticky-col-1, td.sticky-col-2, td.sticky-col-3, td.sticky-col-4 {
+      box-shadow: 4px 0 8px rgba(0,0,0,0.04);
+    }
+
+    .loading, .error {
+      padding: 32px;
+      color: var(--f9u-blue);
+      font-weight: 700;
+    }
+
+    .error { color: #b00020; }
+
+    footer {
+      text-align: center;
+      padding: 28px 20px;
+      color: #6d7b88;
+      font-size: 12px;
+    }
+
+    @media (max-width: 780px) {
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      nav { gap: 16px; font-size: 12px; flex-wrap: wrap; }
+      .hero h2 { font-size: 24px; }
+      .brand-title h1 { font-size: 20px; }
+      .logo-box { width: 94px; height: 58px; font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top-strip"></div>
+
+  <header>
+    <div class="header-inner">
+      <div class="brand">
+        <div class="logo-box">F9U</div>
+        <div class="brand-title">
+          <small>Live timing</small>
+          <h1>WDCI 2026 Results</h1>
+        </div>
+      </div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#results">Risultati</a>
+        <a href="#">Bulletin</a>
+        <a href="#">Regolamento</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h2>Qualifying Results</h2>
+      <p>Classifica qualifiche aggiornata automaticamente dal foglio Google ufficiale.</p>
+    </section>
+
+    <section class="status-bar">
+      <div class="status-item">Ultimo aggiornamento: <strong id="last-update">in attesa...</strong></div>
+      <div class="status-item">Refresh automatico: <strong>ogni 2 minuti</strong></div>
+      <div class="legend">
+        <span class="pill"><span class="dot green"></span>Top 32</span>
+        <span class="pill"><span class="dot red"></span>Outside Top 32</span>
+      </div>
+    </section>
+
+    <section id="results" class="table-card">
+      <div id="race-results"><div class="loading">Caricamento risultati...</div></div>
+    </section>
+  </main>
+
+  <footer>
+    F9U Italy · Live results interface
+  </footer>
+
+  <script>
+    const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSuAN6b92lg_DMfg0wXdKC3VpwdnGV7-QeOUUCdmNqf_nwwO30e3UtIUfzlDHKOUxKYoK1SO9kkt3fT/pub?output=csv";
+
+    function parseCSV(text) {
+      const rows = [];
+      let row = [];
+      let cell = "";
+      let insideQuotes = false;
+
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"' && insideQuotes && nextChar === '"') {
+          cell += '"';
+          i++;
+        } else if (char === '"') {
+          insideQuotes = !insideQuotes;
+        } else if (char === "," && !insideQuotes) {
+          row.push(cell.trim());
+          cell = "";
+        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+          if (cell !== "" || row.length > 0) {
+            row.push(cell.trim());
+            rows.push(row);
+            row = [];
+            cell = "";
+          }
+        } else {
+          cell += char;
+        }
+      }
+
+      if (cell !== "" || row.length > 0) {
+        row.push(cell.trim());
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    function safe(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    async function loadResults() {
+      try {
+        const response = await fetch(sheetURL + "&t=" + Date.now());
+        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        const csv = await response.text();
+        const allRows = parseCSV(csv);
+
+        const headerIndex = allRows.findIndex(row =>
+          row.includes("Nome + Cognome") && row.includes("Miglior Tempo")
+        );
+
+        if (headerIndex < 0) {
+          throw new Error("Intestazione tabella non trovata nel CSV");
+        }
+
+        const rows = allRows
+          .slice(headerIndex + 1)
+          .filter(row => {
+            const pos = parseInt(row[5], 10);
+            return !isNaN(pos) && pos >= 1 && pos <= 48;
+          })
+          .sort((a, b) => parseInt(a[5], 10) - parseInt(b[5], 10));
+
+        let html = `
+          <table class="race-table">
+            <thead>
+              <tr>
+                <th class="sticky-col-1">Pos</th>
+                <th class="sticky-col-2">Pilota</th>
+                <th class="sticky-col-3">ID</th>
+                <th class="sticky-col-4">Best</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+                <th>Q5</th>
+                <th>Q6</th>
+                <th>Q7</th>
+                <th>Q8</th>
+                <th>Q9</th>
+                <th>Q10</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        rows.forEach(row => {
+          const pos = parseInt(row[5], 10);
+          const pilot = safe(row[1]);
+          const id = safe(row[2]);
+          const best = safe(row[6]);
+          const qualified = pos <= 32;
+
+          html += `
+            <tr class="${qualified ? "qualified" : "eliminated"}">
+              <td class="sticky-col-1 position">${pos}</td>
+              <td class="sticky-col-2 pilot-name">${pilot}</td>
+              <td class="sticky-col-3 pilot-id">${id}</td>
+              <td class="sticky-col-4 best-time">${best}</td>
+              <td>${safe(row[7])}</td>
+              <td>${safe(row[8])}</td>
+              <td>${safe(row[9])}</td>
+              <td>${safe(row[10])}</td>
+              <td>${safe(row[11])}</td>
+              <td>${safe(row[12])}</td>
+              <td>${safe(row[13])}</td>
+              <td>${safe(row[14])}</td>
+              <td>${safe(row[15])}</td>
+              <td>${safe(row[16])}</td>
+            </tr>
+          `;
+        });
+
+        html += `</tbody></table>`;
+
+        document.getElementById("race-results").innerHTML = html;
+        document.getElementById("last-update").textContent = new Date().toLocaleTimeString("it-IT", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit"
+        });
+
+      } catch (error) {
+        document.getElementById("race-results").innerHTML =
+          `<div class="error">Errore caricamento dati: ${safe(error.message)}</div>`;
+      }
+    }
+
+    loadResults();
+    setInterval(loadResults, 120000);
+  </script>
+</body>
+</html>
