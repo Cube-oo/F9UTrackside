@@ -170,8 +170,8 @@
 
     .bracket-viewport {
       position: relative;
-      min-width: 1940px;
-      height: 1900px;
+      min-width: 3260px;
+      height: 2100px;
       background: linear-gradient(180deg, #ffffff 0%, #f8fbfe 100%);
       border: 1px solid var(--f9u-line);
       border-radius: 14px;
@@ -181,8 +181,8 @@
     .bracket-lines {
       position: absolute;
       inset: 0;
-      width: 1940px;
-      height: 1900px;
+      width: 3260px;
+      height: 2100px;
       pointer-events: none;
       z-index: 1;
     }
@@ -213,8 +213,8 @@
     .lower-title {
       position: absolute;
       left: 20px;
-      top: 1320px;
-      width: 1320px;
+      top: 1340px;
+      width: 2520px;
       height: 22px;
       line-height: 22px;
       border: 1px solid #8c96a3;
@@ -229,7 +229,7 @@
 
     .heat-card {
       position: absolute;
-      width: 172px;
+      width: 380px;
       border: 1px solid #7d8792;
       background: #fff;
       z-index: 4;
@@ -238,7 +238,7 @@
 
     .heat-title {
       display: grid;
-      grid-template-columns: 64px 1fr;
+      grid-template-columns: 80px 1fr;
       min-height: 30px;
       border-bottom: 1px solid #7d8792;
       background: #f1efe8;
@@ -257,7 +257,7 @@
 
     .heat-meta {
       display: grid;
-      grid-template-columns: 1fr 38px;
+      grid-template-columns: 1fr 40px;
       align-items: center;
       gap: 2px;
       padding: 3px 6px;
@@ -268,7 +268,7 @@
 
     .heat-row {
       display: grid;
-      grid-template-columns: 1fr 46px 26px;
+      grid-template-columns: 180px 160px 40px;
       min-height: 26px;
       border-bottom: 1px solid #cbd6e0;
       background: #fff;
@@ -296,19 +296,19 @@
 
 
     .heat-card.final-card {
-      width: 330px;
+      width: 520px;
     }
 
     .heat-card.final-card .heat-title {
-      grid-template-columns: 74px 1fr;
+      grid-template-columns: 80px 1fr;
     }
 
     .heat-card.final-card .heat-meta {
-      grid-template-columns: 1fr 34px 34px 34px 34px;
+      grid-template-columns: 160px 40px 40px 40px 40px;
     }
 
     .heat-card.final-card .heat-row {
-      grid-template-columns: 1fr 58px 34px 34px 34px 34px;
+      grid-template-columns: 180px 160px 45px 45px 45px 45px;
     }
 
     .heat-card.final-card .ace-rank {
@@ -377,11 +377,11 @@
     <section id="elimination-view" class="view-section">
       <section class="hero">
         <h2>Top 32 Elimination Bracket</h2>
-        <p>Tabellone eliminatorio in stile double elimination, aggiornato automaticamente dal foglio Google ufficiale.</p>
+        <p>GNDlab platform</p>
       </section>
 
       <section class="bracket-card">
-        <p class="bracket-note">GNDlab platform</p>
+        <p class="bracket-note">Welcome to Italy</p>
         <div id="bracket-results"><div class="loading">Caricamento eliminatorie...</div></div>
       </section>
     </section>
@@ -393,29 +393,29 @@
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSuAN6b92lg_DMfg0wXdKC3VpwdnGV7-QeOUUCdmNqf_nwwO30e3UtIUfzlDHKOUxKYoK1SO9kkt3fT/pub?output=csv";
 
     const BRACKET_LAYOUT = {
-      1:  { x: 20,   y: 70 },   2:  { x: 20,   y: 230 },  3:  { x: 20,   y: 390 },  4:  { x: 20,   y: 550 },
-      5:  { x: 20,   y: 710 },  6:  { x: 20,   y: 870 },  7:  { x: 20,   y: 1030 }, 8:  { x: 20,   y: 1190 },
+      1:  { x: 20,   y: 70 },   2:  { x: 20,   y: 225 },  3:  { x: 20,   y: 380 },  4:  { x: 20,   y: 535 },
+      5:  { x: 20,   y: 690 },  6:  { x: 20,   y: 845 },  7:  { x: 20,   y: 1000 }, 8:  { x: 20,   y: 1155 },
 
-      9:  { x: 330,  y: 150 },  10: { x: 330,  y: 470 },  11: { x: 330,  y: 790 },  12: { x: 330,  y: 1110 },
+      9:  { x: 520,  y: 150 },  10: { x: 520,  y: 460 },  11: { x: 520,  y: 770 },  12: { x: 520,  y: 1080 },
 
-      13: { x: 20,   y: 1360 }, 14: { x: 20,   y: 1495 }, 15: { x: 20,   y: 1630 }, 16: { x: 20,   y: 1765 },
-      17: { x: 330,  y: 1360 }, 18: { x: 330,  y: 1495 }, 19: { x: 330,  y: 1630 }, 20: { x: 330,  y: 1765 },
-      21: { x: 660,  y: 1445 }, 22: { x: 660,  y: 1645 },
+      13: { x: 20,   y: 1400 }, 14: { x: 20,   y: 1555 }, 15: { x: 20,   y: 1710 }, 16: { x: 20,   y: 1865 },
+      17: { x: 520,  y: 1400 }, 18: { x: 520,  y: 1555 }, 19: { x: 520,  y: 1710 }, 20: { x: 520,  y: 1865 },
+      21: { x: 1040, y: 1480 }, 22: { x: 1040, y: 1750 },
 
-      23: { x: 800,  y: 365 },  24: { x: 800,  y: 765 },
-      25: { x: 990,  y: 1445 }, 26: { x: 990,  y: 1645 },
-      27: { x: 1240, y: 1545 },
-      28: { x: 1300, y: 565 },
-      29: { x: 1510, y: 1545 },
-      999:{ x: 1580, y: 420 }
+      23: { x: 1040, y: 360 },  24: { x: 1040, y: 780 },
+      25: { x: 1500, y: 1480 }, 26: { x: 1500, y: 1750 },
+      27: { x: 1950, y: 1630 },
+      28: { x: 1860, y: 570 },
+      29: { x: 2420, y: 1630 },
+      999:{ x: 2540, y: 570 }
     };
 
     const STAGE_TITLES = [
-      { text: "1st Elimination Round", x: 20,   y: 24, w: 210 },
-      { text: "2nd Elimination Round", x: 330,  y: 24, w: 210 },
-      { text: "3rd Elimination Round", x: 800,  y: 24, w: 210 },
-      { text: "4th Elimination Round", x: 1300, y: 24, w: 210 },
-      { text: "Final · Chase the Ace",  x: 1580, y: 24, w: 330 }
+      { text: "1st Elimination Round", x: 20,   y: 24, w: 380 },
+      { text: "2nd Elimination Round", x: 520,  y: 24, w: 380 },
+      { text: "3rd Elimination Round", x: 1040, y: 24, w: 380 },
+      { text: "4th Elimination Round", x: 1860, y: 24, w: 380 },
+      { text: "Final · Chase the Ace",  x: 2540, y: 24, w: 520 }
     ];
 
     const CONNECTIONS = [
@@ -641,7 +641,7 @@
       const b = BRACKET_LAYOUT[to];
       if (!a || !b) return "";
 
-      const w = 172;
+      const w = 380;
       const h = 134;
       const x1 = a.x + w;
       const y1 = a.y + h / 2;
@@ -653,7 +653,7 @@
 
     function buildBracketFromRounds(rounds) {
       let html = `<div class="bracket-viewport">`;
-      html += `<svg class="bracket-lines" viewBox="0 0 1940 1900" preserveAspectRatio="none">`;
+      html += `<svg class="bracket-lines" viewBox="0 0 3260 2100" preserveAspectRatio="none">`;
       CONNECTIONS.forEach(([from, to]) => { html += connectorPath(from, to); });
       html += `</svg>`;
 
