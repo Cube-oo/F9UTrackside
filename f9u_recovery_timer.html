@@ -222,6 +222,36 @@ button.danger-button{
   background:#fff8f8;
 }
 
+.group-section{
+  margin-top:28px;
+  padding-top:20px;
+  border-top:1px solid var(--line);
+}
+
+.group-label{
+  margin-bottom:12px;
+  color:#526273;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.group-controls{
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:nowrap;
+}
+
+.group-controls .group-call{
+  flex:1 1 0;
+  min-width:0;
+  max-width:170px;
+}
+
 .help{
   margin-top:18px;
   color:#788897;
@@ -337,6 +367,23 @@ body.fullscreen-mode .controls button.danger-button{
   border-color:rgba(255,120,120,.3);
 }
 
+body.fullscreen-mode .group-section{
+  width:min(900px,92vw);
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.12);
+}
+
+body.fullscreen-mode .group-label{
+  color:#8fa6b8;
+}
+
+body.fullscreen-mode .group-controls .group-call{
+  min-width:0;
+  max-width:none;
+  padding:0 12px;
+}
+
 body.fullscreen-mode .help{
   color:#6f8799;
 }
@@ -398,11 +445,24 @@ body.fullscreen-mode .help{
         <button id="startBtn" class="primary">Start</button>
         <button id="pauseBtn">Pause</button>
         <button id="resetBtn" class="danger-button">Reset</button>
+        <button id="recallBtn" class="danger-button">Richiamo</button>
+        <button id="cancelRaceBtn" class="danger-button">Gara Annullata</button>
         <button id="fullscreenBtn">Fullscreen</button>
       </div>
 
+      <div class="group-section">
+        <div class="group-label">Chiamata Gruppi</div>
+        <div class="group-controls">
+          <button class="group-call" data-group="A">Gruppo A</button>
+          <button class="group-call" data-group="B">Gruppo B</button>
+          <button class="group-call" data-group="C">Gruppo C</button>
+          <button class="group-call" data-group="D">Gruppo D</button>
+          <button class="group-call" data-group="E">Gruppo E</button>
+        </div>
+      </div>
+
       <div class="help">
-        SPAZIO = Start / Pause · R = Reset · F = Fullscreen
+        SPAZIO = Start / Pause · R = Reset · P = Richiamo · S = Gara Annullata · F = Fullscreen
       </div>
     </div>
 
@@ -424,6 +484,9 @@ const statusEl = document.getElementById("status");
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 const resetBtn = document.getElementById("resetBtn");
+const recallBtn = document.getElementById("recallBtn");
+const cancelRaceBtn = document.getElementById("cancelRaceBtn");
+const groupCallButtons = [...document.querySelectorAll(".group-call")];
 const fullscreenBtn = document.getElementById("fullscreenBtn");
 const presetButtons = [...document.querySelectorAll(".preset")];
 
@@ -501,6 +564,97 @@ function playEndAlarm(){
   setTimeout(()=>{
     try{ ctx.close(); }catch(e){}
   }, 2200);
+}
+
+
+let sirenActive = false;
+
+function startRecallSiren(){
+  if(sirenActive) return;
+  sirenActive = true;
+  recallBtn.textContent = "Stop";
+
+  // Richiamo vocale tramite sintesi vocale del browser.
+  // Ripete "Lasciare il campo di gara!" con tono più marcato
+  // finché non viene premuto nuovamente P o STOP.
+  const speakRecall = ()=>{
+    if(!sirenActive) return;
+
+    if(!("speechSynthesis" in window)){
+      sirenActive = false;
+      recallBtn.textContent = "Richiamo";
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance("Lasciare il campo di gara!");
+    utterance.lang = "it-IT";
+    utterance.rate = 0.92;
+    utterance.pitch = 0.82;
+    utterance.volume = 1.0;
+
+    utterance.onend = ()=>{
+      if(sirenActive){
+        setTimeout(speakRecall, 350);
+      }
+    };
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  window.speechSynthesis.cancel();
+  speakRecall();
+}
+
+function stopRecallSiren(){
+  sirenActive = false;
+  recallBtn.textContent = "Richiamo";
+
+  if("speechSynthesis" in window){
+    window.speechSynthesis.cancel();
+  }
+}
+
+function toggleRecallSiren(){
+  sirenActive ? stopRecallSiren() : startRecallSiren();
+}
+
+
+function announceRaceCancelled(){
+  if(!("speechSynthesis" in window)) return;
+
+  // Interrompe eventuali annunci precedenti per dare priorità
+  // al messaggio di annullamento gara.
+  stopRecallSiren();
+  window.speechSynthesis.cancel();
+
+  const utterance =
+    new SpeechSynthesisUtterance("Gara annullata, atterrare subito!");
+
+  utterance.lang = "it-IT";
+  utterance.rate = 0.88;
+  utterance.pitch = 0.78;
+  utterance.volume = 1.0;
+
+  window.speechSynthesis.speak(utterance);
+}
+
+
+function announceGroup(group){
+  if(!("speechSynthesis" in window)) return;
+
+  // Il richiamo del gruppo ha priorità su eventuali altri annunci.
+  stopRecallSiren();
+  window.speechSynthesis.cancel();
+
+  const utterance =
+    new SpeechSynthesisUtterance(`Gruppo ${group}`);
+
+  utterance.lang = "it-IT";
+  utterance.rate = 0.90;
+  utterance.pitch = 0.85;
+  utterance.volume = 1.0;
+
+  window.speechSynthesis.speak(utterance);
 }
 
 async function enterFullscreen(){
@@ -622,6 +776,14 @@ presetButtons.forEach(button=>{
 startBtn.addEventListener("click",startTimer);
 pauseBtn.addEventListener("click",pauseTimer);
 resetBtn.addEventListener("click",resetTimer);
+recallBtn.addEventListener("click",toggleRecallSiren);
+cancelRaceBtn.addEventListener("click",announceRaceCancelled);
+
+groupCallButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    announceGroup(button.dataset.group);
+  });
+});
 
 fullscreenBtn.addEventListener("click",async ()=>{
   if(document.fullscreenElement){
@@ -654,6 +816,18 @@ document.addEventListener("keydown",async event=>{
 
   if(event.key.toLowerCase() === "r"){
     resetTimer();
+    return;
+  }
+
+  if(event.key.toLowerCase() === "p"){
+    event.preventDefault();
+    toggleRecallSiren();
+    return;
+  }
+
+  if(event.key.toLowerCase() === "s"){
+    event.preventDefault();
+    announceRaceCancelled();
     return;
   }
 
