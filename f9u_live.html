@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--Cazzo Guardi? Pussa via!-->
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -1460,6 +1461,22 @@ body.presentation-mode .diagnostic-panel{
   background:#555 !important;
 }
 
+
+/* Show the on-video alert only after the 5-second DNF threshold */
+.feed-card.no-signal .signal-overlay,
+.feed-card.dnf .signal-overlay{
+  display:flex !important;
+}
+
+.feed-card.dnf .signal-badge{
+  padding:12px 24px;
+  border-left:6px solid #ff1f2d;
+  background:rgba(110,0,7,.92);
+  color:#fff;
+  font-size:clamp(26px,2.2vw,44px);
+  letter-spacing:.12em;
+}
+
 @media(max-width:900px){
   .diagnostic-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1620,7 +1637,7 @@ body.presentation-mode .pilot-overlay{
       <div class="pilot-overlay empty" data-pilot-slot="1">
         <div class="pilot-category">--</div>
         <div class="pilot-main">
-          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-name"></div>
         </div>
         <div class="pilot-meta">
           <span class="pilot-id">ID: --</span>
@@ -1641,7 +1658,7 @@ body.presentation-mode .pilot-overlay{
       <div class="pilot-overlay empty" data-pilot-slot="2">
         <div class="pilot-category">--</div>
         <div class="pilot-main">
-          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-name"></div>
         </div>
         <div class="pilot-meta">
           <span class="pilot-id">ID: --</span>
@@ -1662,7 +1679,7 @@ body.presentation-mode .pilot-overlay{
       <div class="pilot-overlay empty" data-pilot-slot="3">
         <div class="pilot-category">--</div>
         <div class="pilot-main">
-          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-name"></div>
         </div>
         <div class="pilot-meta">
           <span class="pilot-id">ID: --</span>
@@ -1683,7 +1700,7 @@ body.presentation-mode .pilot-overlay{
       <div class="pilot-overlay empty" data-pilot-slot="4">
         <div class="pilot-category">--</div>
         <div class="pilot-main">
-          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-name"></div>
         </div>
         <div class="pilot-meta">
           <span class="pilot-id">ID: --</span>
