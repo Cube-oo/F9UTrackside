@@ -1,0 +1,2201 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F9U Live Video</title>
+
+<style>
+:root{
+  --blue:#005b96;
+  --blue-dark:#003f73;
+  --navy:#001f3f;
+  --line:#d7e2ec;
+  --text:#102033;
+  --bg:#f3f7fb;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);
+  color:var(--text);
+}
+
+.top-strip{
+  height:36px;
+  background:#172027;
+}
+
+header{
+  background:#fff;
+  border-bottom:1px solid #e5edf5;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+
+.header-inner{
+  padding:22px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.site-logo{
+  width:126px;
+  height:auto;
+  display:block;
+}
+
+.brand-title small{
+  display:block;
+  color:var(--blue);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:12px;
+  margin-bottom:4px;
+}
+
+.brand-title h1{
+  margin:0;
+  color:var(--navy);
+  font-size:26px;
+  line-height:1.1;
+}
+
+.header-actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+button,select{
+  min-height:40px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--navy);
+  font-weight:800;
+  font-size:12px;
+}
+
+button{
+  padding:0 16px;
+  cursor:pointer;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+button.primary{
+  background:var(--blue);
+  color:#fff;
+  border-color:var(--blue);
+}
+
+main{
+  padding:24px;
+}
+
+.settings-panel{
+  display:none;
+  margin-bottom:18px;
+}
+
+.settings-panel.open{
+  display:block;
+}
+
+.system-status{
+  margin-bottom:10px;
+  padding:14px 16px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  box-shadow:0 8px 24px rgba(0,0,0,.05);
+  font-size:13px;
+  color:#4d5d6e;
+}
+
+.system-status strong{
+  color:var(--navy);
+}
+
+.system-status.error{
+  border-color:#efcaca;
+  background:#fff5f5;
+  color:#9c1b1b;
+}
+
+.source-panel{
+  margin-bottom:18px;
+  padding:14px;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.source-panel select{
+  min-width:280px;
+  padding:0 12px;
+}
+
+.preview-panel{
+  margin-top:12px;
+  padding:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.preview-title{
+  margin-bottom:8px;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.preview-wrap{
+  width:min(640px,100%);
+  aspect-ratio:16/9;
+  background:#000;
+  overflow:hidden;
+  border-radius:10px;
+}
+
+.preview-wrap video{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  background:#000;
+}
+
+.video-grid{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:4px;
+  background:#000;
+}
+
+.feed-card{
+  position:relative;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  background:#071525;
+}
+
+.feed-label{
+  position:absolute;
+  left:12px;
+  top:12px;
+  z-index:10;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(0,0,0,.60);
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+/* Ogni riquadro mostra un quadrante dello stesso stream 2×2 */
+.feed-view{
+  position:absolute;
+  inset:0;
+  overflow:hidden;
+  background:#000;
+}
+
+.feed-view canvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  background:#000;
+}
+
+.placeholder{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#9eb0bf;
+  font-weight:800;
+  font-size:14px;
+  z-index:2;
+}
+
+.feed-card.active .placeholder{
+  display:none;
+}
+
+footer{
+  text-align:center;
+  padding:22px;
+  color:#6d7b88;
+  font-size:12px;
+}
+
+/* FULLSCREEN MATRIX */
+body.presentation-mode{
+  background:#000;
+  overflow:hidden;
+}
+
+body.presentation-mode .top-strip,
+body.presentation-mode header,
+body.presentation-mode footer,
+body.presentation-mode .settings-panel,
+body.presentation-mode .system-status,
+body.presentation-mode .source-panel{
+  display:none;
+}
+
+body.presentation-mode main{
+  padding:0;
+  width:100vw;
+  height:100vh;
+}
+
+body.presentation-mode .video-grid{
+  width:100vw;
+  height:100vh;
+  gap:2px;
+}
+
+body.presentation-mode .feed-card{
+  aspect-ratio:auto;
+  height:50vh;
+}
+
+body.presentation-mode .feed-label{
+  font-size:clamp(11px,1vw,18px);
+}
+
+
+.timer-panel{
+  margin-top:18px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 14px 36px rgba(0,0,0,.08);
+  overflow:hidden;
+}
+
+.timer-panel-head{
+  padding:16px 18px;
+  color:#fff;
+  background:linear-gradient(135deg,#152853,#203b78);
+}
+
+.timer-panel-head h2{
+  margin:0;
+  font-size:22px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+.timer-panel-body{
+  padding:20px;
+  text-align:center;
+}
+
+.timer-label{
+  color:#526273;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.race-timer{
+  margin:8px 0 10px;
+  color:var(--navy);
+  font-size:clamp(70px,10vw,150px);
+  line-height:.9;
+  font-weight:900;
+  letter-spacing:-.05em;
+  font-variant-numeric:tabular-nums;
+}
+
+.race-timer.warning{ color:#d28b00; }
+.race-timer.danger{ color:#b71c1c; }
+
+.timer-status{
+  min-height:24px;
+  margin-bottom:14px;
+  color:#536474;
+  font-size:14px;
+  font-weight:700;
+}
+
+.timer-presets,
+.timer-controls,
+.group-controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.timer-presets{
+  margin-bottom:14px;
+}
+
+.timer-presets button{
+  min-width:88px;
+}
+
+.timer-presets button.active{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
+
+.group-section{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+
+.group-title{
+  margin-bottom:10px;
+  color:#526273;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.keyboard-help{
+  margin-top:14px;
+  color:#788897;
+  font-size:12px;
+}
+
+/* Timer overlay during countdown */
+body.timer-running .timer-overlay{
+  display:flex;
+}
+
+.timer-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(2,9,19,.92);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
+}
+
+.timer-overlay .overlay-label{
+  color:#9db3c5;
+  font-size:clamp(16px,1.5vw,28px);
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.timer-overlay .overlay-time{
+  color:#fff;
+  font-size:min(38vw,52vh);
+  line-height:.82;
+  font-weight:900;
+  letter-spacing:-.06em;
+  font-variant-numeric:tabular-nums;
+}
+
+.timer-overlay .overlay-time.warning{ color:#ffc247; }
+.timer-overlay .overlay-time.danger{ color:#ff6767; }
+
+.timer-overlay .overlay-status{
+  margin-top:18px;
+  color:#bdd0de;
+  font-size:clamp(15px,1.5vw,24px);
+  font-weight:700;
+}
+
+
+/* =========================
+   HEAT / PILOT OVERLAYS
+   ========================= */
+
+.heat-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+  padding:12px 14px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  box-shadow:0 8px 24px rgba(0,0,0,.05);
+}
+
+.heat-toolbar-left,
+.heat-toolbar-right{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.heat-current{
+  color:var(--navy);
+  font-size:16px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.sheet-config{
+  margin-top:12px;
+  padding:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.sheet-config-title{
+  margin-bottom:8px;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.sheet-config-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.sheet-config input{
+  flex:1 1 420px;
+  min-height:40px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  font-size:12px;
+  color:var(--navy);
+  background:#fff;
+}
+
+
+
+.pilot-overlay{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:14px;
+  z-index:20;
+  min-height:76px;
+  display:grid;
+  grid-template-columns:10px minmax(0,1fr) auto;
+  align-items:stretch;
+  overflow:hidden;
+  background:
+    linear-gradient(96deg,
+      rgba(7,12,18,.97) 0%,
+      rgba(13,20,28,.94) 62%,
+      rgba(20,28,38,.88) 100%);
+  border-top:1px solid rgba(255,255,255,.16);
+  border-right:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  clip-path:polygon(0 0,96% 0,100% 22%,100% 100%,4% 100%,0 78%);
+  box-shadow:0 16px 32px rgba(0,0,0,.38);
+}
+
+.pilot-overlay::before{
+  content:"";
+  grid-column:1;
+  grid-row:1;
+  background:
+    linear-gradient(180deg,#5cc2ff 0%,#0076c8 58%,#003f73 100%);
+}
+
+.pilot-overlay::after{
+  content:"";
+  position:absolute;
+  right:112px;
+  top:0;
+  width:58px;
+  height:100%;
+  background:
+    linear-gradient(120deg,
+      transparent 0 38%,
+      rgba(255,255,255,.045) 39% 55%,
+      transparent 56% 100%);
+  pointer-events:none;
+}
+
+.pilot-main{
+  grid-column:2;
+  min-width:0;
+  padding:11px 16px 10px 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.pilot-name{
+  position:relative;
+  color:#fff;
+  font-size:clamp(19px,1.55vw,29px);
+  line-height:.95;
+  font-weight:900;
+  letter-spacing:-.035em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-shadow:0 2px 8px rgba(0,0,0,.42);
+}
+
+.pilot-meta{
+  margin-top:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.pilot-id{
+  display:inline-flex;
+  align-items:center;
+  min-height:22px;
+  padding:0 8px 0 0;
+  color:#aebdca;
+  font-size:clamp(10px,.72vw,12px);
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+}
+
+.pilot-id::before{
+  content:"";
+  display:inline-block;
+  width:22px;
+  height:3px;
+  margin-right:7px;
+  background:#1aa7ff;
+  transform:skewX(-26deg);
+}
+
+.pilot-category{
+  grid-column:3;
+  align-self:stretch;
+  min-width:106px;
+  padding:0 18px 0 16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  background:
+    linear-gradient(145deg,#244c93 0%,#142b58 100%);
+  border-left:1px solid rgba(255,255,255,.10);
+  font-size:clamp(12px,.88vw,15px);
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  clip-path:polygon(18% 0,100% 0,100% 100%,0 100%);
+}
+
+.pilot-category.open{
+  background:
+    linear-gradient(145deg,#e23838 0%,#8f1010 100%);
+}
+
+.pilot-overlay:has(.pilot-category.open)::before{
+  background:
+    linear-gradient(180deg,#ff6d6d 0%,#d72525 55%,#821010 100%);
+}
+
+.pilot-overlay:has(.pilot-category.open) .pilot-id::before{
+  background:#ff4444;
+}
+
+.pilot-overlay.empty{
+  opacity:.52;
+  filter:saturate(.55);
+}
+
+.pilot-overlay.empty::before{
+  background:linear-gradient(180deg,#71808c,#3c4852);
+}
+
+.pilot-overlay.empty .pilot-category{
+  background:linear-gradient(145deg,#4a5660,#2b343c);
+}
+
+body.presentation-mode .pilot-overlay{
+  left:12px;
+  right:12px;
+  bottom:12px;
+  min-height:84px;
+}
+
+body.presentation-mode .pilot-name{
+  font-size:clamp(21px,1.7vw,32px);
+}
+
+body.presentation-mode .pilot-category{
+  min-width:118px;
+  font-size:clamp(12px,.95vw,16px);
+}
+
+body.presentation-mode .heat-toolbar{
+  position:fixed;
+  top:8px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:100;
+  margin:0;
+  padding:7px 10px;
+  border-color:rgba(255,255,255,.12);
+  background:rgba(0,15,30,.72);
+  color:#fff;
+  box-shadow:none;
+}
+
+body.presentation-mode .heat-current{
+  color:#fff;
+}
+
+body.presentation-mode .heat-toolbar button{
+  min-height:34px;
+  padding:0 12px;
+  background:rgba(255,255,255,.10);
+  color:#fff;
+  border-color:rgba(255,255,255,.18);
+}
+
+body.presentation-mode .pilot-overlay{
+  left:8px;
+  right:8px;
+  bottom:8px;
+}
+
+
+/* Category-driven broadcast label */
+.pilot-overlay{
+  background:linear-gradient(96deg,#071b31 0%,#0b315b 68%,#005b96 100%);
+  border-top:2px solid #36a9ff;
+}
+
+.pilot-overlay::before{
+  background:#168ee0;
+}
+
+.pilot-overlay .pilot-category{
+  background:rgba(0,0,0,.22);
+  border-left:1px solid rgba(255,255,255,.16);
+}
+
+.pilot-overlay .pilot-id::before{
+  background:#39adff;
+}
+
+/* OPEN = RED */
+.pilot-overlay.category-open{
+  background:linear-gradient(96deg,#250606 0%,#761010 68%,#b71c1c 100%);
+  border-top-color:#ff5555;
+}
+
+.pilot-overlay.category-open::before{
+  background:#e12a2a;
+}
+
+.pilot-overlay.category-open .pilot-category{
+  background:rgba(75,0,0,.34);
+}
+
+.pilot-overlay.category-open .pilot-id::before{
+  background:#ff5555;
+}
+
+/* PRO = BLUE */
+.pilot-overlay.category-pro{
+  background:linear-gradient(96deg,#06182c 0%,#103d70 68%,#005b96 100%);
+  border-top-color:#40b4ff;
+}
+
+.pilot-overlay.category-pro::before{
+  background:#1594e8;
+}
+
+.pilot-overlay.category-pro .pilot-category{
+  background:rgba(0,36,70,.34);
+}
+
+.pilot-overlay.category-pro .pilot-id::before{
+  background:#40b4ff;
+}
+
+
+/* Slim semi-transparent pilot labels */
+.pilot-overlay{
+  left:12px;
+  right:12px;
+  bottom:12px;
+  min-height:54px;
+  grid-template-columns:6px minmax(0,1fr) auto;
+  background:linear-gradient(96deg,
+    rgba(7,27,49,.68) 0%,
+    rgba(11,49,91,.62) 68%,
+    rgba(0,91,150,.58) 100%);
+  border-top:1px solid rgba(64,180,255,.75);
+  border-right:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(5px);
+  box-shadow:0 8px 20px rgba(0,0,0,.22);
+}
+
+.pilot-main{
+  padding:7px 12px 6px 13px;
+}
+
+.pilot-name{
+  font-size:clamp(15px,1.2vw,22px);
+  line-height:1;
+}
+
+.pilot-meta{
+  margin-top:4px;
+}
+
+.pilot-id{
+  min-height:17px;
+  font-size:clamp(9px,.62vw,11px);
+}
+
+.pilot-id::before{
+  width:16px;
+  height:2px;
+  margin-right:6px;
+}
+
+.pilot-category{
+  min-width:82px;
+  padding:0 12px 0 14px;
+  background:rgba(0,36,70,.38);
+  font-size:clamp(10px,.7vw,12px);
+}
+
+/* OPEN: red but translucent */
+.pilot-overlay.category-open{
+  background:linear-gradient(96deg,
+    rgba(37,6,6,.70) 0%,
+    rgba(118,16,16,.64) 68%,
+    rgba(183,28,28,.58) 100%);
+  border-top-color:rgba(255,85,85,.82);
+}
+
+.pilot-overlay.category-open .pilot-category{
+  background:rgba(75,0,0,.38);
+}
+
+/* PRO: blue but translucent */
+.pilot-overlay.category-pro{
+  background:linear-gradient(96deg,
+    rgba(6,24,44,.70) 0%,
+    rgba(16,61,112,.64) 68%,
+    rgba(0,91,150,.58) 100%);
+  border-top-color:rgba(64,180,255,.82);
+}
+
+.pilot-overlay.category-pro .pilot-category{
+  background:rgba(0,36,70,.38);
+}
+
+body.presentation-mode .pilot-overlay{
+  left:10px;
+  right:10px;
+  bottom:10px;
+  min-height:58px;
+}
+
+body.presentation-mode .pilot-name{
+  font-size:clamp(16px,1.3vw,24px);
+}
+
+body.presentation-mode .pilot-category{
+  min-width:88px;
+  font-size:clamp(10px,.75vw,13px);
+}
+
+
+.heat-description-overlay{
+  position:absolute;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:30;
+  max-width:80%;
+  padding:8px 18px;
+  background:rgba(4,14,26,.72);
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  color:#fff;
+  font-size:clamp(13px,1.05vw,19px);
+  font-weight:900;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  text-align:center;
+  backdrop-filter:blur(6px);
+  box-shadow:0 8px 22px rgba(0,0,0,.28);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  pointer-events:none;
+}
+
+body.presentation-mode .heat-description-overlay{
+  top:10px;
+  max-width:72%;
+  padding:9px 20px;
+  font-size:clamp(14px,1.15vw,21px);
+}
+
+@media(max-width:900px){
+  .header-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  .source-panel select{
+    min-width:180px;
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-strip"></div>
+
+<header>
+  <div class="header-inner">
+
+    <div class="brand">
+      <img class="site-logo"
+           src="https://f9u.it/wp-content/uploads/2026/03/cropped-cropped-Logo.png"
+           alt="F9U Italy Logo">
+
+      <div class="brand-title">
+        <small>Race control · live heat</small>
+        <h1>F9U Live Video</h1>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button id="settingsBtn">Impostazioni</button>
+      <button id="fullscreenBtn">Fullscreen</button>
+    </div>
+
+  </div>
+</header>
+
+<main>
+
+  <section id="settingsPanel" class="settings-panel">
+    <div id="systemStatus" class="system-status">
+      <strong>Stato:</strong> abilita la sorgente video.
+    </div>
+
+    <div class="source-panel">
+      <select id="cameraSelect">
+        <option value="">Sorgente video...</option>
+      </select>
+
+      <button id="enableBtn" class="primary">Abilita Webcam</button>
+      <button id="startBtn">Avvia Video</button>
+      <button id="stopBtn">Stop</button>
+      <button id="refreshBtn">Aggiorna Sorgenti</button>
+    </div>
+
+    <div class="sheet-config">
+      <div class="sheet-config-title">Google Sheet · Heat</div>
+      <div style="margin-bottom:8px;color:#6d7b88;font-size:11px;font-weight:700;">
+        A=Heat (es. 12 oppure F46=Eliminatorie) · B=Slot P1-P4 · C=Nome e Cognome · D=ID · E=Categoria · F=Descrizione Heat
+      </div>
+      <div class="sheet-config-row">
+        <input id="heatSheetInput"
+               type="text"
+               placeholder="Incolla URL o ID del Google Sheet">
+        <button id="loadHeatsBtn" class="primary">Carica Heat</button>
+      </div>
+    </div>
+
+    <div class="preview-panel">
+      <div class="preview-title">Preview segnale completo</div>
+      <div class="preview-wrap">
+        <video id="previewVideo" autoplay playsinline muted></video>
+      </div>
+    </div>
+  </section>
+
+  <video id="sourceVideo" autoplay playsinline muted style="display:none"></video>
+
+  <section class="heat-toolbar">
+    <div class="heat-toolbar-left">
+      <button id="prevHeatBtn">← Heat</button>
+      <div id="heatCurrent" class="heat-current">Heat --</div>
+      <button id="nextHeatBtn">Heat →</button>
+    </div>
+
+    <div class="heat-toolbar-right">
+      <button id="reloadHeatsBtn">Aggiorna Heat</button>
+    </div>
+  </section>
+
+  <section class="video-grid">
+    <div id="heatDescriptionOverlay" class="heat-description-overlay">Descrizione Heat</div>
+
+    <article class="feed-card feed-1">
+      <div class="feed-label">Pilota 1</div>
+      <div class="pilot-overlay empty" data-pilot-slot="1">
+        <div class="pilot-main">
+          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-meta">
+            <span class="pilot-id">ID: --</span>
+          </div>
+        </div>
+        <div class="pilot-category">--</div>
+      </div>
+      <div class="feed-view">
+        <canvas id="canvas1"></canvas>
+        <div class="placeholder">Nessun segnale</div>
+      </div>
+    </article>
+
+    <article class="feed-card feed-2">
+      <div class="feed-label">Pilota 2</div>
+      <div class="pilot-overlay empty" data-pilot-slot="2">
+        <div class="pilot-main">
+          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-meta">
+            <span class="pilot-id">ID: --</span>
+          </div>
+        </div>
+        <div class="pilot-category">--</div>
+      </div>
+      <div class="feed-view">
+        <canvas id="canvas2"></canvas>
+        <div class="placeholder">Nessun segnale</div>
+      </div>
+    </article>
+
+    <article class="feed-card feed-3">
+      <div class="feed-label">Pilota 3</div>
+      <div class="pilot-overlay empty" data-pilot-slot="3">
+        <div class="pilot-main">
+          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-meta">
+            <span class="pilot-id">ID: --</span>
+          </div>
+        </div>
+        <div class="pilot-category">--</div>
+      </div>
+      <div class="feed-view">
+        <canvas id="canvas3"></canvas>
+        <div class="placeholder">Nessun segnale</div>
+      </div>
+    </article>
+
+    <article class="feed-card feed-4">
+      <div class="feed-label">Pilota 4</div>
+      <div class="pilot-overlay empty" data-pilot-slot="4">
+        <div class="pilot-main">
+          <div class="pilot-name">In attesa...</div>
+          <div class="pilot-meta">
+            <span class="pilot-id">ID: --</span>
+          </div>
+        </div>
+        <div class="pilot-category">--</div>
+      </div>
+      <div class="feed-view">
+        <canvas id="canvas4"></canvas>
+        <div class="placeholder">Nessun segnale</div>
+      </div>
+    </article>
+
+  </section>
+
+
+  <section class="timer-panel">
+    <div class="timer-panel-head">
+      <h2>Recovery Timer</h2>
+    </div>
+
+    <div class="timer-panel-body">
+      <div class="timer-label">Time Remaining</div>
+      <div id="raceTimer" class="race-timer">3:00</div>
+      <div id="raceTimerStatus" class="timer-status">Timer pronto</div>
+
+      <div class="timer-presets">
+        <button class="timer-preset" data-seconds="30">30 sec</button>
+        <button class="timer-preset" data-seconds="60">1 min</button>
+        <button class="timer-preset" data-seconds="120">2 min</button>
+        <button class="timer-preset active" data-seconds="180">3 min</button>
+        <button class="timer-preset" data-seconds="300">5 min</button>
+      </div>
+
+      <div class="timer-controls">
+        <button id="timerStartBtn" class="primary">Start</button>
+        <button id="timerPauseBtn">Pause</button>
+        <button id="timerResetBtn">Reset</button>
+        <button id="recallBtn">Richiamo</button>
+        <button id="cancelRaceBtn">Gara Annullata</button>
+      </div>
+
+      <div class="group-section">
+        <div class="group-title">Chiamata Gruppi</div>
+        <div class="group-controls">
+          <button class="group-call" data-group="A">Gruppo A</button>
+          <button class="group-call" data-group="B">Gruppo B</button>
+          <button class="group-call" data-group="C">Gruppo C</button>
+          <button class="group-call" data-group="D">Gruppo D</button>
+          <button class="group-call" data-group="E">Gruppo E</button>
+        </div>
+      </div>
+
+      <div class="keyboard-help">
+        SPAZIO = Start / Pause · R = Reset · P = Richiamo · S = Gara Annullata · F = Fullscreen
+      </div>
+    </div>
+  </section>
+
+  <div class="timer-overlay">
+    <div class="overlay-label">Recovery Time</div>
+    <div id="overlayTimer" class="overlay-time">3:00</div>
+    <div id="overlayStatus" class="overlay-status">Recovery time in corso</div>
+  </div>
+
+</main>
+
+<footer>F9U Italy · Live Video</footer>
+
+<script>
+const cameraSelect = document.getElementById("cameraSelect");
+const settingsBtn = document.getElementById("settingsBtn");
+const settingsPanel = document.getElementById("settingsPanel");
+const enableBtn = document.getElementById("enableBtn");
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+const refreshBtn = document.getElementById("refreshBtn");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const systemStatus = document.getElementById("systemStatus");
+
+const heatSheetInput = document.getElementById("heatSheetInput");
+const loadHeatsBtn = document.getElementById("loadHeatsBtn");
+const reloadHeatsBtn = document.getElementById("reloadHeatsBtn");
+const prevHeatBtn = document.getElementById("prevHeatBtn");
+const nextHeatBtn = document.getElementById("nextHeatBtn");
+const heatCurrent = document.getElementById("heatCurrent");
+const heatDescriptionOverlay = document.getElementById("heatDescriptionOverlay");
+const pilotOverlays = [...document.querySelectorAll(".pilot-overlay")];
+
+let heats = [];
+let currentHeatIndex = 0;
+let heatSheetId = localStorage.getItem("f9uHeatSheetId") || "1fNKQOTEUjQ17VSKYmlYhYHilcCtu-GrQT1q5Ym4Pw6o";
+heatSheetInput.value = heatSheetId;
+
+
+const sourceVideo = document.getElementById("sourceVideo");
+const previewVideo = document.getElementById("previewVideo");
+const canvases = [1,2,3,4].map(i=>document.getElementById(`canvas${i}`));
+const cards = [...document.querySelectorAll(".feed-card")];
+
+let drawFrameId = null;
+
+let currentStream = null;
+
+function setStatus(message,isError=false){
+  systemStatus.classList.toggle("error",isError);
+  systemStatus.innerHTML = `<strong>Stato:</strong> ${message}`;
+}
+
+function checkEnvironment(){
+  const ok =
+    window.isSecureContext ||
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1";
+
+  if(!ok){
+    setStatus(
+      "la webcam può essere bloccata. Apri la pagina tramite HTTPS o localhost.",
+      true
+    );
+  }
+
+  return ok;
+}
+
+async function requestPermission(){
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    setStatus("API webcam non disponibile nel browser.",true);
+    return false;
+  }
+
+  try{
+    const testStream =
+      await navigator.mediaDevices.getUserMedia({
+        video:true,
+        audio:false
+      });
+
+    testStream.getTracks().forEach(t=>t.stop());
+
+    setStatus("Accesso alla sorgente video autorizzato.");
+    return true;
+
+  }catch(err){
+    setStatus(`Errore autorizzazione: ${err.name}`,true);
+    return false;
+  }
+}
+
+async function loadDevices(){
+  if(!navigator.mediaDevices?.enumerateDevices) return;
+
+  const devices =
+    await navigator.mediaDevices.enumerateDevices();
+
+  const cameras =
+    devices.filter(d=>d.kind==="videoinput");
+
+  cameraSelect.innerHTML = "";
+
+  if(!cameras.length){
+    cameraSelect.innerHTML =
+      '<option value="">Nessuna sorgente video</option>';
+
+    setStatus("Nessuna sorgente video rilevata.",true);
+    return;
+  }
+
+  cameras.forEach((camera,index)=>{
+    const option = document.createElement("option");
+
+    option.value = camera.deviceId || "";
+    option.textContent =
+      camera.label || `Video Input ${index+1}`;
+
+    cameraSelect.appendChild(option);
+  });
+
+  setStatus(`${cameras.length} sorgente/i video rilevata/e.`);
+}
+
+function stopDrawing(){
+  if(drawFrameId){
+    cancelAnimationFrame(drawFrameId);
+    drawFrameId = null;
+  }
+}
+
+function stopStream(){
+  stopDrawing();
+
+  if(currentStream){
+    currentStream.getTracks().forEach(track=>track.stop());
+    currentStream = null;
+  }
+
+  try{ sourceVideo.pause(); }catch(e){}
+  try{ previewVideo.pause(); }catch(e){}
+  sourceVideo.srcObject = null;
+  previewVideo.srcObject = null;
+
+  canvases.forEach(canvas=>{
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+  });
+
+  cards.forEach(card=>card.classList.remove("active"));
+
+  setStatus("Feed fermato.");
+}
+
+function startDrawingMatrix(){
+  const draw = ()=>{
+    if(!currentStream || sourceVideo.readyState < 2){
+      drawFrameId = requestAnimationFrame(draw);
+      return;
+    }
+
+    const sw = sourceVideo.videoWidth;
+    const sh = sourceVideo.videoHeight;
+
+    if(!sw || !sh){
+      drawFrameId = requestAnimationFrame(draw);
+      return;
+    }
+
+    const halfW = Math.floor(sw / 2);
+    const halfH = Math.floor(sh / 2);
+
+    const crops = [
+      [0,      0,       halfW, halfH], // PILOTA 1
+      [halfW,  0,       sw-halfW, halfH], // PILOTA 2
+      [0,      halfH,   halfW, sh-halfH], // PILOTA 3
+      [halfW,  halfH,   sw-halfW, sh-halfH] // PILOTA 4
+    ];
+
+    canvases.forEach((canvas,index)=>{
+      const rect = canvas.getBoundingClientRect();
+
+      // Dimensione interna del canvas proporzionale al riquadro visualizzato
+      const targetW = Math.max(320, Math.floor(rect.width * window.devicePixelRatio));
+      const targetH = Math.max(180, Math.floor(rect.height * window.devicePixelRatio));
+
+      if(canvas.width !== targetW || canvas.height !== targetH){
+        canvas.width = targetW;
+        canvas.height = targetH;
+      }
+
+      const ctx = canvas.getContext("2d");
+      const [sx,sy,swidth,sheight] = crops[index];
+
+      ctx.drawImage(
+        sourceVideo,
+        sx,sy,swidth,sheight,
+        0,0,canvas.width,canvas.height
+      );
+    });
+
+    drawFrameId = requestAnimationFrame(draw);
+  };
+
+  draw();
+}
+
+async function startStream(){
+  stopStream();
+
+  try{
+    let videoConstraint = true;
+
+    /*
+      Alcuni browser/capture card mostrano la sorgente ma restituiscono
+      un deviceId vuoto finché non viene stabilito lo stream.
+      In quel caso apriamo direttamente il dispositivo video disponibile.
+    */
+    if(cameraSelect.value){
+      videoConstraint = {
+        deviceId:{ideal:cameraSelect.value}
+      };
+    }
+
+    currentStream =
+      await navigator.mediaDevices.getUserMedia({
+        video:videoConstraint,
+        audio:false
+      });
+
+    const track =
+      currentStream.getVideoTracks()[0];
+
+    if(!track){
+      throw new Error("Nessuna traccia video");
+    }
+
+    const settings =
+      track.getSettings ? track.getSettings() : {};
+
+    sourceVideo.srcObject = currentStream;
+    previewVideo.srcObject = currentStream;
+
+    sourceVideo.muted = true;
+    previewVideo.muted = true;
+    sourceVideo.playsInline = true;
+    previewVideo.playsInline = true;
+
+    await sourceVideo.play();
+    try{ await previewVideo.play(); }catch(e){}
+
+    if(sourceVideo.readyState < 2){
+      await new Promise(resolve=>{
+        sourceVideo.addEventListener("loadeddata",resolve,{once:true});
+        setTimeout(resolve,1500);
+      });
+    }
+
+    cards.forEach(card=>card.classList.add("active"));
+    startDrawingMatrix();
+
+    setStatus(
+      `LIVE · sorgente ${sourceVideo.videoWidth || settings.width || "?"}×${sourceVideo.videoHeight || settings.height || "?"} · matrice 2×2. La preview sopra mostra il segnale originale.`
+    );
+
+  }catch(err){
+    console.error(err);
+
+    let msg =
+      `Impossibile avviare la sorgente (${err.name || err.message}).`;
+
+    if(err.name==="NotReadableError"){
+      msg += " Potrebbe essere già utilizzata da un altro programma.";
+    }
+
+    setStatus(msg,true);
+  }
+}
+
+enableBtn.addEventListener("click",async ()=>{
+  const ok = await requestPermission();
+
+  if(ok){
+    await loadDevices();
+  }
+});
+
+refreshBtn.addEventListener("click",loadDevices);
+startBtn.addEventListener("click",startStream);
+stopBtn.addEventListener("click",stopStream);
+
+async function toggleFullscreen(){
+  document.body.classList.toggle("presentation-mode");
+
+  if(document.body.classList.contains("presentation-mode")){
+    try{
+      if(!document.fullscreenElement){
+        await document.documentElement.requestFullscreen();
+      }
+    }catch(e){}
+  }else{
+    if(document.fullscreenElement){
+      try{ await document.exitFullscreen(); }catch(e){}
+    }
+  }
+}
+
+settingsBtn.addEventListener("click",()=>{
+  settingsPanel.classList.toggle("open");
+  settingsBtn.textContent =
+    settingsPanel.classList.contains("open")
+      ? "Chiudi Impostazioni"
+      : "Impostazioni";
+});
+
+fullscreenBtn.addEventListener("click",toggleFullscreen);
+
+document.addEventListener("keydown",event=>{
+  if(event.key.toLowerCase()==="f"){
+    toggleFullscreen();
+  }
+});
+
+document.addEventListener("fullscreenchange",()=>{
+  if(!document.fullscreenElement){
+    document.body.classList.remove("presentation-mode");
+  }
+});
+
+
+/* =========================
+   RECOVERY TIMER + ANNOUNCEMENTS
+   ========================= */
+
+let selectedSeconds = 180;
+let remaining = selectedSeconds;
+let timerRunning = false;
+let timerIntervalId = null;
+let timerTargetEnd = null;
+let alarmPlayed = false;
+let recallActive = false;
+
+const raceTimer = document.getElementById("raceTimer");
+const raceTimerStatus = document.getElementById("raceTimerStatus");
+const overlayTimer = document.getElementById("overlayTimer");
+const overlayStatus = document.getElementById("overlayStatus");
+const timerPresetButtons = [...document.querySelectorAll(".timer-preset")];
+const timerStartBtn = document.getElementById("timerStartBtn");
+const timerPauseBtn = document.getElementById("timerPauseBtn");
+const timerResetBtn = document.getElementById("timerResetBtn");
+const recallBtn = document.getElementById("recallBtn");
+const cancelRaceBtn = document.getElementById("cancelRaceBtn");
+const groupCallButtons = [...document.querySelectorAll(".group-call")];
+
+function formatRaceTime(seconds){
+  const sec = Math.max(0, Math.ceil(seconds));
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${String(s).padStart(2,"0")}`;
+}
+
+function updateTimerClasses(el){
+  el.classList.remove("warning","danger");
+  if(remaining <= 10 && remaining > 0){
+    el.classList.add("danger");
+  }else if(remaining <= 30 && remaining > 0){
+    el.classList.add("warning");
+  }
+}
+
+function renderRaceTimer(){
+  const value = formatRaceTime(remaining);
+
+  raceTimer.textContent = value;
+  overlayTimer.textContent = value;
+
+  updateTimerClasses(raceTimer);
+  updateTimerClasses(overlayTimer);
+
+  if(remaining <= 0){
+    raceTimerStatus.textContent = "TIME EXPIRED";
+    overlayStatus.textContent = "TIME EXPIRED";
+  }else if(timerRunning){
+    raceTimerStatus.textContent = "Recovery time in corso";
+    overlayStatus.textContent = "Recovery time in corso";
+  }else if(remaining < selectedSeconds){
+    raceTimerStatus.textContent = "Timer in pausa";
+  }else{
+    raceTimerStatus.textContent = "Timer pronto";
+  }
+}
+
+function playEndAlarm(){
+  if(alarmPlayed) return;
+  alarmPlayed = true;
+
+  const AudioContextClass =
+    window.AudioContext || window.webkitAudioContext;
+
+  if(!AudioContextClass) return;
+
+  const ctx = new AudioContextClass();
+  const now = ctx.currentTime;
+
+  function beep(start,duration,frequency){
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "square";
+    osc.frequency.setValueAtTime(frequency,start);
+
+    gain.gain.setValueAtTime(0.0001,start);
+    gain.gain.exponentialRampToValueAtTime(0.35,start+0.01);
+    gain.gain.setValueAtTime(0.35,start+duration-0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001,start+duration);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(start);
+    osc.stop(start+duration);
+  }
+
+  beep(now,0.20,880);
+  beep(now+0.30,0.20,880);
+  beep(now+0.60,0.20,880);
+  beep(now+0.95,0.75,660);
+
+  setTimeout(()=>{
+    try{ctx.close();}catch(e){}
+  },2200);
+}
+
+function stopTimerInterval(){
+  if(timerIntervalId){
+    clearInterval(timerIntervalId);
+    timerIntervalId = null;
+  }
+}
+
+function timerTick(){
+  if(!timerRunning || !timerTargetEnd) return;
+
+  remaining = Math.max(
+    0,
+    (timerTargetEnd - performance.now()) / 1000
+  );
+
+  if(remaining <= 0){
+    remaining = 0;
+    timerRunning = false;
+    timerTargetEnd = null;
+    stopTimerInterval();
+    playEndAlarm();
+    renderRaceTimer();
+
+    setTimeout(()=>{
+      remaining = selectedSeconds;
+      alarmPlayed = false;
+      document.body.classList.remove("timer-running");
+      renderRaceTimer();
+    },3000);
+
+    return;
+  }
+
+  renderRaceTimer();
+}
+
+async function startRaceTimer(){
+  if(timerRunning) return;
+
+  if(remaining <= 0){
+    remaining = selectedSeconds;
+    alarmPlayed = false;
+  }
+
+  timerRunning = true;
+  timerTargetEnd =
+    performance.now() + (remaining * 1000);
+
+  document.body.classList.add("timer-running");
+
+  stopTimerInterval();
+  timerIntervalId = setInterval(timerTick,100);
+  timerTick();
+
+  try{
+    if(!document.fullscreenElement){
+      await document.documentElement.requestFullscreen();
+    }
+  }catch(e){}
+}
+
+function pauseRaceTimer(){
+  if(!timerRunning) return;
+
+  timerTick();
+  timerRunning = false;
+  timerTargetEnd = null;
+  stopTimerInterval();
+  document.body.classList.remove("timer-running");
+  renderRaceTimer();
+}
+
+function resetRaceTimer(){
+  timerRunning = false;
+  timerTargetEnd = null;
+  stopTimerInterval();
+  alarmPlayed = false;
+  remaining = selectedSeconds;
+  document.body.classList.remove("timer-running");
+  renderRaceTimer();
+}
+
+timerPresetButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    if(timerRunning) return;
+
+    selectedSeconds =
+      parseInt(button.dataset.seconds,10);
+
+    remaining = selectedSeconds;
+    alarmPlayed = false;
+
+    timerPresetButtons.forEach(btn=>
+      btn.classList.remove("active")
+    );
+
+    button.classList.add("active");
+    renderRaceTimer();
+  });
+});
+
+timerStartBtn.addEventListener("click",startRaceTimer);
+timerPauseBtn.addEventListener("click",pauseRaceTimer);
+timerResetBtn.addEventListener("click",resetRaceTimer);
+
+/* ---- Voice announcements ---- */
+
+function speakOnce(text,rate=0.9,pitch=0.82){
+  if(!("speechSynthesis" in window)) return;
+
+  window.speechSynthesis.cancel();
+
+  const utterance =
+    new SpeechSynthesisUtterance(text);
+
+  utterance.lang = "it-IT";
+  utterance.rate = rate;
+  utterance.pitch = pitch;
+  utterance.volume = 1.0;
+
+  window.speechSynthesis.speak(utterance);
+}
+
+function startRecall(){
+  if(recallActive) return;
+
+  recallActive = true;
+  recallBtn.textContent = "Stop";
+
+  const repeat = ()=>{
+    if(!recallActive) return;
+
+    if(!("speechSynthesis" in window)){
+      recallActive = false;
+      recallBtn.textContent = "Richiamo";
+      return;
+    }
+
+    const u =
+      new SpeechSynthesisUtterance(
+        "Lasciare il campo di gara!"
+      );
+
+    u.lang = "it-IT";
+    u.rate = 0.92;
+    u.pitch = 0.82;
+    u.volume = 1.0;
+
+    u.onend = ()=>{
+      if(recallActive){
+        setTimeout(repeat,350);
+      }
+    };
+
+    window.speechSynthesis.speak(u);
+  };
+
+  window.speechSynthesis.cancel();
+  repeat();
+}
+
+function stopRecall(){
+  recallActive = false;
+  recallBtn.textContent = "Richiamo";
+
+  if("speechSynthesis" in window){
+    window.speechSynthesis.cancel();
+  }
+}
+
+function toggleRecall(){
+  recallActive ? stopRecall() : startRecall();
+}
+
+function announceRaceCancelled(){
+  stopRecall();
+  speakOnce(
+    "Gara annullata, atterrare subito!",
+    0.88,
+    0.78
+  );
+}
+
+function announceGroup(group){
+  stopRecall();
+  speakOnce(`Gruppo ${group}`,0.90,0.85);
+}
+
+recallBtn.addEventListener("click",toggleRecall);
+cancelRaceBtn.addEventListener(
+  "click",
+  announceRaceCancelled
+);
+
+groupCallButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    announceGroup(button.dataset.group);
+  });
+});
+
+/* Keyboard shortcuts */
+document.addEventListener("keydown",async event=>{
+  const key = event.key.toLowerCase();
+
+  if(event.code === "Space"){
+    event.preventDefault();
+    timerRunning
+      ? pauseRaceTimer()
+      : startRaceTimer();
+    return;
+  }
+
+  if(key === "r"){
+    resetRaceTimer();
+    return;
+  }
+
+  if(key === "p"){
+    event.preventDefault();
+    toggleRecall();
+    return;
+  }
+
+  if(key === "s"){
+    event.preventDefault();
+    announceRaceCancelled();
+    return;
+  }
+});
+
+renderRaceTimer();
+
+
+/* =========================
+   GOOGLE SHEET · HEAT DATA
+   ========================= */
+
+function normalizeText(value){
+  return String(value ?? "")
+    .replace(/\u00A0/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+
+function extractSheetId(value){
+  const text = normalizeText(value);
+
+  const urlMatch =
+    text.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
+
+  if(urlMatch){
+    return urlMatch[1];
+  }
+
+  return text;
+}
+
+function parseCSV(text){
+  const rows=[];
+  let row=[];
+  let cell="";
+  let inside=false;
+
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    const n=text[i+1];
+
+    if(c === '"' && inside && n === '"'){
+      cell += '"';
+      i++;
+    }
+    else if(c === '"'){
+      inside = !inside;
+    }
+    else if(c === ',' && !inside){
+      row.push(cell.trim());
+      cell="";
+    }
+    else if((c === '\n' || c === '\r') && !inside){
+      if(cell !== "" || row.length){
+        row.push(cell.trim());
+        rows.push(row);
+        row=[];
+        cell="";
+      }
+    }
+    else{
+      cell += c;
+    }
+  }
+
+  if(cell !== "" || row.length){
+    row.push(cell.trim());
+    rows.push(row);
+  }
+
+  return rows;
+}
+
+function buildHeats(rows){
+  /*
+    Struttura fissa del tab HEAT:
+    A = Heat
+    B = Slot (P1/P2/P3/P4)
+    C = Nome e Cognome
+    D = ID
+    E = Categoria (PRO/OPEN)
+    F = Descrizione Heat
+  */
+
+  const HEAT_COL = 0;
+  const SLOT_COL = 1;
+  const NAME_COL = 2;
+  const ID_COL = 3;
+  const CATEGORY_COL = 4;
+  const DESCRIPTION_COL = 5;
+
+  const map = new Map();
+
+  for(let r=0;r<rows.length;r++){
+    const row = rows[r] || [];
+
+    const heatRaw = normalizeText(row[HEAT_COL]);
+    const slotRaw = normalizeText(row[SLOT_COL]).toUpperCase();
+    const name = normalizeText(row[NAME_COL]);
+    const id = normalizeText(row[ID_COL]);
+    const category = normalizeText(row[CATEGORY_COL]).toUpperCase();
+    const description = normalizeText(row[DESCRIPTION_COL]);
+
+    // Heat valide:
+    // 12  = heat normale
+    // F46 = finale / heat delle eliminatorie
+    if(!/^(?:\d+|F\d+)$/i.test(heatRaw)){
+      continue;
+    }
+
+    if(!/^P[1-4]$/.test(slotRaw)){
+      continue;
+    }
+
+    const heatCode = heatRaw.toUpperCase();
+    const isFinal = heatCode.startsWith("F");
+    const heatNumber = parseInt(isFinal ? heatCode.substring(1) : heatCode,10);
+    const slotNumber = parseInt(slotRaw.substring(1),10);
+
+    if(!map.has(heatCode)){
+      map.set(heatCode,{
+        heat:heatCode,
+        heatNumber,
+        isFinal,
+        description:description || "",
+        pilots:[null,null,null,null]
+      });
+    }
+
+    if(!map.get(heatCode).description && description){
+      map.get(heatCode).description = description;
+    }
+
+    map.get(heatCode).pilots[slotNumber-1] = {
+      slot:slotRaw,
+      name,
+      id,
+      category
+    };
+  }
+
+  const result = [...map.values()]
+    .sort((a,b)=>{
+      if(a.isFinal !== b.isFinal){
+        return a.isFinal ? 1 : -1;
+      }
+      return a.heatNumber - b.heatNumber;
+    });
+
+  if(!result.length){
+    throw new Error(
+      "Nessuna heat valida trovata. Verifica che il tab HEAT abbia: A=Heat, B=Slot P1-P4, C=Nome, D=ID, E=Categoria."
+    );
+  }
+
+  return result;
+}
+
+function renderCurrentHeat(){
+  const heat = heats[currentHeatIndex];
+
+  if(!heat){
+    heatCurrent.textContent = "Heat --";
+    heatDescriptionOverlay.textContent = "Descrizione Heat";
+
+    pilotOverlays.forEach((overlay,index)=>{
+      overlay.classList.add("empty");
+      overlay.querySelector(".pilot-name").textContent = `Pilota ${index+1}`;
+      overlay.querySelector(".pilot-id").textContent = "ID: --";
+
+      const cat = overlay.querySelector(".pilot-category");
+      cat.textContent = "--";
+      cat.classList.remove("open");
+    });
+
+    return;
+  }
+
+  heatCurrent.textContent =
+    heat.isFinal
+      ? `Eliminatorie · ${heat.heat}`
+      : `Heat ${heat.heat}`;
+
+  heatDescriptionOverlay.textContent =
+    heat.description || (heat.isFinal ? "Eliminatorie" : `Heat ${heat.heat}`);
+
+  pilotOverlays.forEach((overlay,index)=>{
+    /*
+      index 0 -> P1 -> quadrante Pilota 1
+      index 1 -> P2 -> quadrante Pilota 2
+      index 2 -> P3 -> quadrante Pilota 3
+      index 3 -> P4 -> quadrante Pilota 4
+    */
+    const pilot = heat.pilots[index];
+
+    const nameEl = overlay.querySelector(".pilot-name");
+    const idEl = overlay.querySelector(".pilot-id");
+    const catEl = overlay.querySelector(".pilot-category");
+
+    catEl.classList.remove("open");
+    overlay.classList.remove("category-open","category-pro");
+
+    if(!pilot){
+      overlay.classList.add("empty");
+      nameEl.textContent = `P${index+1} · Non assegnato`;
+      idEl.textContent = "ID: --";
+      catEl.textContent = "--";
+      return;
+    }
+
+    overlay.classList.remove("empty");
+    nameEl.textContent = pilot.name || `P${index+1}`;
+    idEl.textContent = `ID: ${pilot.id || "--"}`;
+
+    const category = pilot.category || "--";
+    catEl.textContent = category;
+
+    if(category === "OPEN"){
+      catEl.classList.add("open");
+      overlay.classList.add("category-open");
+    }
+    else if(category === "PRO"){
+      overlay.classList.add("category-pro");
+    }
+  });
+}
+
+function gvizTableToRows(table){
+  const rows=[];
+
+  // Header row from GViz column labels
+  if(table && Array.isArray(table.cols)){
+    rows.push(
+      table.cols.map(col =>
+        normalizeText(col.label || col.id || "")
+      )
+    );
+  }
+
+  if(table && Array.isArray(table.rows)){
+    table.rows.forEach(row=>{
+      const values = [];
+
+      (row.c || []).forEach(cell=>{
+        if(!cell){
+          values.push("");
+          return;
+        }
+
+        // Prefer formatted value when available, otherwise raw value.
+        const value =
+          cell.f !== undefined && cell.f !== null
+            ? cell.f
+            : cell.v !== undefined && cell.v !== null
+              ? cell.v
+              : "";
+
+        values.push(normalizeText(value));
+      });
+
+      rows.push(values);
+    });
+  }
+
+  return rows;
+}
+
+function loadHeatSheetViaJSONP(sheetId){
+  return new Promise((resolve,reject)=>{
+    const callbackName =
+      "f9uHeatCallback_" + Date.now() + "_" +
+      Math.floor(Math.random()*100000);
+
+    const script = document.createElement("script");
+    let completed = false;
+
+    const cleanup = ()=>{
+      try{ delete window[callbackName]; }catch(e){}
+      if(script.parentNode){
+        script.parentNode.removeChild(script);
+      }
+    };
+
+    const timeout = setTimeout(()=>{
+      if(completed) return;
+      completed = true;
+      cleanup();
+      reject(
+        new Error(
+          "Timeout caricamento Google Sheet. Verifica che il foglio sia condiviso come visibile tramite link."
+        )
+      );
+    },10000);
+
+    window[callbackName] = response=>{
+      if(completed) return;
+      completed = true;
+      clearTimeout(timeout);
+
+      try{
+        if(!response){
+          throw new Error("Risposta vuota da Google Sheets.");
+        }
+
+        if(response.status === "error"){
+          const detail =
+            response.errors?.[0]?.detailed_message ||
+            response.errors?.[0]?.message ||
+            "Errore Google Visualization.";
+
+          throw new Error(detail);
+        }
+
+        if(!response.table){
+          throw new Error("Tabella HEAT non disponibile.");
+        }
+
+        const rows = gvizTableToRows(response.table);
+        cleanup();
+        resolve(rows);
+      }
+      catch(err){
+        cleanup();
+        reject(err);
+      }
+    };
+
+    script.onerror = ()=>{
+      if(completed) return;
+      completed = true;
+      clearTimeout(timeout);
+      cleanup();
+
+      reject(
+        new Error(
+          "Google Sheets non raggiungibile dal browser."
+        )
+      );
+    };
+
+    const params = new URLSearchParams({
+      sheet:"HEAT",
+      tq:"select *",
+      tqx:`responseHandler:${callbackName}`
+    });
+
+    script.src =
+      `https://docs.google.com/spreadsheets/d/${encodeURIComponent(sheetId)}/gviz/tq?${params.toString()}`;
+
+    document.head.appendChild(script);
+  });
+}
+
+async function loadHeats(){
+  const inputId =
+    extractSheetId(heatSheetInput.value);
+
+  if(!inputId){
+    setStatus("Inserisci l'URL o l'ID del Google Sheet.",true);
+    return;
+  }
+
+  heatSheetId = inputId;
+  heatSheetInput.value = heatSheetId;
+  localStorage.setItem("f9uHeatSheetId",heatSheetId);
+
+  try{
+    setStatus("Caricamento heat dal tab HEAT...");
+
+    const rows =
+      await loadHeatSheetViaJSONP(heatSheetId);
+
+    heats = buildHeats(rows);
+
+    if(currentHeatIndex >= heats.length){
+      currentHeatIndex = 0;
+    }
+
+    renderCurrentHeat();
+
+    setStatus(
+      `${heats.length} heat caricate dal tab HEAT. Heat corrente: ${heats[currentHeatIndex].heat}.`
+    );
+  }
+  catch(err){
+    console.error("HEAT load error:",err);
+
+    heats = [];
+    currentHeatIndex = 0;
+    renderCurrentHeat();
+
+    setStatus(
+      `Errore caricamento HEAT: ${err.message}`,
+      true
+    );
+  }
+}
+
+prevHeatBtn.addEventListener("click",()=>{
+  if(!heats.length) return;
+
+  currentHeatIndex =
+    (currentHeatIndex - 1 + heats.length) % heats.length;
+
+  renderCurrentHeat();
+});
+
+nextHeatBtn.addEventListener("click",()=>{
+  if(!heats.length) return;
+
+  currentHeatIndex =
+    (currentHeatIndex + 1) % heats.length;
+
+  renderCurrentHeat();
+});
+
+loadHeatsBtn.addEventListener("click",loadHeats);
+reloadHeatsBtn.addEventListener("click",loadHeats);
+
+/* Tastiera: freccia sx/dx cambia heat */
+document.addEventListener("keydown",event=>{
+  if(event.target instanceof HTMLInputElement) return;
+
+  if(event.key === "ArrowLeft"){
+    if(!heats.length) return;
+    currentHeatIndex =
+      (currentHeatIndex - 1 + heats.length) % heats.length;
+    renderCurrentHeat();
+  }
+
+  if(event.key === "ArrowRight"){
+    if(!heats.length) return;
+    currentHeatIndex =
+      (currentHeatIndex + 1) % heats.length;
+    renderCurrentHeat();
+  }
+});
+
+renderCurrentHeat();
+
+/* Prova a caricare automaticamente il foglio configurato */
+loadHeats();
+
+checkEnvironment();
+</script>
+
+</body>
+</html>
