@@ -1477,6 +1477,127 @@ body.presentation-mode .diagnostic-panel{
   letter-spacing:.12em;
 }
 
+
+/* ==========================================================
+   ROTORHAZARD TIMING DIAGNOSTICS
+   ========================================================== */
+.rh-panel{
+  margin-top:12px;
+  padding:12px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+}
+
+.rh-title{
+  margin-bottom:8px;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+
+.rh-row{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.rh-row input{
+  flex:1 1 320px;
+  min-height:40px;
+  padding:0 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  font-size:12px;
+  color:var(--navy);
+  background:#fff;
+}
+
+.rh-status{
+  margin-top:10px;
+  padding:9px 10px;
+  border-radius:10px;
+  background:#f6f9fc;
+  color:#536474;
+  font-size:11px;
+  font-weight:700;
+}
+
+.rh-status.ok{
+  background:#eef9f0;
+  color:#177439;
+}
+
+.rh-status.error{
+  background:#fff0f0;
+  color:#a31919;
+}
+
+.rh-grid{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:8px;
+}
+
+.rh-node{
+  padding:10px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#f8fbfe;
+}
+
+.rh-node strong{
+  display:block;
+  margin-bottom:5px;
+  color:var(--navy);
+  font-size:12px;
+}
+
+.rh-node .rh-values{
+  color:#4d5d6e;
+  font-size:11px;
+  line-height:1.55;
+}
+
+.rh-raw{
+  margin-top:10px;
+}
+
+.rh-raw summary{
+  cursor:pointer;
+  color:#526273;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+}
+
+.rh-raw pre{
+  max-height:260px;
+  overflow:auto;
+  margin:8px 0 0;
+  padding:10px;
+  border-radius:10px;
+  background:#0d1620;
+  color:#d8e6f2;
+  font:11px/1.4 Consolas,Monaco,monospace;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+
+body.presentation-mode .rh-panel{
+  display:none !important;
+}
+
+@media(max-width:900px){
+  .rh-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
 @media(max-width:900px){
   .diagnostic-grid{
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -1602,6 +1723,66 @@ body.presentation-mode .pilot-overlay{
           <div class="diag-state">In attesa</div>
         </div>
       </div>
+    </div>
+
+    <div class="rh-panel">
+      <div class="rh-title">RotorHazard Timing</div>
+
+      <div class="rh-row">
+        <input id="rhServerInput"
+               type="text"
+               placeholder="http://192.168.1.50">
+        <button id="rhConnectBtn" class="primary">Connetti</button>
+        <button id="rhDisconnectBtn">Disconnetti</button>
+        <button id="rhRefreshBtn">Aggiorna Tempi</button>
+      </div>
+
+      <div id="rhStatus" class="rh-status">
+        Non connesso.
+      </div>
+
+      <div class="rh-grid">
+        <div class="rh-node" data-rh-node="0">
+          <strong>P1 / Node 1</strong>
+          <div class="rh-values">
+            Laps: --<br>
+            Last: --<br>
+            Best: --
+          </div>
+        </div>
+
+        <div class="rh-node" data-rh-node="1">
+          <strong>P2 / Node 2</strong>
+          <div class="rh-values">
+            Laps: --<br>
+            Last: --<br>
+            Best: --
+          </div>
+        </div>
+
+        <div class="rh-node" data-rh-node="2">
+          <strong>P3 / Node 3</strong>
+          <div class="rh-values">
+            Laps: --<br>
+            Last: --<br>
+            Best: --
+          </div>
+        </div>
+
+        <div class="rh-node" data-rh-node="3">
+          <strong>P4 / Node 4</strong>
+          <div class="rh-values">
+            Laps: --<br>
+            Last: --<br>
+            Best: --
+          </div>
+        </div>
+      </div>
+
+      <details class="rh-raw">
+        <summary>Dati RotorHazard ricevuti</summary>
+        <pre id="rhRawData">Nessun dato ricevuto.</pre>
+      </details>
     </div>
 
     <div class="preview-panel">
@@ -1779,6 +1960,21 @@ const stopBtn = document.getElementById("stopBtn");
 const refreshBtn = document.getElementById("refreshBtn");
 const fullscreenBtn = document.getElementById("fullscreenBtn");
 const systemStatus = document.getElementById("systemStatus");
+
+const rhServerInput = document.getElementById("rhServerInput");
+const rhConnectBtn = document.getElementById("rhConnectBtn");
+const rhDisconnectBtn = document.getElementById("rhDisconnectBtn");
+const rhRefreshBtn = document.getElementById("rhRefreshBtn");
+const rhStatus = document.getElementById("rhStatus");
+const rhRawData = document.getElementById("rhRawData");
+const rhNodeCards = [...document.querySelectorAll("[data-rh-node]")];
+
+let rhSocket = null;
+let rhServerUrl = localStorage.getItem("f9uRotorHazardServer") || "http://rotorhazard.local";
+let rhLastPayload = null;
+
+rhServerInput.value = rhServerUrl;
+
 
 const heatSheetInput = document.getElementById("heatSheetInput");
 const loadHeatsBtn = document.getElementById("loadHeatsBtn");
@@ -3035,8 +3231,443 @@ renderCurrentHeat();
 /* Prova a caricare automaticamente il foglio configurato */
 loadHeats();
 
+
+/* =========================
+   ROTORHAZARD TIMING
+   ========================= */
+
+function normalizeRhServer(value){
+  let v = String(value || "").trim();
+
+  if(!v){
+    return "";
+  }
+
+  if(!/^https?:\/\//i.test(v)){
+    v = "http://" + v;
+  }
+
+  return v.replace(/\/+$/,"");
+}
+
+function setRhStatus(message,type=""){
+  rhStatus.textContent = message;
+  rhStatus.classList.remove("ok","error");
+
+  if(type){
+    rhStatus.classList.add(type);
+  }
+}
+
+function loadExternalScript(src){
+  return new Promise((resolve,reject)=>{
+    const existing =
+      [...document.scripts].find(s=>s.src === src);
+
+    if(existing){
+      if(window.io){
+        resolve();
+        return;
+      }
+
+      existing.addEventListener("load",resolve,{once:true});
+      existing.addEventListener("error",reject,{once:true});
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = src;
+    script.async = true;
+
+    script.onload = resolve;
+    script.onerror = ()=>reject(
+      new Error("Impossibile caricare il client Socket.IO da RotorHazard.")
+    );
+
+    document.head.appendChild(script);
+  });
+}
+
+function formatRhLap(value){
+  if(value === null || value === undefined || value === ""){
+    return "--";
+  }
+
+  if(typeof value === "string"){
+    return value;
+  }
+
+  if(typeof value === "number"){
+    if(value > 1000){
+      const sec = value / 1000;
+      return sec.toFixed(3);
+    }
+    return value.toFixed ? value.toFixed(3) : String(value);
+  }
+
+  return String(value);
+}
+
+/*
+  Il formato di current_laps può variare fra versioni RotorHazard.
+  Questa funzione cerca ricorsivamente array di lap associabili ai node.
+  Per ora serve soprattutto alla diagnostica; dopo il test sul tuo
+  RotorHazard possiamo renderla precisa sulla struttura effettiva.
+*/
+function collectArrays(obj,path="",out=[]){
+  if(Array.isArray(obj)){
+    out.push({path,value:obj});
+    obj.forEach((v,i)=>{
+      if(v && typeof v === "object"){
+        collectArrays(v,`${path}[${i}]`,out);
+      }
+    });
+  }else if(obj && typeof obj === "object"){
+    Object.entries(obj).forEach(([k,v])=>{
+      if(v && typeof v === "object"){
+        collectArrays(v,path ? `${path}.${k}` : k,out);
+      }
+    });
+  }
+
+  return out;
+}
+
+function lapTimeFromObject(lap){
+  if(!lap || typeof lap !== "object"){
+    return null;
+  }
+
+  const keys = [
+    "lap_time_formatted",
+    "lap_time",
+    "lapTime",
+    "time",
+    "lap_time_stamp"
+  ];
+
+  for(const key of keys){
+    if(lap[key] !== undefined && lap[key] !== null){
+      return lap[key];
+    }
+  }
+
+  return null;
+}
+
+function nodeIndexFromObject(obj){
+  if(!obj || typeof obj !== "object"){
+    return null;
+  }
+
+  for(const key of ["node_index","node","seat","nodeIndex"]){
+    if(obj[key] !== undefined && obj[key] !== null){
+      const n = parseInt(obj[key],10);
+      if(Number.isFinite(n)){
+        return n;
+      }
+    }
+  }
+
+  return null;
+}
+
+function extractRhNodeTiming(payload){
+  const result = [0,1,2,3].map(()=>({
+    laps:0,
+    last:null,
+    best:null
+  }));
+
+  if(!payload || typeof payload !== "object"){
+    return result;
+  }
+
+  const arrays = collectArrays(payload);
+
+  // Pass 1: arrays that look like lists of per-node structures.
+  arrays.forEach(({value})=>{
+    value.forEach((item,index)=>{
+      if(!item || typeof item !== "object"){
+        return;
+      }
+
+      let node = nodeIndexFromObject(item);
+
+      if(node === null && value.length <= 8){
+        node = index;
+      }
+
+      if(node < 0 || node > 3){
+        return;
+      }
+
+      let laps = null;
+
+      for(const key of ["laps","lap_list","lapList"]){
+        if(Array.isArray(item[key])){
+          laps = item[key];
+          break;
+        }
+      }
+
+      if(!laps){
+        return;
+      }
+
+      const times = laps
+        .map(lapTimeFromObject)
+        .filter(v=>v !== null);
+
+      if(!times.length){
+        result[node].laps = laps.length;
+        return;
+      }
+
+      result[node].laps = times.length;
+      result[node].last = times[times.length-1];
+
+      const numeric = times.map(v=>{
+        if(typeof v === "number"){
+          return v;
+        }
+
+        const txt = String(v).replace(",",".");
+        const m = txt.match(/(?:(\d+):)?(\d+(?:\.\d+)?)/);
+
+        if(!m){
+          return NaN;
+        }
+
+        return (parseFloat(m[1] || 0)*60) + parseFloat(m[2]);
+      }).filter(Number.isFinite);
+
+      if(numeric.length){
+        result[node].best = Math.min(...numeric);
+      }
+    });
+  });
+
+  // Pass 2: raw lap list, where each lap itself has node_index.
+  arrays.forEach(({value})=>{
+    const lapObjects = value.filter(v=>
+      v &&
+      typeof v === "object" &&
+      nodeIndexFromObject(v) !== null &&
+      lapTimeFromObject(v) !== null
+    );
+
+    if(!lapObjects.length){
+      return;
+    }
+
+    const grouped = [[],[],[],[]];
+
+    lapObjects.forEach(lap=>{
+      const node = nodeIndexFromObject(lap);
+
+      if(node >= 0 && node <= 3){
+        grouped[node].push(lapTimeFromObject(lap));
+      }
+    });
+
+    grouped.forEach((times,node)=>{
+      if(!times.length){
+        return;
+      }
+
+      result[node].laps = Math.max(result[node].laps,times.length);
+      result[node].last = times[times.length-1];
+
+      const numeric = times.map(v=>{
+        if(typeof v === "number"){
+          return v > 1000 ? v/1000 : v;
+        }
+
+        const txt = String(v).replace(",",".");
+        const m = txt.match(/(?:(\d+):)?(\d+(?:\.\d+)?)/);
+
+        if(!m){
+          return NaN;
+        }
+
+        return (parseFloat(m[1] || 0)*60) + parseFloat(m[2]);
+      }).filter(Number.isFinite);
+
+      if(numeric.length){
+        result[node].best = Math.min(...numeric);
+      }
+    });
+  });
+
+  return result;
+}
+
+function renderRhTiming(payload){
+  rhLastPayload = payload;
+
+  try{
+    rhRawData.textContent =
+      JSON.stringify(payload,null,2);
+  }catch(e){
+    rhRawData.textContent = String(payload);
+  }
+
+  const nodes = extractRhNodeTiming(payload);
+
+  nodes.forEach((node,index)=>{
+    const card = rhNodeCards[index];
+
+    if(!card){
+      return;
+    }
+
+    card.querySelector(".rh-values").innerHTML =
+      `Laps: ${node.laps ?? "--"}<br>` +
+      `Last: ${formatRhLap(node.last)}<br>` +
+      `Best: ${formatRhLap(node.best)}`;
+  });
+}
+
+function requestRhTiming(){
+  if(!rhSocket || !rhSocket.connected){
+    setRhStatus("RotorHazard non connesso.","error");
+    return;
+  }
+
+  rhSocket.emit("load_data",{
+    load_types:[
+      "current_laps",
+      "race_status"
+    ]
+  });
+}
+
+async function connectRotorHazard(){
+  const base = normalizeRhServer(rhServerInput.value);
+
+  if(!base){
+    setRhStatus("Inserisci l'indirizzo del server RotorHazard.","error");
+    return;
+  }
+
+  rhServerUrl = base;
+  rhServerInput.value = base;
+  localStorage.setItem("f9uRotorHazardServer",base);
+
+  disconnectRotorHazard();
+
+  try{
+    setRhStatus("Caricamento client RotorHazard...");
+
+    await loadExternalScript(
+      `${base}/socket.io/socket.io.js`
+    );
+
+    if(!window.io){
+      throw new Error("Client Socket.IO non disponibile.");
+    }
+
+    setRhStatus("Connessione a RotorHazard...");
+
+    rhSocket = window.io(base,{
+      transports:["websocket","polling"],
+      reconnection:true,
+      reconnectionAttempts:5,
+      timeout:5000
+    });
+
+    rhSocket.on("connect",()=>{
+      setRhStatus(
+        `Connesso a ${base}`,
+        "ok"
+      );
+
+      requestRhTiming();
+    });
+
+    rhSocket.on("connect_error",err=>{
+      setRhStatus(
+        `Connessione fallita: ${err?.message || err}`,
+        "error"
+      );
+    });
+
+    rhSocket.on("disconnect",reason=>{
+      setRhStatus(
+        `Disconnesso: ${reason}`,
+        "error"
+      );
+    });
+
+    // Evento principale che ci interessa.
+    rhSocket.on("current_laps",data=>{
+      setRhStatus(
+        "Tempi live ricevuti da RotorHazard.",
+        "ok"
+      );
+      renderRhTiming(data);
+    });
+
+    // Alcune versioni/UI possono emettere dati risultato separati.
+    rhSocket.on("leaderboard",data=>{
+      if(!rhLastPayload){
+        renderRhTiming(data);
+      }
+    });
+
+    rhSocket.on("race_status",data=>{
+      // Manteniamo i tempi come payload principale; lo status viene
+      // aggiunto nel raw-data solo a scopo diagnostico.
+      if(rhLastPayload){
+        rhRawData.textContent =
+          JSON.stringify({
+            current_laps:rhLastPayload,
+            race_status:data
+          },null,2);
+      }
+    });
+
+  }catch(err){
+    console.error(err);
+    setRhStatus(
+      err.message || String(err),
+      "error"
+    );
+  }
+}
+
+function disconnectRotorHazard(){
+  if(rhSocket){
+    try{
+      rhSocket.removeAllListeners();
+      rhSocket.disconnect();
+    }catch(e){}
+
+    rhSocket = null;
+  }
+
+  setRhStatus("Non connesso.");
+}
+
+rhConnectBtn.addEventListener(
+  "click",
+  connectRotorHazard
+);
+
+rhDisconnectBtn.addEventListener(
+  "click",
+  disconnectRotorHazard
+);
+
+rhRefreshBtn.addEventListener(
+  "click",
+  requestRhTiming
+);
+
 checkEnvironment();
 </script>
 
 </body>
 </html>
+
