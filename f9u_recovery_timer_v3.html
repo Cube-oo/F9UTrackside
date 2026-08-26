@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F9U Recovery Timer</title>
+
+<style>
+:root{
+  --blue:#005b96;
+  --blue-dark:#003f73;
+  --navy:#001f3f;
+  --line:#d7e2ec;
+  --text:#102033;
+  --warning:#d28b00;
+  --danger:#b71c1c;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  width:100%;
+  height:100%;
+  margin:0;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#fff 0%,#f3f7fb 100%);
+  color:var(--text);
+}
+
+.top-strip{
+  height:36px;
+  background:#172027;
+}
+
+header{
+  width:100%;
+  background:#fff;
+  border-bottom:1px solid #e5edf5;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+
+.header-inner{
+  width:100%;
+  margin:0;
+  padding:22px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.site-logo{
+  width:126px;
+  height:auto;
+  display:block;
+}
+
+.brand-title small{
+  display:block;
+  color:var(--blue);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  font-size:12px;
+  margin-bottom:4px;
+}
+
+.brand-title h1{
+  margin:0;
+  color:var(--navy);
+  font-size:26px;
+  line-height:1.1;
+}
+
+main{
+  min-height:calc(100vh - 160px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+}
+
+.timer-card{
+  width:min(100%,1100px);
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:0 18px 50px rgba(0,0,0,.10);
+  overflow:hidden;
+}
+
+.timer-hero{
+  padding:24px 28px;
+  color:#fff;
+  background:linear-gradient(135deg,#152853,#203b78);
+}
+
+.timer-hero h2{
+  margin:0 0 7px;
+  font-size:32px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+
+.timer-hero p{
+  margin:0;
+  color:#e2eff8;
+  font-size:15px;
+}
+
+.timer-content{
+  padding:34px 28px 30px;
+  text-align:center;
+}
+
+.label{
+  color:#526273;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.timer{
+  margin:12px 0 18px;
+  color:var(--navy);
+  font-size:clamp(110px,18vw,260px);
+  line-height:.88;
+  font-weight:900;
+  letter-spacing:-.06em;
+  font-variant-numeric:tabular-nums;
+}
+
+.timer.warning{ color:var(--warning); }
+.timer.danger{ color:var(--danger); }
+
+.status{
+  min-height:28px;
+  margin-bottom:20px;
+  color:#536474;
+  font-size:16px;
+  font-weight:700;
+}
+
+.presets{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:0 auto 22px;
+}
+
+.preset{
+  min-width:92px;
+  min-height:40px;
+  padding:0 16px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.preset.active{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+button{
+  min-width:150px;
+  min-height:48px;
+  padding:0 22px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--navy);
+  font-size:13px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  cursor:pointer;
+  transition:.18s ease;
+}
+
+button:hover{
+  transform:translateY(-1px);
+  box-shadow:0 7px 18px rgba(0,0,0,.08);
+}
+
+button.primary{
+  border-color:var(--blue);
+  background:var(--blue);
+  color:#fff;
+}
+
+button.primary:hover{
+  background:var(--blue-dark);
+}
+
+button.danger-button{
+  border-color:#eccaca;
+  color:var(--danger);
+  background:#fff8f8;
+}
+
+.help{
+  margin-top:18px;
+  color:#788897;
+  font-size:12px;
+}
+
+/* FULLSCREEN */
+body.fullscreen-mode{
+  overflow:hidden;
+  background:#071525;
+}
+
+body.fullscreen-mode .top-strip,
+body.fullscreen-mode header,
+body.fullscreen-mode footer{
+  display:none;
+}
+
+body.fullscreen-mode main{
+  width:100vw;
+  height:100vh;
+  min-height:100vh;
+  padding:0;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(0,91,150,.20),transparent 48%),
+    linear-gradient(180deg,#071525 0%,#020913 100%);
+}
+
+body.fullscreen-mode .timer-card{
+  width:100%;
+  height:100%;
+  max-width:none;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  box-shadow:none;
+  display:flex;
+  flex-direction:column;
+}
+
+body.fullscreen-mode .timer-hero{
+  flex:0 0 auto;
+  padding:18px 28px;
+  text-align:center;
+  background:rgba(255,255,255,.045);
+  border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+body.fullscreen-mode .timer-hero h2{
+  font-size:clamp(22px,2.4vw,42px);
+}
+
+body.fullscreen-mode .timer-hero p{
+  color:#bcd0df;
+}
+
+body.fullscreen-mode .timer-content{
+  flex:1;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+}
+
+body.fullscreen-mode .label{
+  color:#9db3c5;
+  font-size:clamp(14px,1.4vw,24px);
+}
+
+body.fullscreen-mode .timer{
+  color:#fff;
+  margin:18px 0 22px;
+  font-size:min(38vw,52vh);
+  line-height:.82;
+  text-shadow:0 0 45px rgba(0,91,150,.30);
+}
+
+body.fullscreen-mode .timer.warning{
+  color:#ffc247;
+  text-shadow:0 0 45px rgba(255,194,71,.18);
+}
+
+body.fullscreen-mode .timer.danger{
+  color:#ff6767;
+  text-shadow:0 0 45px rgba(255,103,103,.22);
+}
+
+body.fullscreen-mode .status{
+  color:#bdd0de;
+  font-size:clamp(15px,1.5vw,24px);
+}
+
+body.fullscreen-mode .presets{
+  display:none;
+}
+
+body.fullscreen-mode .controls button{
+  min-width:140px;
+  min-height:44px;
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border-color:rgba(255,255,255,.18);
+}
+
+body.fullscreen-mode .controls button.primary{
+  background:var(--blue);
+  border-color:var(--blue);
+}
+
+body.fullscreen-mode .controls button.danger-button{
+  color:#ffc8c8;
+  border-color:rgba(255,120,120,.3);
+}
+
+body.fullscreen-mode .help{
+  color:#6f8799;
+}
+
+@media(max-width:780px){
+  .header-inner{ padding:18px 12px; }
+  .site-logo{ width:104px; }
+  .brand-title h1{ font-size:20px; }
+  main{ padding:16px 10px; }
+  .timer-hero h2{ font-size:24px; }
+  .timer-content{ padding:28px 14px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-strip"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <img class="site-logo"
+           src="https://f9u.it/wp-content/uploads/2026/03/cropped-cropped-Logo.png"
+           alt="F9U Italy Logo">
+
+      <div class="brand-title">
+        <small>Race control</small>
+        <h1>F9U Recovery Timer</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="timer-card">
+
+    <div class="timer-hero">
+      <h2>Recovery Time</h2>
+      <p>Tempo disponibile per recuperare il drone e riposizionarlo sul launch pad</p>
+    </div>
+
+    <div class="timer-content">
+      <div class="label">Time Remaining</div>
+
+      <div id="timer" class="timer">3:00</div>
+
+      <div id="status" class="status">Timer pronto</div>
+
+      <div class="presets">
+        <button class="preset" data-seconds="30">30 sec</button>
+        <button class="preset" data-seconds="60">1 min</button>
+        <button class="preset" data-seconds="120">2 min</button>
+        <button class="preset active" data-seconds="180">3 min</button>
+        <button class="preset" data-seconds="300">5 min</button>
+      </div>
+
+      <div class="controls">
+        <button id="startBtn" class="primary">Start</button>
+        <button id="pauseBtn">Pause</button>
+        <button id="resetBtn" class="danger-button">Reset</button>
+        <button id="fullscreenBtn">Fullscreen</button>
+      </div>
+
+      <div class="help">
+        SPAZIO = Start / Pause · R = Reset · F = Fullscreen
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer>F9U Italy · Race Control Interface</footer>
+
+<script>
+let selectedSeconds = 180;
+let remaining = selectedSeconds;
+let running = false;
+let intervalId = null;
+let targetEnd = null;
+let alarmPlayed = false;
+
+const timerEl = document.getElementById("timer");
+const statusEl = document.getElementById("status");
+const startBtn = document.getElementById("startBtn");
+const pauseBtn = document.getElementById("pauseBtn");
+const resetBtn = document.getElementById("resetBtn");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const presetButtons = [...document.querySelectorAll(".preset")];
+
+function formatTime(seconds){
+  const sec = Math.max(0, Math.ceil(seconds));
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${m}:${String(s).padStart(2,"0")}`;
+}
+
+function render(){
+  timerEl.textContent = formatTime(remaining);
+  timerEl.classList.remove("warning","danger");
+
+  if(remaining <= 10 && remaining > 0){
+    timerEl.classList.add("danger");
+  }
+  else if(remaining <= 30 && remaining > 0){
+    timerEl.classList.add("warning");
+  }
+
+  if(remaining <= 0){
+    statusEl.textContent = "TIME EXPIRED";
+  }
+  else if(running){
+    statusEl.textContent = "Recovery time in corso";
+  }
+  else if(remaining < selectedSeconds){
+    statusEl.textContent = "Timer in pausa";
+  }
+  else{
+    statusEl.textContent = "Timer pronto";
+  }
+}
+
+/* Segnale acustico generato direttamente dal browser:
+   non richiede file audio esterni. */
+function playEndAlarm(){
+  if(alarmPlayed) return;
+  alarmPlayed = true;
+
+  const AudioContextClass =
+    window.AudioContext || window.webkitAudioContext;
+
+  if(!AudioContextClass) return;
+
+  const ctx = new AudioContextClass();
+  const now = ctx.currentTime;
+
+  function beep(start, duration, frequency){
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = "square";
+    osc.frequency.setValueAtTime(frequency, start);
+
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(0.35, start + 0.01);
+    gain.gain.setValueAtTime(0.35, start + duration - 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(start);
+    osc.stop(start + duration);
+  }
+
+  // Tre beep brevi + uno finale più lungo
+  beep(now,       0.20, 880);
+  beep(now+0.30,  0.20, 880);
+  beep(now+0.60,  0.20, 880);
+  beep(now+0.95,  0.75, 660);
+
+  setTimeout(()=>{
+    try{ ctx.close(); }catch(e){}
+  }, 2200);
+}
+
+async function enterFullscreen(){
+  document.body.classList.add("fullscreen-mode");
+
+  try{
+    if(!document.fullscreenElement){
+      await document.documentElement.requestFullscreen();
+    }
+  }
+  catch(err){
+    // Race mode resta comunque attiva
+  }
+}
+
+function exitRaceMode(){
+  document.body.classList.remove("fullscreen-mode");
+}
+
+function stopInterval(){
+  if(intervalId){
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+}
+
+function tick(){
+  if(!running || !targetEnd) return;
+
+  remaining = Math.max(0, (targetEnd - performance.now()) / 1000);
+
+  if(remaining <= 0){
+    remaining = 0;
+    running = false;
+    targetEnd = null;
+    stopInterval();
+    playEndAlarm();
+
+    // Mostra 0:00 per alcuni secondi, poi torna automaticamente
+    // alla schermata principale e ripristina il preset selezionato.
+    setTimeout(async ()=>{
+      remaining = selectedSeconds;
+      alarmPlayed = false;
+      render();
+
+      if(document.fullscreenElement){
+        try{
+          await document.exitFullscreen();
+        }catch(e){}
+      }
+
+      document.body.classList.remove("fullscreen-mode");
+    }, 3000);
+  }
+
+  render();
+}
+
+async function startTimer(){
+  if(running) return;
+
+  if(remaining <= 0){
+    remaining = selectedSeconds;
+    alarmPlayed = false;
+  }
+
+  await enterFullscreen();
+
+  running = true;
+  alarmPlayed = false;
+  targetEnd = performance.now() + (remaining * 1000);
+
+  stopInterval();
+  intervalId = setInterval(tick,100);
+  tick();
+}
+
+function pauseTimer(){
+  if(!running) return;
+
+  tick();
+  running = false;
+  targetEnd = null;
+  stopInterval();
+  render();
+}
+
+function resetTimer(){
+  running = false;
+  targetEnd = null;
+  stopInterval();
+  alarmPlayed = false;
+  remaining = selectedSeconds;
+  render();
+}
+
+function selectPreset(seconds, button){
+  if(running) return;
+
+  selectedSeconds = seconds;
+  remaining = seconds;
+  alarmPlayed = false;
+
+  presetButtons.forEach(btn=>btn.classList.remove("active"));
+  button.classList.add("active");
+
+  render();
+}
+
+presetButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    selectPreset(
+      parseInt(button.dataset.seconds,10),
+      button
+    );
+  });
+});
+
+startBtn.addEventListener("click",startTimer);
+pauseBtn.addEventListener("click",pauseTimer);
+resetBtn.addEventListener("click",resetTimer);
+
+fullscreenBtn.addEventListener("click",async ()=>{
+  if(document.fullscreenElement){
+    await document.exitFullscreen();
+  }
+  else{
+    await enterFullscreen();
+  }
+});
+
+document.addEventListener("fullscreenchange",()=>{
+  if(!document.fullscreenElement){
+    exitRaceMode();
+  }
+});
+
+/* Tastiera */
+document.addEventListener("keydown",async event=>{
+  if(event.code === "Space"){
+    event.preventDefault();
+
+    if(running){
+      pauseTimer();
+    }
+    else{
+      startTimer();
+    }
+    return;
+  }
+
+  if(event.key.toLowerCase() === "r"){
+    resetTimer();
+    return;
+  }
+
+  if(event.key.toLowerCase() === "f"){
+    if(document.fullscreenElement){
+      await document.exitFullscreen();
+    }
+    else{
+      await enterFullscreen();
+    }
+  }
+});
+
+render();
+</script>
+
+</body>
+</html>
