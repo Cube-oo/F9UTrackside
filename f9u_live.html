@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!--Cazzo Guardi? Pussa via!-->
 <html lang="it">
 <head>
 <meta charset="UTF-8">
@@ -1479,17 +1478,16 @@ body.presentation-mode .diagnostic-panel{
 
 
 /* ==========================================================
-   ROTORHAZARD TIMING DIAGNOSTICS
+   VIDEO RECORDING
    ========================================================== */
-.rh-panel{
+.recording-panel{
   margin-top:12px;
   padding:12px;
   background:#fff;
   border:1px solid var(--line);
   border-radius:14px;
 }
-
-.rh-title{
+.recording-title{
   margin-bottom:8px;
   color:var(--navy);
   font-size:12px;
@@ -1497,105 +1495,67 @@ body.presentation-mode .diagnostic-panel{
   text-transform:uppercase;
   letter-spacing:.08em;
 }
-
-.rh-row{
+.recording-row{
   display:flex;
+  align-items:center;
   gap:8px;
   flex-wrap:wrap;
-  align-items:center;
 }
-
-.rh-row input{
-  flex:1 1 320px;
+.recording-row button.rec{
+  background:#b71c1c;
+  border-color:#b71c1c;
+  color:#fff;
+}
+.recording-row button.rec.active{
+  background:#e21a22;
+  box-shadow:0 0 0 3px rgba(226,26,34,.14);
+}
+.recording-state{
+  display:flex;
+  align-items:center;
+  gap:8px;
   min-height:40px;
   padding:0 12px;
-  border:1px solid var(--line);
   border-radius:999px;
-  font-size:12px;
-  color:var(--navy);
-  background:#fff;
-}
-
-.rh-status{
-  margin-top:10px;
-  padding:9px 10px;
-  border-radius:10px;
   background:#f6f9fc;
   color:#536474;
   font-size:11px;
-  font-weight:700;
+  font-weight:800;
 }
-
-.rh-status.ok{
-  background:#eef9f0;
-  color:#177439;
+.recording-dot{
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:#a7b1ba;
 }
-
-.rh-status.error{
+.recording-state.active{
+  color:#a71920;
   background:#fff0f0;
-  color:#a31919;
 }
-
-.rh-grid{
-  margin-top:10px;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:8px;
+.recording-state.active .recording-dot{
+  background:#e21a22;
+  box-shadow:0 0 0 4px rgba(226,26,34,.12);
+  animation:recPulse 1s infinite;
 }
-
-.rh-node{
-  padding:10px;
-  border:1px solid var(--line);
-  border-radius:10px;
-  background:#f8fbfe;
+@keyframes recPulse{
+  0%,100%{opacity:1}
+  50%{opacity:.35}
 }
-
-.rh-node strong{
-  display:block;
-  margin-bottom:5px;
-  color:var(--navy);
-  font-size:12px;
-}
-
-.rh-node .rh-values{
-  color:#4d5d6e;
+.recording-info{
+  margin-top:8px;
+  color:#6d7b88;
   font-size:11px;
-  line-height:1.55;
 }
-
-.rh-raw{
-  margin-top:10px;
-}
-
-.rh-raw summary{
-  cursor:pointer;
-  color:#526273;
-  font-size:11px;
-  font-weight:900;
-  text-transform:uppercase;
-}
-
-.rh-raw pre{
-  max-height:260px;
-  overflow:auto;
-  margin:8px 0 0;
-  padding:10px;
-  border-radius:10px;
-  background:#0d1620;
-  color:#d8e6f2;
-  font:11px/1.4 Consolas,Monaco,monospace;
-  white-space:pre-wrap;
-  word-break:break-word;
-}
-
-body.presentation-mode .rh-panel{
+body.presentation-mode .recording-panel{
   display:none !important;
 }
 
-@media(max-width:900px){
-  .rh-grid{
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
+
+#autoRecordBtn.armed{
+  background:#0b4f88;
+  border-color:#0b4f88;
+  color:#fff;
+  box-shadow:0 0 0 3px rgba(11,79,136,.12);
 }
 
 @media(max-width:900px){
@@ -1725,64 +1685,23 @@ body.presentation-mode .pilot-overlay{
       </div>
     </div>
 
-    <div class="rh-panel">
-      <div class="rh-title">RotorHazard Timing</div>
-
-      <div class="rh-row">
-        <input id="rhServerInput"
-               type="text"
-               placeholder="http://192.168.1.50">
-        <button id="rhConnectBtn" class="primary">Connetti</button>
-        <button id="rhDisconnectBtn">Disconnetti</button>
-        <button id="rhRefreshBtn">Aggiorna Tempi</button>
-      </div>
-
-      <div id="rhStatus" class="rh-status">
-        Non connesso.
-      </div>
-
-      <div class="rh-grid">
-        <div class="rh-node" data-rh-node="0">
-          <strong>P1 / Node 1</strong>
-          <div class="rh-values">
-            Laps: --<br>
-            Last: --<br>
-            Best: --
-          </div>
-        </div>
-
-        <div class="rh-node" data-rh-node="1">
-          <strong>P2 / Node 2</strong>
-          <div class="rh-values">
-            Laps: --<br>
-            Last: --<br>
-            Best: --
-          </div>
-        </div>
-
-        <div class="rh-node" data-rh-node="2">
-          <strong>P3 / Node 3</strong>
-          <div class="rh-values">
-            Laps: --<br>
-            Last: --<br>
-            Best: --
-          </div>
-        </div>
-
-        <div class="rh-node" data-rh-node="3">
-          <strong>P4 / Node 4</strong>
-          <div class="rh-values">
-            Laps: --<br>
-            Last: --<br>
-            Best: --
-          </div>
+    <div class="recording-panel">
+      <div class="recording-title">Registrazione Feed Video 2×2</div>
+      <div class="recording-row">
+        <button id="recordStartBtn" class="rec">REC</button>
+        <button id="recordStopBtn">STOP</button>
+        <button id="autoRecordBtn">AUTO REC</button>
+        <div id="recordingState" class="recording-state">
+          <span class="recording-dot"></span>
+          <span id="recordingStateText">Pronto</span>
+          <span id="recordingDuration">00:00</span>
         </div>
       </div>
-
-      <details class="rh-raw">
-        <summary>Dati RotorHazard ricevuti</summary>
-        <pre id="rhRawData">Nessun dato ricevuto.</pre>
-      </details>
+      <div class="recording-info">
+        Registra l'intero ingresso video composito 2×2 della capture card.
+        AUTO REC avvia la registrazione quando almeno un feed video è presente
+        e la interrompe automaticamente quando tutti i feed sono assenti.
+      </div>
     </div>
 
     <div class="preview-panel">
@@ -1961,19 +1880,23 @@ const refreshBtn = document.getElementById("refreshBtn");
 const fullscreenBtn = document.getElementById("fullscreenBtn");
 const systemStatus = document.getElementById("systemStatus");
 
-const rhServerInput = document.getElementById("rhServerInput");
-const rhConnectBtn = document.getElementById("rhConnectBtn");
-const rhDisconnectBtn = document.getElementById("rhDisconnectBtn");
-const rhRefreshBtn = document.getElementById("rhRefreshBtn");
-const rhStatus = document.getElementById("rhStatus");
-const rhRawData = document.getElementById("rhRawData");
-const rhNodeCards = [...document.querySelectorAll("[data-rh-node]")];
+const recordStartBtn = document.getElementById("recordStartBtn");
+const recordStopBtn = document.getElementById("recordStopBtn");
+const autoRecordBtn = document.getElementById("autoRecordBtn");
+const recordingState = document.getElementById("recordingState");
+const recordingStateText = document.getElementById("recordingStateText");
+const recordingDuration = document.getElementById("recordingDuration");
 
-let rhSocket = null;
-let rhServerUrl = localStorage.getItem("f9uRotorHazardServer") || "http://rotorhazard.local";
-let rhLastPayload = null;
+let mediaRecorder = null;
+let recordedChunks = [];
+let recordingStartedAt = null;
+let recordingTimer = null;
 
-rhServerInput.value = rhServerUrl;
+let autoRecordArmed = false;
+let autoRecordStartedBySystem = false;
+let autoRecordSignalSince = null;
+let autoRecordNoSignalSince = null;
+const autoRecordSignalPresent = [false,false,false,false];
 
 
 const heatSheetInput = document.getElementById("heatSheetInput");
@@ -2092,6 +2015,9 @@ function stopDrawing(){
 }
 
 function stopStream(){
+  if(mediaRecorder && mediaRecorder.state !== "inactive"){
+    stopVideoRecording();
+  }
   stopDrawing();
   stopSignalAnalysis();
 
@@ -2184,6 +2110,10 @@ function runSignalAnalysis(){
     const metrics = analyzeCanvasSignal(canvas);
     const probableNoSignal = classifySignal(metrics);
 
+    // Dato grezzo usato da AUTO REC:
+    // almeno un quadrante non classificato come grigio/piatto = segnale presente.
+    autoRecordSignalPresent[index] = !probableNoSignal;
+
     // Persistence counter: ~1.5 sec to trigger, ~0.5 sec to recover
     if(probableNoSignal){
       signalState[index] = Math.min(signalState[index]+1,10);
@@ -2239,6 +2169,8 @@ function runSignalAnalysis(){
       state.classList.toggle("bad",noSignal);
     }
   });
+
+  evaluateAutoRecording();
 }
 
 function startSignalAnalysis(){
@@ -2258,6 +2190,9 @@ function stopSignalAnalysis(){
   signalState.fill(0);
   signalLostSince.fill(null);
   signalDNF.fill(false);
+  autoRecordSignalPresent.fill(false);
+  autoRecordSignalSince = null;
+  autoRecordNoSignalSince = null;
 
   cards.forEach(card=>{
     card.classList.remove("no-signal","dnf");
@@ -3233,441 +3168,262 @@ loadHeats();
 
 
 /* =========================
-   ROTORHAZARD TIMING
+   VIDEO RECORDING
    ========================= */
 
-function normalizeRhServer(value){
-  let v = String(value || "").trim();
+function chooseRecordingMimeType(){
+  const candidates = [
+    "video/webm;codecs=vp9",
+    "video/webm;codecs=vp8",
+    "video/webm"
+  ];
 
-  if(!v){
+  if(typeof MediaRecorder === "undefined"){
     return "";
   }
 
-  if(!/^https?:\/\//i.test(v)){
-    v = "http://" + v;
-  }
-
-  return v.replace(/\/+$/,"");
-}
-
-function setRhStatus(message,type=""){
-  rhStatus.textContent = message;
-  rhStatus.classList.remove("ok","error");
-
-  if(type){
-    rhStatus.classList.add(type);
-  }
-}
-
-function loadExternalScript(src){
-  return new Promise((resolve,reject)=>{
-    const existing =
-      [...document.scripts].find(s=>s.src === src);
-
-    if(existing){
-      if(window.io){
-        resolve();
-        return;
-      }
-
-      existing.addEventListener("load",resolve,{once:true});
-      existing.addEventListener("error",reject,{once:true});
-      return;
-    }
-
-    const script = document.createElement("script");
-    script.src = src;
-    script.async = true;
-
-    script.onload = resolve;
-    script.onerror = ()=>reject(
-      new Error("Impossibile caricare il client Socket.IO da RotorHazard.")
-    );
-
-    document.head.appendChild(script);
-  });
-}
-
-function formatRhLap(value){
-  if(value === null || value === undefined || value === ""){
-    return "--";
-  }
-
-  if(typeof value === "string"){
-    return value;
-  }
-
-  if(typeof value === "number"){
-    if(value > 1000){
-      const sec = value / 1000;
-      return sec.toFixed(3);
-    }
-    return value.toFixed ? value.toFixed(3) : String(value);
-  }
-
-  return String(value);
-}
-
-/*
-  Il formato di current_laps può variare fra versioni RotorHazard.
-  Questa funzione cerca ricorsivamente array di lap associabili ai node.
-  Per ora serve soprattutto alla diagnostica; dopo il test sul tuo
-  RotorHazard possiamo renderla precisa sulla struttura effettiva.
-*/
-function collectArrays(obj,path="",out=[]){
-  if(Array.isArray(obj)){
-    out.push({path,value:obj});
-    obj.forEach((v,i)=>{
-      if(v && typeof v === "object"){
-        collectArrays(v,`${path}[${i}]`,out);
-      }
-    });
-  }else if(obj && typeof obj === "object"){
-    Object.entries(obj).forEach(([k,v])=>{
-      if(v && typeof v === "object"){
-        collectArrays(v,path ? `${path}.${k}` : k,out);
-      }
-    });
-  }
-
-  return out;
-}
-
-function lapTimeFromObject(lap){
-  if(!lap || typeof lap !== "object"){
-    return null;
-  }
-
-  const keys = [
-    "lap_time_formatted",
-    "lap_time",
-    "lapTime",
-    "time",
-    "lap_time_stamp"
-  ];
-
-  for(const key of keys){
-    if(lap[key] !== undefined && lap[key] !== null){
-      return lap[key];
+  for(const type of candidates){
+    if(MediaRecorder.isTypeSupported(type)){
+      return type;
     }
   }
 
-  return null;
+  return "";
 }
 
-function nodeIndexFromObject(obj){
-  if(!obj || typeof obj !== "object"){
-    return null;
-  }
-
-  for(const key of ["node_index","node","seat","nodeIndex"]){
-    if(obj[key] !== undefined && obj[key] !== null){
-      const n = parseInt(obj[key],10);
-      if(Number.isFinite(n)){
-        return n;
-      }
-    }
-  }
-
-  return null;
+function sanitizeFilenamePart(value){
+  return String(value || "")
+    .trim()
+    .replace(/[^\w\-]+/g,"_")
+    .replace(/^_+|_+$/g,"")
+    .slice(0,60);
 }
 
-function extractRhNodeTiming(payload){
-  const result = [0,1,2,3].map(()=>({
-    laps:0,
-    last:null,
-    best:null
-  }));
-
-  if(!payload || typeof payload !== "object"){
-    return result;
-  }
-
-  const arrays = collectArrays(payload);
-
-  // Pass 1: arrays that look like lists of per-node structures.
-  arrays.forEach(({value})=>{
-    value.forEach((item,index)=>{
-      if(!item || typeof item !== "object"){
-        return;
-      }
-
-      let node = nodeIndexFromObject(item);
-
-      if(node === null && value.length <= 8){
-        node = index;
-      }
-
-      if(node < 0 || node > 3){
-        return;
-      }
-
-      let laps = null;
-
-      for(const key of ["laps","lap_list","lapList"]){
-        if(Array.isArray(item[key])){
-          laps = item[key];
-          break;
-        }
-      }
-
-      if(!laps){
-        return;
-      }
-
-      const times = laps
-        .map(lapTimeFromObject)
-        .filter(v=>v !== null);
-
-      if(!times.length){
-        result[node].laps = laps.length;
-        return;
-      }
-
-      result[node].laps = times.length;
-      result[node].last = times[times.length-1];
-
-      const numeric = times.map(v=>{
-        if(typeof v === "number"){
-          return v;
-        }
-
-        const txt = String(v).replace(",",".");
-        const m = txt.match(/(?:(\d+):)?(\d+(?:\.\d+)?)/);
-
-        if(!m){
-          return NaN;
-        }
-
-        return (parseFloat(m[1] || 0)*60) + parseFloat(m[2]);
-      }).filter(Number.isFinite);
-
-      if(numeric.length){
-        result[node].best = Math.min(...numeric);
-      }
-    });
-  });
-
-  // Pass 2: raw lap list, where each lap itself has node_index.
-  arrays.forEach(({value})=>{
-    const lapObjects = value.filter(v=>
-      v &&
-      typeof v === "object" &&
-      nodeIndexFromObject(v) !== null &&
-      lapTimeFromObject(v) !== null
-    );
-
-    if(!lapObjects.length){
-      return;
-    }
-
-    const grouped = [[],[],[],[]];
-
-    lapObjects.forEach(lap=>{
-      const node = nodeIndexFromObject(lap);
-
-      if(node >= 0 && node <= 3){
-        grouped[node].push(lapTimeFromObject(lap));
-      }
-    });
-
-    grouped.forEach((times,node)=>{
-      if(!times.length){
-        return;
-      }
-
-      result[node].laps = Math.max(result[node].laps,times.length);
-      result[node].last = times[times.length-1];
-
-      const numeric = times.map(v=>{
-        if(typeof v === "number"){
-          return v > 1000 ? v/1000 : v;
-        }
-
-        const txt = String(v).replace(",",".");
-        const m = txt.match(/(?:(\d+):)?(\d+(?:\.\d+)?)/);
-
-        if(!m){
-          return NaN;
-        }
-
-        return (parseFloat(m[1] || 0)*60) + parseFloat(m[2]);
-      }).filter(Number.isFinite);
-
-      if(numeric.length){
-        result[node].best = Math.min(...numeric);
-      }
-    });
-  });
-
-  return result;
-}
-
-function renderRhTiming(payload){
-  rhLastPayload = payload;
-
+function currentHeatCodeForFilename(){
   try{
-    rhRawData.textContent =
-      JSON.stringify(payload,null,2);
-  }catch(e){
-    rhRawData.textContent = String(payload);
-  }
-
-  const nodes = extractRhNodeTiming(payload);
-
-  nodes.forEach((node,index)=>{
-    const card = rhNodeCards[index];
-
-    if(!card){
-      return;
+    const heat = heats?.[currentHeatIndex];
+    if(heat?.heat){
+      return sanitizeFilenamePart(`Heat_${heat.heat}`);
     }
-
-    card.querySelector(".rh-values").innerHTML =
-      `Laps: ${node.laps ?? "--"}<br>` +
-      `Last: ${formatRhLap(node.last)}<br>` +
-      `Best: ${formatRhLap(node.best)}`;
-  });
+  }catch(e){}
+  return "Heat";
 }
 
-function requestRhTiming(){
-  if(!rhSocket || !rhSocket.connected){
-    setRhStatus("RotorHazard non connesso.","error");
+function formatRecordingDuration(ms){
+  const total = Math.floor(ms/1000);
+  const min = Math.floor(total/60);
+  const sec = total%60;
+  return `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+}
+
+function updateRecordingUi(active){
+  recordingState.classList.toggle("active",active);
+  recordStartBtn.classList.toggle("active",active);
+  recordingStateText.textContent = active ? "REC" : "Pronto";
+}
+
+function startRecordingClock(){
+  if(recordingTimer) clearInterval(recordingTimer);
+  recordingStartedAt = Date.now();
+  recordingDuration.textContent = "00:00";
+
+  recordingTimer = setInterval(()=>{
+    recordingDuration.textContent =
+      formatRecordingDuration(Date.now()-recordingStartedAt);
+  },250);
+}
+
+function stopRecordingClock(){
+  if(recordingTimer){
+    clearInterval(recordingTimer);
+    recordingTimer = null;
+  }
+}
+
+function startVideoRecording(){
+  if(mediaRecorder && mediaRecorder.state !== "inactive") return;
+
+  if(!currentStream){
+    setStatus("Avvia prima il feed video: non c'è uno stream da registrare.",true);
     return;
   }
 
-  rhSocket.emit("load_data",{
-    load_types:[
-      "current_laps",
-      "race_status"
-    ]
-  });
-}
-
-async function connectRotorHazard(){
-  const base = normalizeRhServer(rhServerInput.value);
-
-  if(!base){
-    setRhStatus("Inserisci l'indirizzo del server RotorHazard.","error");
+  if(typeof MediaRecorder === "undefined"){
+    setStatus("Questo browser non supporta MediaRecorder.",true);
     return;
   }
 
-  rhServerUrl = base;
-  rhServerInput.value = base;
-  localStorage.setItem("f9uRotorHazardServer",base);
-
-  disconnectRotorHazard();
-
   try{
-    setRhStatus("Caricamento client RotorHazard...");
+    const mimeType = chooseRecordingMimeType();
+    recordedChunks = [];
 
-    await loadExternalScript(
-      `${base}/socket.io/socket.io.js`
+    const options = {videoBitsPerSecond:8000000};
+    if(mimeType) options.mimeType = mimeType;
+
+    mediaRecorder = new MediaRecorder(currentStream,options);
+
+    mediaRecorder.ondataavailable = event=>{
+      if(event.data && event.data.size > 0){
+        recordedChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.onerror = event=>{
+      console.error("MediaRecorder error:",event);
+      setStatus("Errore durante la registrazione video.",true);
+    };
+
+    mediaRecorder.onstop = ()=>{
+      stopRecordingClock();
+      updateRecordingUi(false);
+
+      if(autoRecordArmed){
+        recordingStateText.textContent = "AUTO ARMATO";
+      }
+
+      if(!recordedChunks.length){
+        setStatus("Registrazione terminata ma nessun dato video è stato prodotto.",true);
+        return;
+      }
+
+      const type = mediaRecorder.mimeType || chooseRecordingMimeType() || "video/webm";
+      const blob = new Blob(recordedChunks,{type});
+
+      const now = new Date();
+      const date =
+        `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,"0")}-${String(now.getDate()).padStart(2,"0")}`;
+      const time =
+        `${String(now.getHours()).padStart(2,"0")}-${String(now.getMinutes()).padStart(2,"0")}-${String(now.getSeconds()).padStart(2,"0")}`;
+
+      const filename =
+        `F9U_${currentHeatCodeForFilename()}_${date}_${time}.webm`;
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      setTimeout(()=>URL.revokeObjectURL(url),10000);
+
+      setStatus(`Registrazione salvata: ${filename}`);
+      recordedChunks = [];
+      mediaRecorder = null;
+      recordingStartedAt = null;
+      recordingDuration.textContent = "00:00";
+    };
+
+    mediaRecorder.start(1000);
+    updateRecordingUi(true);
+    startRecordingClock();
+
+    setStatus(
+      `Registrazione video avviata · ${mediaRecorder.mimeType || "formato browser"}`
     );
-
-    if(!window.io){
-      throw new Error("Client Socket.IO non disponibile.");
-    }
-
-    setRhStatus("Connessione a RotorHazard...");
-
-    rhSocket = window.io(base,{
-      transports:["websocket","polling"],
-      reconnection:true,
-      reconnectionAttempts:5,
-      timeout:5000
-    });
-
-    rhSocket.on("connect",()=>{
-      setRhStatus(
-        `Connesso a ${base}`,
-        "ok"
-      );
-
-      requestRhTiming();
-    });
-
-    rhSocket.on("connect_error",err=>{
-      setRhStatus(
-        `Connessione fallita: ${err?.message || err}`,
-        "error"
-      );
-    });
-
-    rhSocket.on("disconnect",reason=>{
-      setRhStatus(
-        `Disconnesso: ${reason}`,
-        "error"
-      );
-    });
-
-    // Evento principale che ci interessa.
-    rhSocket.on("current_laps",data=>{
-      setRhStatus(
-        "Tempi live ricevuti da RotorHazard.",
-        "ok"
-      );
-      renderRhTiming(data);
-    });
-
-    // Alcune versioni/UI possono emettere dati risultato separati.
-    rhSocket.on("leaderboard",data=>{
-      if(!rhLastPayload){
-        renderRhTiming(data);
-      }
-    });
-
-    rhSocket.on("race_status",data=>{
-      // Manteniamo i tempi come payload principale; lo status viene
-      // aggiunto nel raw-data solo a scopo diagnostico.
-      if(rhLastPayload){
-        rhRawData.textContent =
-          JSON.stringify({
-            current_laps:rhLastPayload,
-            race_status:data
-          },null,2);
-      }
-    });
-
   }catch(err){
     console.error(err);
-    setRhStatus(
-      err.message || String(err),
-      "error"
-    );
+    updateRecordingUi(false);
+    stopRecordingClock();
+    setStatus(`Impossibile avviare la registrazione: ${err.message || err}`,true);
   }
 }
 
-function disconnectRotorHazard(){
-  if(rhSocket){
-    try{
-      rhSocket.removeAllListeners();
-      rhSocket.disconnect();
-    }catch(e){}
+function stopVideoRecording(){
+  if(!mediaRecorder || mediaRecorder.state === "inactive") return;
 
-    rhSocket = null;
+  try{
+    recordingStateText.textContent = "Salvataggio...";
+    mediaRecorder.stop();
+  }catch(err){
+    console.error(err);
+    setStatus(`Errore arresto registrazione: ${err.message || err}`,true);
   }
-
-  setRhStatus("Non connesso.");
 }
 
-rhConnectBtn.addEventListener(
-  "click",
-  connectRotorHazard
-);
 
-rhDisconnectBtn.addEventListener(
-  "click",
-  disconnectRotorHazard
-);
+function setAutoRecordArmed(enabled){
+  autoRecordArmed = enabled;
+  autoRecordBtn.classList.toggle("armed",enabled);
+  autoRecordBtn.textContent = enabled ? "AUTO REC ON" : "AUTO REC";
 
-rhRefreshBtn.addEventListener(
-  "click",
-  requestRhTiming
-);
+  autoRecordSignalSince = null;
+  autoRecordNoSignalSince = null;
+
+  if(enabled){
+    recordingStateText.textContent =
+      mediaRecorder && mediaRecorder.state !== "inactive"
+        ? "REC"
+        : "AUTO ARMATO";
+  }else if(!mediaRecorder || mediaRecorder.state === "inactive"){
+    recordingStateText.textContent = "Pronto";
+  }
+}
+
+function evaluateAutoRecording(){
+  if(!autoRecordArmed || !currentStream){
+    return;
+  }
+
+  const now = performance.now();
+  const anySignal = autoRecordSignalPresent.some(Boolean);
+
+  if(anySignal){
+    autoRecordNoSignalSince = null;
+
+    if(autoRecordSignalSince === null){
+      autoRecordSignalSince = now;
+    }
+
+    // Richiede circa 1 secondo di segnale valido per evitare falsi start.
+    const stableSignal =
+      (now - autoRecordSignalSince) >= 1000;
+
+    if(
+      stableSignal &&
+      (!mediaRecorder || mediaRecorder.state === "inactive")
+    ){
+      autoRecordStartedBySystem = true;
+      startVideoRecording();
+    }
+  }else{
+    autoRecordSignalSince = null;
+
+    if(autoRecordNoSignalSince === null){
+      autoRecordNoSignalSince = now;
+    }
+
+    // Se tutti i feed restano assenti per 2 secondi,
+    // chiude automaticamente la registrazione avviata da AUTO REC.
+    // Il piccolo ritardo evita stop dovuti a brevissimi disturbi video.
+    const allGoneLongEnough =
+      (now - autoRecordNoSignalSince) >= 2000;
+
+    if(
+      allGoneLongEnough &&
+      autoRecordStartedBySystem &&
+      mediaRecorder &&
+      mediaRecorder.state !== "inactive"
+    ){
+      autoRecordStartedBySystem = false;
+      stopVideoRecording();
+    }
+  }
+}
+
+autoRecordBtn.addEventListener("click",()=>{
+  setAutoRecordArmed(!autoRecordArmed);
+});
+
+recordStartBtn.addEventListener("click",()=>{
+  autoRecordStartedBySystem = false;
+  startVideoRecording();
+});
+recordStopBtn.addEventListener("click",stopVideoRecording);
 
 checkEnvironment();
 </script>
 
 </body>
 </html>
-
