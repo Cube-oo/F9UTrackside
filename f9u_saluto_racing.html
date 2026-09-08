@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ci vediamo in pista — F9U</title>
+  <meta name="description" content="Un passo indietro dal mondo dello F9U, dopo tanti anni di gare, organizzazione e promozione del drone racing.">
+  <style>
+    :root{
+      --bg:#05080d;
+      --panel:#0a111b;
+      --text:#f2f7fb;
+      --muted:#8ea2b8;
+      --line:#183047;
+      --accent:#00a8ff;
+      --accent2:#ff2d55;
+      --max:860px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:
+        radial-gradient(circle at 50% -10%, rgba(0,168,255,.18), transparent 30rem),
+        radial-gradient(circle at 82% 10%, rgba(255,45,85,.10), transparent 24rem),
+        linear-gradient(180deg,#080a0f 0%,#07090d 100%);
+      color:var(--text);
+      font-family:Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height:1.76;
+    }
+    body:before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size:100% 5px;
+      opacity:.3;
+    }
+    .hero{
+      min-height:72vh;
+      display:flex;
+      align-items:flex-end;
+      padding:72px 24px 60px;
+      border-bottom:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:after{
+      content:"F9U";
+      position:absolute;
+      right:-.04em;
+      bottom:-.24em;
+      font-size:clamp(130px,28vw,430px);
+      font-weight:900;
+      letter-spacing:-.09em;
+      color:rgba(0,168,255,.035);
+      line-height:.8;
+      pointer-events:none;
+    }
+    .hero-inner{
+      width:100%;
+      max-width:var(--max);
+      margin:0 auto;
+      position:relative;
+      z-index:1;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      text-transform:uppercase;
+      letter-spacing:.18em;
+      font-size:.75rem;
+      font-weight:800;
+      color:#b9d7ee;
+      margin-bottom:24px;
+    }
+    .eyebrow:before{
+      content:"";
+      width:40px;
+      height:3px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+    }
+    h1{
+      margin:0;
+      max-width:760px;
+      font-size:clamp(3.1rem,9vw,7rem);
+      line-height:.92;
+      letter-spacing:-.065em;
+      font-weight:900;
+    }
+    .subtitle{
+      max-width:680px;
+      margin:28px 0 0;
+      font-size:clamp(1.15rem,2.3vw,1.45rem);
+      color:#a9bfd1;
+      line-height:1.5;
+    }
+    main{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:72px 24px 100px;
+    }
+    article{
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:clamp(1.08rem,2vw,1.21rem);
+      color:#dce8f2;
+    }
+    article p{margin:0 0 1.55em}
+    article strong{
+      color:#fff;
+      font-weight:700;
+    }
+    .lead:first-letter{
+      float:left;
+      font-family:Inter, sans-serif;
+      font-weight:900;
+      font-size:4.7rem;
+      line-height:.8;
+      padding:.12em .12em 0 0;
+      color:var(--accent);
+    }
+    .divider{
+      width:100%;
+      height:1px;
+      background:linear-gradient(90deg,var(--accent),var(--accent2),transparent 72%);
+      margin:54px 0;
+    }
+    .milestone{
+      border-left:3px solid var(--accent);
+      padding:4px 0 4px 22px;
+      margin:38px 0;
+      font-family:Inter, sans-serif;
+      color:#f2f8fc;
+      font-size:clamp(1.25rem,3vw,1.75rem);
+      font-weight:750;
+      line-height:1.4;
+      letter-spacing:-.025em;
+    }
+    .quote{
+      margin:54px 0;
+      padding:30px 30px 28px;
+      border:1px solid var(--line);
+      background:linear-gradient(135deg,rgba(0,168,255,.10),rgba(255,45,85,.035));
+      font-family:Inter, sans-serif;
+      font-size:clamp(1.25rem,3vw,1.7rem);
+      line-height:1.45;
+      font-weight:750;
+      letter-spacing:-.025em;
+    }
+    .thanks{
+      font-family:Inter, sans-serif;
+      padding:30px 0;
+      color:#f2f4f7;
+      font-size:1.05rem;
+      line-height:1.85;
+    }
+    .final{
+      margin-top:70px;
+      font-family:Inter, sans-serif;
+      border-top:1px solid var(--line);
+      padding-top:55px;
+    }
+    .final .big{
+      margin:20px 0 8px;
+      font-size:clamp(2.5rem,8vw,5.5rem);
+      line-height:.95;
+      font-weight:900;
+      letter-spacing:-.055em;
+      background:linear-gradient(90deg,#ffffff,#7fd4ff 58%,#ff6b87);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .final small{
+      display:block;
+      margin-top:24px;
+      color:var(--muted);
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-weight:700;
+    }
+    .progress{
+      position:fixed;
+      left:0; top:0;
+      width:0%;
+      height:3px;
+      z-index:20;
+      background:linear-gradient(90deg,var(--accent),var(--accent2));
+    }
+    @media(max-width:640px){
+      .hero{min-height:62vh;padding-top:50px;padding-bottom:42px}
+      main{padding-top:52px}
+      article{line-height:1.68}
+      .quote{padding:24px 22px}
+    }
+    @media print{
+      .progress{display:none}
+      body{background:#fff;color:#111}
+      .hero{min-height:auto;border-color:#ddd}
+      .hero:after{display:none}
+      h1,.subtitle,.eyebrow,article,.final .big{color:#111}
+      main{padding-top:35px}
+      .quote{background:#fafafa;border-color:#ddd}
+    }
+  </style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Matteo · GND</div>
+    <h1>Un passo<br>a lato.</h1>
+    
+  </div>
+</header>
+
+<main>
+<article>
+<p class="lead">Qualche tempo fa, durante il mio ultimo viaggio in Cina, avevo già anticipato sui social una decisione che stava maturando dentro di me da tempo.</p>
+
+<p>Oggi è arrivato il momento di darle seguito; dopo tanti anni ho deciso di fare un passo indietro dal mondo dello <strong>F9U</strong>, almeno da quella parte che mi ha visto impegnato nell'organizzazione, nella promozione e nel tentativo di far crescere questo sport.</p>
+
+<p>Non è un addio al drone racing e, soprattutto, <strong>non lascio questo hobby</strong>.</p>
+
+<p>Continuerò a volare e sicuramente parteciperò ancora a qualche gara come pilota, probabilmente con uno spirito diverso e con il piacere di arrivare al campo pensando semplicemente al mio drone, alle mie batterie e alla gara che mi aspetta… Quello che si chiude è un altro capitolo. Un capitolo iniziato parecchi anni fa.</p>
+
+<div class="divider"></div>
+
+<p>Ricordo ancora il primo <strong>WhiteTrack</strong>, organizzato insieme alla <strong>ASD Brixia Drone Racing</strong> con circa 40 piloti che avevano affrontato con noi quella prima avventura.</p>
+
+<p>Erano altri tempi dove il drone racing era qualcosa di molto più piccolo e pionieristico, fatto di sperimentazione, improvvisazione e soprattutto una quantità enorme di entusiasmo. Non sapevamo dove saremmo arrivati: volevamo semplicemente costruire una pista, mettere qualche gate in un campo e correre con i nostri droni.</p>
+
+<p>Poi sono arrivate le gare della <strong>IDS – Italian Drone Series</strong>, e a seguire della <strong>IWL – Italian Whoop League</strong>, il Campionato Italiano e tante altre gare.</p>
+
+<p>Il cammino in questa passione ha iniziato anche a portarmi sempre più lontano da casa.</p>
+
+<div class="milestone"><strong>2019 · Ningbo, Cina</strong><br>Inizia la parte internazionale del percorso.</div>
+
+<p>Nel <strong>2019, a Ningbo in Cina</strong>, è iniziata per me una parte internazionale di questo percorso che mi avrebbe regalato esperienze difficili da immaginare quando tutto era cominciato.</p>
+
+<div class="milestone"><strong>2022 · Birmingham, Alabama</strong><br>The World Games.</div>
+
+<p>Nel <strong>2022 Birmingham, Alabama</strong>, con <strong>The World Games</strong>: un'esperienza difficile da dimenticare, anche per ciò che rappresentava vedere il Drone Racing inserito in un contesto sportivo mondiale di quel livello.</p>
+
+<p>Poi i Campionati del Mondo, la Nazionale Italiana, il ruolo di Team Manager, il <strong>WDRC 2024 di Hangzhou</strong> e le varie partecipazioni a tappe della coppa del mondo, a campionati privati ecc.ecc.</p>
+
+<p>Esperienze diverse tra loro, ma accomunate dalla possibilità di incontrare piloti e persone provenienti da tutto il mondo e di scoprire quanto una passione nata attorno a qualche gate potesse davvero superare qualsiasi confine.</p>
+
+<div class="milestone"><strong>WDCI · 2024 + 2025</strong><br>Un punto d'incontro internazionale, in Italia.</div>
+
+<p>Due eventi nei quali abbiamo provato a costruire qualcosa che andasse oltre la semplice gara: creare in Italia un punto d'incontro per il drone racing internazionale e dimostrare cosa fossimo capaci di organizzare. E credo che siano stati indiscutibilmente un successo.</p>
+
+<p>Vedere arrivare piloti da ogni parte del mondo, vederli correre sulle piste che avevamo immaginato e costruito e ritrovarsi tutti nello stesso campo gara per condividere la stessa passione rimarrà sicuramente una delle immagini più belle di questi anni.</p>
+
+<div class="divider"></div>
+
+<p>In mezzo a tutto questo ci sono stati migliaia di chilometri, centinaia di batterie, piste montate e smontate, riunioni, telefonate, regolamenti, problemi risolti all'ultimo secondo, discussioni, soddisfazioni e inevitabilmente anche qualche delusione.</p>
+
+<p>Ho avuto la fortuna di vivere questo sport da tanti punti di vista: come pilota, organizzatore, Team Manager, coach, tecnico e, negli ultimi anni, cercando di dare il mio contributo anche supportando la promozione degli eventi della <strong>Federazione AeCI</strong>.</p>
+
+<p>Negli anni sono stato additato come “imprenditore”, persona che voleva lucrare sulla passione altrui, persona che voleva comandare, imporre le proprie idee e i peggio epiteti … ma del resto se essere additato di tutte queste cose è servito a portare a volare nello F9U quasi l’80% dei piloti attualmente attivi che sono passati prima dalle nostre organizzazioni.</p>
+
+<div class="quote">Me lo accollo volentieri come bagaglio.</div>
+
+<p>Ed è forse proprio qui che si sottolinea e rimane uno dei miei più grandi rammarichi; avrei voluto essere <strong>più incisivo istituzionalmente</strong>. Ma del resto sono convinto che alla base di tutto ci sia un non desiderio a muoversi in quella direzione sia da parte della comunità dei piloti che in chi in questi anni ha ricoperto cariche organizzative e/o dirigenziali trasversalmente a quel che sia ente sportivo e in chi ha anch’esso lavorato e si è sacrificato per la disciplina.</p>
+
+<p>Avrei voluto riuscire a fare di più nella promozione dello <strong>F9U</strong>, nel portarlo fuori dalla sfera del “passatempo” in favore della percezione dello <strong>Sport</strong>; avrei voluto poter dare il mio contributo anche attraverso ruoli federali che, alla fine di 10 anni di percorso, non ho avuto la possibilità di ricoprire. Ma i percorsi sono lunghi e complessi da gestire e districare.</p>
+
+<p>Probabilmente alcune cose avrei potuto affrontarle diversamente; altre erano semplicemente più grandi delle possibilità di una singola persona. Fa parte del percorso, ed è giusto riconoscerlo.</p>
+
+<p>Ma guardandomi indietro c'è anche qualcosa che oggi mi rende davvero <strong>fiero</strong>. Negli anni abbiamo provato tante strade. Abbiamo sperimentato format, campionati, eventi e modi diversi di organizzare e raccontare questo sport. Alcune idee hanno funzionato, altre meno, altre ancora sono state raccolte e trasformate da chi è arrivato dopo.</p>
+
+<p>Ed è proprio questo, forse, il risultato più importante; oggi vedo <strong>nuovi piloti avvicinarsi alle gare</strong> e persone che, magari entrate in questo mondo quasi per curiosità, ne fanno ormai parte stabilmente. Soprattutto vedo nascere <strong>nuove realtà territoriali, nuovi gruppi e nuove associazioni</strong>, con persone che hanno deciso di prendere in mano questo sport, organizzare gare e creare comunità dove prima non esistevano.</p>
+
+<p>E questa è probabilmente una delle soddisfazioni più grandi che porto con me.</p>
+
+<div class="quote">Perché una gara finisce la domenica sera e una classifica, prima o poi, viene dimenticata, ma <strong>le persone che iniziano a volare e le comunità che continuano a crescere rimangono</strong>.</div>
+
+<p>Se anche soltanto una piccola parte di quello che abbiamo fatto in questi anni ha contribuito a mettere le basi per un futuro più prospero per la disciplina, allora ne è valsa la pena.</p>
+
+<div class="divider"></div>
+
+<p>Naturalmente niente sarebbe stato possibile da soli.</p>
+
+<p>Dietro ogni gara ci sono state persone disposte a sacrificare weekend, serate e spesso ferie semplicemente perché credevano in quello che stavamo facendo.</p>
+
+<p>Ci sono state amicizie nate sui campi gara, trasferte infinite, cene dopo gli eventi, discussioni, incazzature, risate e rivalità che duravano esattamente fino al momento in cui ci si toglievano gli occhiali. Non farò una lista di nomi. Dopo tutti questi anni sarebbe lunghissima e inevitabilmente dimenticherei qualcuno.</p>
+
+<p>Ma chi ha condiviso con me anche soltanto un pezzo di questa strada sa di farne parte. A tutti voi va il mio <strong>grazie</strong>.</p>
+
+<div class="thanks">
+A chi ha corso.<br>
+A chi ha organizzato.<br>
+A chi ha montato un gate sotto il sole, smontato una pista al buio o salvato un dive sotto la pioggia.<br>
+A chi ha creduto nelle mie idee e anche a chi le ha criticate, costringendomi qualche volta a rivederle e migliorarle.<br>
+A chi si è preso responsabilità quando serviva.<br>
+E a tutti i piloti che, anno dopo anno, hanno continuato a presentarsi su una griglia di partenza.
+</div>
+
+<p>Dal primo <strong>WhiteTrack</strong>, passando per <strong>IDS e IWL</strong>, da <strong>Ningbo nel 2019</strong> a <strong>The World Games di Birmingham nel 2022</strong>, fino ad <strong>Hangzhou</strong>, ai <strong>WDCI 2024 e 2025</strong> e a tutto quello che c'è stato nel mezzo. Con Gara#3 del Campionato Italiano AeCI 2026 sono state <strong>40 le gare</strong> che ho aiutato a organizzare e curare.</p>
+
+<p>È stata una strada molto più lunga di quanto avrei mai potuto immaginare quando tutto è cominciato. Adesso, semplicemente, per me cambia il modo di percorrerla.</p>
+
+<p>Non sarò più quello che cerca di capire come organizzare la prossima gara, trovare una location, preparare un regolamento o risolvere l'ennesimo problema cinque minuti prima della partenza; ma ogni tanto mi vedrete ancora arrivare al campo con uno zaino, qualche batteria e un drone.</p>
+
+<p>E forse sarà anche bello tornare, dopo tanti anni, a preoccuparmi semplicemente di una cosa: volare.</p>
+
+<div class="final">
+  <p>A chi continuerà a portare avanti questo sport auguro di riuscire a farlo crescere ancora, magari arrivando dove noi non siamo riusciti ad arrivare ed organizzare eventi a cui sarò felice di partecipare.</p>
+  <p>Abbiamo fatto tanta strada.</p>
+  <p>Adesso è il momento che siano altri a decidere dove mettere il prossimo gate.</p>
+  <p>Io, ogni tanto, sarò ancora lì a cercare di passarci dentro il più velocemente possibile.</p>
+  <div class="big">Ci vediamo in pista.</div>
+  <small>Matteo · GND</small>
+</div>
+</article>
+</main>
+
+<script>
+  const bar = document.getElementById('progress');
+  function updateProgress(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  document.addEventListener('scroll', updateProgress, {passive:true});
+  updateProgress();
+</script>
+</body>
+</html>
