@@ -183,6 +183,10 @@ main{
   background:var(--purple);
 }
 
+.portal-card.results .card-accent{
+  background:#d89b00;
+}
+
 .card-body{
   padding:20px;
   flex:1;
@@ -224,6 +228,12 @@ main{
   background:#f4effb;
   color:var(--purple);
   border-color:#dfd3ef;
+}
+
+.results .card-icon{
+  background:#fff8e8;
+  color:#b77a00;
+  border-color:#eddba9;
 }
 
 .card-icon svg{
@@ -286,6 +296,7 @@ main{
 .timer .card-open{color:var(--red)}
 .judge .card-open{color:var(--green)}
 .replay .card-open{color:var(--purple)}
+.results .card-open{color:#b77a00}
 
 .card-open::after{
   content:"→";
@@ -513,11 +524,46 @@ footer{
       </div>
     </a>
 
+
+    <a class="portal-card results" href="f9u_Liveresults.html">
+      <div class="card-accent"></div>
+
+      <div class="card-body">
+
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 19V9"></path>
+              <path d="M10 19V5"></path>
+              <path d="M16 19v-7"></path>
+              <path d="M22 19V3"></path>
+              <path d="M2 19h21"></path>
+            </svg>
+          </div>
+
+          <div class="card-code">05</div>
+        </div>
+
+        <h3>Live Results</h3>
+
+        <p>
+          Visualizzazione dei risultati live di gara, classifiche aggiornate
+          e monitoraggio dell'andamento delle Heat.
+        </p>
+
+        <div class="card-footer">
+          <span class="card-tag">Results</span>
+          <span class="card-open">Apri sezione</span>
+        </div>
+
+      </div>
+    </a>
+
   </section>
 
   <div class="system-bar">
     <span><strong>F9U Race Control</strong> · Operations Portal</span>
-    <span>Live Video · Timer · Judge · Replay</span>
+    <span>Live Video · Timer · Judge · Replay · Live Results</span>
   </div>
 
 </main>
