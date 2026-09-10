@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F9U Race Control Portal</title>
+
+<style>
+:root{
+  --blue:#005b96;
+  --blue-dark:#003f73;
+  --navy:#001f3f;
+  --line:#d7e2ec;
+  --text:#102033;
+  --muted:#687786;
+  --bg:#f3f7fb;
+  --green:#1f8a43;
+  --red:#d71920;
+  --purple:#7448b3;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  min-height:100%;
+}
+
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#ffffff 0%,var(--bg) 100%);
+  color:var(--text);
+}
+
+.top-strip{
+  height:36px;
+  background:#172027;
+}
+
+header{
+  background:#fff;
+  border-bottom:1px solid #e5edf5;
+  box-shadow:0 8px 24px rgba(0,0,0,.06);
+}
+
+.header-inner{
+  width:min(1500px,calc(100% - 40px));
+  margin:0 auto;
+  padding:22px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+}
+
+.logo{
+  width:126px;
+  height:auto;
+}
+
+.brand small{
+  display:block;
+  color:var(--blue);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:4px;
+}
+
+.brand h1{
+  margin:0;
+  color:var(--navy);
+  font-size:26px;
+}
+
+.header-badge{
+  padding:8px 12px;
+  border:1px solid var(--line);
+  border-radius:999px;
+  background:#f7fafc;
+  color:#607080;
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+}
+
+main{
+  width:min(1500px,calc(100% - 40px));
+  margin:0 auto;
+  padding:28px 0 42px;
+}
+
+.welcome-panel{
+  margin-bottom:18px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(0,0,0,.07);
+  overflow:hidden;
+}
+
+.welcome-head{
+  padding:20px 22px;
+  background:linear-gradient(135deg,#152853,#203b78);
+  color:#fff;
+}
+
+.welcome-head small{
+  display:block;
+  margin-bottom:5px;
+  color:#bcd6e7;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.welcome-head h2{
+  margin:0;
+  font-size:27px;
+  text-transform:uppercase;
+  letter-spacing:.02em;
+}
+
+.welcome-body{
+  padding:18px 22px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.portal-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+
+.portal-card{
+  position:relative;
+  min-height:220px;
+  display:flex;
+  flex-direction:column;
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:#fff;
+  box-shadow:0 10px 28px rgba(0,0,0,.06);
+  overflow:hidden;
+  text-decoration:none;
+  color:inherit;
+  transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease;
+}
+
+.portal-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 16px 34px rgba(0,0,0,.09);
+  border-color:#bfd0dd;
+}
+
+.card-accent{
+  height:5px;
+  background:var(--blue);
+}
+
+.portal-card.timer .card-accent{
+  background:var(--red);
+}
+
+.portal-card.judge .card-accent{
+  background:var(--green);
+}
+
+.portal-card.replay .card-accent{
+  background:var(--purple);
+}
+
+.card-body{
+  padding:20px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.card-top{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.card-icon{
+  width:50px;
+  height:50px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:#eef6fb;
+  color:var(--blue);
+  border:1px solid #d7e8f4;
+}
+
+.timer .card-icon{
+  background:#fff1f1;
+  color:var(--red);
+  border-color:#f0cccc;
+}
+
+.judge .card-icon{
+  background:#edf8ef;
+  color:var(--green);
+  border-color:#cde5d3;
+}
+
+.replay .card-icon{
+  background:#f4effb;
+  color:var(--purple);
+  border-color:#dfd3ef;
+}
+
+.card-icon svg{
+  width:25px;
+  height:25px;
+}
+
+.card-code{
+  color:#9aa8b4;
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+
+.portal-card h3{
+  margin:22px 0 7px;
+  color:var(--navy);
+  font-size:22px;
+}
+
+.portal-card p{
+  margin:0;
+  max-width:540px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.6;
+}
+
+.card-footer{
+  margin-top:auto;
+  padding-top:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.card-tag{
+  padding:6px 9px;
+  border-radius:999px;
+  background:#f4f7f9;
+  color:#71808d;
+  font-size:10px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.07em;
+}
+
+.card-open{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  color:var(--blue);
+  font-size:11px;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+}
+
+.timer .card-open{color:var(--red)}
+.judge .card-open{color:var(--green)}
+.replay .card-open{color:var(--purple)}
+
+.card-open::after{
+  content:"→";
+  font-size:16px;
+}
+
+.system-bar{
+  margin-top:18px;
+  padding:13px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:#fff;
+  color:#748390;
+  font-size:11px;
+  box-shadow:0 8px 22px rgba(0,0,0,.04);
+}
+
+.system-bar strong{
+  color:var(--navy);
+}
+
+footer{
+  padding:0 20px 26px;
+  text-align:center;
+  color:#6d7b88;
+  font-size:11px;
+}
+
+@media(max-width:900px){
+  .portal-grid{
+    grid-template-columns:1fr;
+  }
+
+  .header-inner{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+}
+
+@media(max-width:600px){
+  .header-inner,
+  main{
+    width:min(100% - 24px,1500px);
+  }
+
+  .welcome-head h2{
+    font-size:22px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-strip"></div>
+
+<header>
+  <div class="header-inner">
+
+    <div class="brand">
+      <img
+        class="logo"
+        src="https://f9u.it/wp-content/uploads/2026/03/cropped-cropped-Logo.png"
+        alt="F9U Italy">
+
+      <div>
+        <small>Race Control</small>
+        <h1>F9U Operations Portal</h1>
+      </div>
+    </div>
+
+    <div class="header-badge">F9U Italy</div>
+
+  </div>
+</header>
+
+<main>
+
+  <section class="welcome-panel">
+
+    <div class="welcome-head">
+      <small>Operations Hub</small>
+      <h2>Race Control Portal</h2>
+    </div>
+
+    <div class="welcome-body">
+      Accesso centralizzato agli strumenti operativi F9U per gestione video,
+      cronometraggio, validazione giudici e replay.
+    </div>
+
+  </section>
+
+  <section class="portal-grid">
+
+    <a class="portal-card live" href="f9u_live.html">
+      <div class="card-accent"></div>
+
+      <div class="card-body">
+
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <rect x="3" y="5" width="14" height="14" rx="2"></rect>
+              <path d="M17 9l4-2v10l-4-2z"></path>
+            </svg>
+          </div>
+
+          <div class="card-code">01</div>
+        </div>
+
+        <h3>Live Video</h3>
+
+        <p>
+          Visualizzazione FPV 2×2, gestione Heat, overlay piloti,
+          diagnostica segnale, NO SIGNAL / DNF e registrazione automatica.
+        </p>
+
+        <div class="card-footer">
+          <span class="card-tag">Broadcast</span>
+          <span class="card-open">Apri sezione</span>
+        </div>
+
+      </div>
+    </a>
+
+    <a class="portal-card timer" href="f9u_timer.html">
+      <div class="card-accent"></div>
+
+      <div class="card-body">
+
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="13" r="8"></circle>
+              <path d="M12 9v5l3 2"></path>
+              <path d="M9 2h6"></path>
+            </svg>
+          </div>
+
+          <div class="card-code">02</div>
+        </div>
+
+        <h3>Race Timer</h3>
+
+        <p>
+          Countdown gara, preset temporali, segnali audio,
+          messaggi operativi e gestione rapida dei gruppi.
+        </p>
+
+        <div class="card-footer">
+          <span class="card-tag">Timing</span>
+          <span class="card-open">Apri sezione</span>
+        </div>
+
+      </div>
+    </a>
+
+    <a class="portal-card judge" href="f9u_judge.html">
+      <div class="card-accent"></div>
+
+      <div class="card-body">
+
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M9 11l2 2 4-4"></path>
+              <rect x="4" y="3" width="16" height="18" rx="2"></rect>
+              <path d="M8 7h8"></path>
+              <path d="M8 17h8"></path>
+            </svg>
+          </div>
+
+          <div class="card-code">03</div>
+        </div>
+
+        <h3>Judge Panel</h3>
+
+        <p>
+          Selezione Heat e pilota, validazione individuale,
+          gestione stato gara, note del giudice e generazione JSON.
+        </p>
+
+        <div class="card-footer">
+          <span class="card-tag">Judging</span>
+          <span class="card-open">Apri sezione</span>
+        </div>
+
+      </div>
+    </a>
+
+    <a class="portal-card replay" href="f9u_replay.html">
+      <div class="card-accent"></div>
+
+      <div class="card-body">
+
+        <div class="card-top">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M4 12a8 8 0 1 0 2.3-5.7"></path>
+              <path d="M4 4v6h6"></path>
+              <path d="M10 9l6 3-6 3z"></path>
+            </svg>
+          </div>
+
+          <div class="card-code">04</div>
+        </div>
+
+        <h3>Replay</h3>
+
+        <p>
+          Riproduzione delle registrazioni di gara con timeline,
+          avanzamento rapido, rallenty, velocità variabile e fullscreen.
+        </p>
+
+        <div class="card-footer">
+          <span class="card-tag">Review</span>
+          <span class="card-open">Apri sezione</span>
+        </div>
+
+      </div>
+    </a>
+
+  </section>
+
+  <div class="system-bar">
+    <span><strong>F9U Race Control</strong> · Operations Portal</span>
+    <span>Live Video · Timer · Judge · Replay</span>
+  </div>
+
+</main>
+
+<footer>
+  F9U Italy · Race Control Portal
+</footer>
+
+</body>
+</html>
