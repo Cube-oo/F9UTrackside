@@ -1761,7 +1761,39 @@ body.presentation-mode .pilot-overlay{
 #settingsPanel .recording-info,#settingsPanel .rh-help{font-size:11px;line-height:1.65;color:#748497}
 #settingsPanel .recording-state{border-radius:7px;font-size:10px}
 @media(max-width:850px){.setup-grid{grid-template-columns:1fr}#settingsPanel{padding:14px}.setup-card{padding:16px}.setup-tag{display:none}}
-</style>
+
+#signalPlaceholder{position:absolute;inset:0;z-index:160;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#c6efff 0%,#79cef3 55%,#48afe1 100%);color:#064573;overflow:hidden}
+#signalPlaceholder[hidden]{display:none}
+#signalPlaceholder>div{padding:24px}
+#signalPlaceholder span{font-size:clamp(12px,1.5vw,24px);font-weight:900;letter-spacing:.24em}
+#signalPlaceholder h2{font-size:clamp(22px,4vw,64px);letter-spacing:-.035em;margin:16px 0}
+#signalPlaceholder p{font-size:clamp(12px,1.4vw,22px);margin:0;color:#22668d}
+body.all-feeds-lost .heat-description-overlay{visibility:hidden}
+
+#signalPlaceholder{background:radial-gradient(ellipse at 90% 0%,#076aa4 0%,transparent 55%),linear-gradient(135deg,#061b32,#003f73);color:white;text-align:left;isolation:isolate}
+#signalPlaceholder::before{content:'';position:absolute;inset:-60%;background:repeating-linear-gradient(130deg,transparent 0 130px,#60ceff08 131px 133px,transparent 134px 260px);transform:rotate(-8deg);z-index:-1}
+#signalPlaceholder .waiting-screen{width:100%;height:100%;padding:clamp(16px,3.5vw,64px);display:flex;flex-direction:column;justify-content:space-between;gap:clamp(10px,2vw,28px);box-sizing:border-box}
+#signalPlaceholder span{font-size:inherit;letter-spacing:inherit;font-weight:inherit}
+.waiting-header{display:flex;justify-content:space-between;align-items:center;gap:20px}
+.waiting-logo{background:white;padding:10px 18px;border-radius:3px;box-shadow:8px 8px 0 #39b7f5}
+.waiting-logo img{display:block;width:clamp(70px,10vw,160px);max-height:70px;object-fit:contain}
+#signalPlaceholder .waiting-live{font-size:clamp(8px,1vw,15px);font-weight:800;letter-spacing:.16em;color:#a7dcfa}
+#signalPlaceholder .waiting-eyebrow{font-size:clamp(11px,1.1vw,19px);font-weight:900;color:#57caff;letter-spacing:.15em}
+#signalPlaceholder h2{color:white;font-size:clamp(22px,3.5vw,60px);line-height:1.06;letter-spacing:-.035em;margin:8px 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#signalPlaceholder .waiting-heading p{color:#99bed9;font-size:clamp(10px,1.1vw,18px)}
+.waiting-roster{display:grid;grid-template-columns:1fr 1fr;gap:clamp(8px,1.2vw,20px)}
+.waiting-pilot{display:flex;align-items:center;gap:clamp(8px,1.1vw,18px);min-width:0;padding:clamp(10px,1.5vw,24px);border:1px solid #94d6ff30;border-left:4px solid #30baff;background:linear-gradient(100deg,#0d4e7ec9,#092943c9);border-radius:4px}
+.waiting-slot{font-size:clamp(16px,2vw,32px);font-weight:900;font-style:italic;color:#52c9ff;flex-shrink:0}
+.waiting-identity{flex:1;min-width:0}
+.waiting-identity h3{font-size:clamp(12px,1.6vw,26px);text-transform:uppercase;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;margin:0 0 5px;letter-spacing:-.02em;color:white}
+#signalPlaceholder .waiting-identity p{font-size:clamp(8px,.85vw,13px);color:#9cc0da}
+#signalPlaceholder .waiting-category{font-size:clamp(8px,.8vw,13px);padding:5px 8px;border-radius:3px;background:#1277b7;font-weight:900;letter-spacing:.04em}
+.waiting-open{border-left-color:#ff515b}.waiting-open .waiting-slot{color:#ff848c}#signalPlaceholder .waiting-open .waiting-category{background:#c92335}
+.waiting-empty{opacity:.5}
+.waiting-footer{display:flex;align-items:center;gap:10px;color:#a5c4da;font-size:clamp(7px,.8vw,12px);font-weight:700;letter-spacing:.1em}
+.waiting-dot{width:7px;height:7px;background:#52c9ff;border-radius:50%;box-shadow:0 0 10px #52c9ff;flex-shrink:0}.waiting-line{height:1px;flex:1;background:#7ac7ee30}
+@media(max-width:650px){#signalPlaceholder .waiting-screen{padding:12px;gap:9px}.waiting-logo{padding:4px 8px;box-shadow:4px 4px 0 #39b7f5}.waiting-logo img{width:55px;max-height:35px}#signalPlaceholder h2{font-size:18px;margin:3px 0}.waiting-heading p,.waiting-live,.waiting-footer>span:last-child{display:none}.waiting-pilot{padding:8px;gap:6px}.waiting-identity h3{font-size:10px}.waiting-slot{font-size:14px}#signalPlaceholder .waiting-category{font-size:7px;padding:3px}.waiting-footer{font-size:6px}}
+#fallbackHd{position:absolute;inset:0;z-index:170;background:#000}#fallbackHd[hidden]{display:none}#fallbackVideo{width:100%;height:100%;object-fit:contain;background:#000}#fallbackHd>span{position:absolute;bottom:18px;left:18px;background:#003f73dc;color:white;padding:9px 14px;border-left:3px solid #52c9ff;font:800 12px Arial;letter-spacing:.08em}</style>
 </head>
 
 <body>
@@ -1798,6 +1830,7 @@ body.presentation-mode .pilot-overlay{
       <strong>Stato:</strong> abilita la sorgente video.
     </div>
  <div class="setup-grid">
+
  <section class="setup-card"><div class="setup-card-head"><span class="setup-number">01</span><div><h3>Sorgente video</h3><p>Seleziona la capture card e avvia i quattro feed.</p></div></div><div class="source-panel">
       <select id="cameraSelect">
         <option value="">Sorgente video...</option>
@@ -1882,6 +1915,10 @@ body.presentation-mode .pilot-overlay{
         e la interrompe automaticamente quando tutti i feed sono assenti.
       </div>
     </div></section>
+<section class="setup-card"><div class="setup-card-head"><span class="setup-number">05</span><div><h3>Schermata senza segnale</h3><p>Dopo 5 secondi senza feed pilota, mostra la sorgente scelta.</p></div></div>
+<div class="sheet-config-row"><label for="fallbackMode">Sorgente di attesa</label><select id="fallbackMode"><option value="placeholder">Grafica F9U e piloti</option><option value="hd">Camera HD</option></select>
+<label for="fallbackCamera">Camera USB / HDMI</label><select id="fallbackCamera"><option value="">Seleziona camera HD</option></select><button id="fallbackRefresh">Aggiorna camere</button><button id="fallbackStart" class="primary">Avvia HD</button><button id="fallbackStop">Stop HD</button></div>
+<p id="fallbackStatus" role="status" class="rh-help">HD non attiva. Grafica F9U disponibile.</p><p class="recording-info">Seleziona un ingresso diverso dalla capture card FPV. Se la HD non è pronta, appare la grafica F9U. Il ritorno ai feed è automatico appena torna un segnale. La registrazione salva solo il video sorgente FPV.</p></section>
  </div>
  </section>
 
@@ -1901,6 +1938,8 @@ body.presentation-mode .pilot-overlay{
   </section>
 
   <section class="video-grid">
+<div id="fallbackHd" hidden><video id="fallbackVideo" autoplay playsinline muted></video><span>F9U LIVE · TRACCIATO</span></div>
+    <div id="signalPlaceholder" hidden role="status" aria-label="Attesa video e piloti della heat corrente"><div class="waiting-screen"><div class="waiting-header"><div class="waiting-logo"><img src="https://f9u.it/wp-content/uploads/2026/03/cropped-cropped-Logo.png" alt="F9U Italy"></div><span class="waiting-live">F9U · LIVE TIMING</span></div><div class="waiting-heading"><span class="waiting-eyebrow" id="waitingHeat">HEAT —</span><h2 id="waitingDescription">Pronti a volare.</h2><p>La prossima azione è in pista.</p></div><div class="waiting-roster"><article class="waiting-pilot" id="waitingPilot0"><div class="waiting-slot">P1</div><div class="waiting-identity"><h3 data-wait-name>Pilota 1</h3><p data-wait-id>ID —</p></div><span class="waiting-category" data-wait-category>—</span></article><article class="waiting-pilot" id="waitingPilot1"><div class="waiting-slot">P2</div><div class="waiting-identity"><h3 data-wait-name>Pilota 2</h3><p data-wait-id>ID —</p></div><span class="waiting-category" data-wait-category>—</span></article><article class="waiting-pilot" id="waitingPilot2"><div class="waiting-slot">P3</div><div class="waiting-identity"><h3 data-wait-name>Pilota 3</h3><p data-wait-id>ID —</p></div><span class="waiting-category" data-wait-category>—</span></article><article class="waiting-pilot" id="waitingPilot3"><div class="waiting-slot">P4</div><div class="waiting-identity"><h3 data-wait-name>Pilota 4</h3><p data-wait-id>ID —</p></div><span class="waiting-category" data-wait-category>—</span></article></div><div class="waiting-footer"><span class="waiting-dot"></span> IN ATTESA DEL SEGNALE VIDEO <span class="waiting-line"></span><span>FPV RACING · ITALIA</span></div></div></div>
     <div id="heatDescriptionOverlay" class="heat-description-overlay">Descrizione Heat</div>
 
     <article class="feed-card feed-1">
@@ -2095,6 +2134,26 @@ let autoRecordStartedBySystem = false;
 let autoRecordSignalSince = null;
 let autoRecordNoSignalSince = null;
 const autoRecordSignalPresent = [false,false,false,false];
+let fallbackStream=null, fallbackGeneration=0, fallbackActive=false;
+let allFeedsLostSince = null;
+function clearSignalPlaceholder(){
+  fallbackActive=false;
+  allFeedsLostSince = null;
+  document.getElementById('signalPlaceholder').hidden = true;
+  document.getElementById('fallbackHd').hidden = true;
+  document.body.classList.remove('all-feeds-lost');
+}
+function updateSignalPlaceholder(now){
+  if(!currentStream || autoRecordSignalPresent.some(Boolean)){
+    clearSignalPlaceholder();
+    return;
+  }
+  if(allFeedsLostSince === null) allFeedsLostSince = now;
+  const show = now - allFeedsLostSince >= 5000;
+  displayFallback(show);
+  document.body.classList.toggle('all-feeds-lost',show);
+}
+
 
 
 const heatSheetInput = document.getElementById("heatSheetInput");
@@ -2213,6 +2272,7 @@ function stopDrawing(){
 }
 
 function stopStream(){
+  clearSignalPlaceholder();
   if(mediaRecorder && mediaRecorder.state !== "inactive"){
     stopVideoRecording();
   }
@@ -2369,6 +2429,7 @@ function runSignalAnalysis(){
   });
 
   evaluateAutoRecording();
+  updateSignalPlaceholder(performance.now());
 }
 
 function startSignalAnalysis(){
@@ -3065,7 +3126,20 @@ function buildHeats(rows){
   return result;
 }
 
+function renderWaitingHeat(heat){
+ document.getElementById('waitingHeat').textContent=heat?'HEAT '+heat.heat:'HEAT —';
+ document.getElementById('waitingDescription').textContent=heat?.description || (heat?'Piloti in griglia':'Pronti a volare.');
+ for(let i=0;i<4;i++){
+  const card=document.getElementById('waitingPilot'+i),pilot=heat?.pilots?.[i];
+  card.querySelector('[data-wait-name]').textContent=pilot?.name || 'Non assegnato';
+  card.querySelector('[data-wait-id]').textContent='ID '+(pilot?.id || '—');
+  card.querySelector('[data-wait-category]').textContent=pilot?.category || '—';
+  card.classList.toggle('waiting-open',pilot?.category==='OPEN');
+  card.classList.toggle('waiting-empty',!pilot);
+ }
+}
 function renderCurrentHeat(){
+  renderWaitingHeat(heats[currentHeatIndex]);
   const heat = heats[currentHeatIndex];
 
   if(!heat){
@@ -3624,6 +3698,56 @@ recordStartBtn.addEventListener("click",()=>{
 recordStopBtn.addEventListener("click",stopVideoRecording);
 
 checkEnvironment();
+
+function fallbackMessage(message){document.getElementById('fallbackStatus').textContent=message;}
+function displayFallback(show){
+ fallbackActive=show;
+ const video=document.getElementById('fallbackVideo');
+ const ready=fallbackStream?.getVideoTracks().some(t=>t.readyState==='live') && video.readyState>=2 && !video.paused;
+ const hd=show && document.getElementById('fallbackMode').value==='hd' && ready;
+ document.getElementById('fallbackHd').hidden=!hd;
+ document.getElementById('signalPlaceholder').hidden=!show || !!hd;
+}
+async function refreshFallbackCameras(){
+ try{
+ const cameras=(await navigator.mediaDevices.enumerateDevices()).filter(d=>d.kind==='videoinput');
+ const select=document.getElementById('fallbackCamera'),previous=select.value;
+ select.replaceChildren(new Option('Seleziona camera HD',''));
+ cameras.forEach((d,i)=>select.add(new Option(d.label || 'Camera '+(i+1),d.deviceId)));
+ if(cameras.some(d=>d.deviceId===previous))select.value=previous;
+ }catch(e){fallbackMessage('Impossibile elencare le camere: '+e.message);}
+}
+function stopFallbackCamera(){
+ fallbackGeneration++;
+ fallbackStream?.getTracks().forEach(t=>t.stop());fallbackStream=null;
+ document.getElementById('fallbackVideo').srcObject=null;
+ displayFallback(fallbackActive);fallbackMessage('HD non attiva. Grafica F9U disponibile.');
+}
+async function startFallbackCamera(){
+ const id=document.getElementById('fallbackCamera').value;
+ const fpv=currentStream?.getVideoTracks()[0]?.getSettings().deviceId || cameraSelect.value;
+ if(!id){fallbackMessage('Seleziona una camera HD.');return;}
+ if(id===fpv){fallbackMessage('La camera HD deve essere diversa dalla sorgente FPV.');return;}
+ stopFallbackCamera();const generation=fallbackGeneration;
+ fallbackMessage('Avvio camera HD…');
+ try{
+ const stream=await navigator.mediaDevices.getUserMedia({video:{deviceId:{exact:id},width:{ideal:1920},height:{ideal:1080}},audio:false});
+ if(generation!==fallbackGeneration){stream.getTracks().forEach(t=>t.stop());return;}
+ fallbackStream=stream;
+ const video=document.getElementById('fallbackVideo');video.srcObject=stream;
+ await video.play();if(generation!==fallbackGeneration)return;
+ fallbackMessage('Camera HD pronta. Seleziona Camera HD come sorgente di attesa.');
+ stream.getVideoTracks()[0].addEventListener('ended',()=>{if(generation!==fallbackGeneration)return;stopFallbackCamera();fallbackMessage('Camera HD scollegata: uso della grafica F9U.');});
+ displayFallback(fallbackActive);
+ }catch(e){if(generation!==fallbackGeneration)return;stopFallbackCamera();fallbackMessage('HD non disponibile: '+e.message+'. Uso della grafica F9U.');}
+}
+document.getElementById('fallbackRefresh').addEventListener('click',refreshFallbackCameras);
+document.getElementById('fallbackStart').addEventListener('click',startFallbackCamera);
+document.getElementById('fallbackStop').addEventListener('click',stopFallbackCamera);
+document.getElementById('fallbackMode').addEventListener('change',()=>displayFallback(fallbackActive));
+document.getElementById('fallbackCamera').addEventListener('change',stopFallbackCamera);
+document.getElementById('fallbackVideo').addEventListener('error',()=>{stopFallbackCamera();fallbackMessage('Errore video HD: uso della grafica F9U.');});
+
 </script>
 
 <script>
