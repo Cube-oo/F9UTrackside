@@ -1073,38 +1073,27 @@ function buildQualificationTable(category,data){
 }
 
 
-async function loadQualifications(){
-  try{
-    const allRows=await fetchRows();
+function renderQualificationsFromRows(allRows){
+  const pro=getQualificationRows(allRows,"PRO");
+  const open=getQualificationRows(allRows,"OPEN");
 
-    const pro=getQualificationRows(allRows,"PRO");
-    const open=getQualificationRows(allRows,"OPEN");
+  document.getElementById("pro-race-results").innerHTML=
+    buildQualificationTable("PRO",pro);
 
-    document.getElementById("pro-race-results").innerHTML=
-      buildQualificationTable("PRO",pro);
+  document.getElementById("open-race-results").innerHTML=
+    buildQualificationTable("OPEN",open);
 
-    document.getElementById("open-race-results").innerHTML=
-      buildQualificationTable("OPEN",open);
+  const update=new Date().toLocaleTimeString(
+    "it-IT",
+    {
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
+    }
+  );
 
-    const update=new Date().toLocaleTimeString(
-      "it-IT",
-      {
-        hour:"2-digit",
-        minute:"2-digit",
-        second:"2-digit"
-      }
-    );
-
-    document.getElementById("pro-last-update").textContent=update;
-    document.getElementById("open-last-update").textContent=update;
-  }
-  catch(error){
-    const html=
-      `<div class="error">Errore caricamento dati: ${safe(error.message)}</div>`;
-
-    document.getElementById("pro-race-results").innerHTML=html;
-    document.getElementById("open-race-results").innerHTML=html;
-  }
+  document.getElementById("pro-last-update").textContent=update;
+  document.getElementById("open-last-update").textContent=update;
 }
 
 
@@ -1445,70 +1434,60 @@ function buildBracket(rounds,config){
 }
 
 
-async function loadBrackets(){
-  try{
-    const allRows=await fetchRows();
-    const zones=getBracketZones(allRows);
+function renderBracketsFromRows(allRows){
+  const zones=getBracketZones(allRows);
 
-    const openRounds=
-      findRoundsInZone(
-        allRows,
-        zones.open.start,
-        zones.open.end
-      );
+  const openRounds=
+    findRoundsInZone(
+      allRows,
+      zones.open.start,
+      zones.open.end
+    );
 
-    const proRounds=
-      findRoundsInZone(
-        allRows,
-        zones.pro.start,
-        zones.pro.end
-      );
+  const proRounds=
+    findRoundsInZone(
+      allRows,
+      zones.pro.start,
+      zones.pro.end
+    );
 
-    if(!openRounds.size){
-      throw new Error("Nessun Round OPEN trovato.");
-    }
-
-    if(!proRounds.size){
-      throw new Error("Nessun Round PRO trovato.");
-    }
-
-    document.getElementById("open-bracket-results").innerHTML=
-      buildBracket(
-        openRounds,
-        {
-          layout:OPEN_LAYOUT,
-          stageTitles:OPEN_STAGE_TITLES,
-          connections:OPEN_CONNECTIONS,
-          width:2200,
-          height:1800,
-          lowerTitle:"Double Elimination Sequence",
-          lowerTitleTop:1320,
-          lowerTitleWidth:1900
-        }
-      );
-
-    document.getElementById("pro-bracket-results").innerHTML=
-      buildBracket(
-        proRounds,
-        {
-          layout:PRO_LAYOUT,
-          stageTitles:PRO_STAGE_TITLES,
-          connections:PRO_CONNECTIONS,
-          width:1650,
-          height:1150,
-          lowerTitle:"Loser Bracket",
-          lowerTitleTop:780,
-          lowerTitleWidth:860
-        }
-      );
+  if(!openRounds.size){
+    throw new Error("Nessun Round OPEN trovato.");
   }
-  catch(error){
-    const html=
-      `<div class="error">Errore caricamento eliminatorie: ${safe(error.message)}</div>`;
 
-    document.getElementById("open-bracket-results").innerHTML=html;
-    document.getElementById("pro-bracket-results").innerHTML=html;
+  if(!proRounds.size){
+    throw new Error("Nessun Round PRO trovato.");
   }
+
+  document.getElementById("open-bracket-results").innerHTML=
+    buildBracket(
+      openRounds,
+      {
+        layout:OPEN_LAYOUT,
+        stageTitles:OPEN_STAGE_TITLES,
+        connections:OPEN_CONNECTIONS,
+        width:2200,
+        height:1800,
+        lowerTitle:"Double Elimination Sequence",
+        lowerTitleTop:1320,
+        lowerTitleWidth:1900
+      }
+    );
+
+  document.getElementById("pro-bracket-results").innerHTML=
+    buildBracket(
+      proRounds,
+      {
+        layout:PRO_LAYOUT,
+        stageTitles:PRO_STAGE_TITLES,
+        connections:PRO_CONNECTIONS,
+        width:1650,
+        height:1150,
+        lowerTitle:"Loser Bracket",
+        lowerTitleTop:780,
+        lowerTitleWidth:860
+      }
+    );
 }
 
 
@@ -1588,11 +1567,78 @@ setView(
   "pro-qualifications"
 );
 
-loadQualifications();
-loadBrackets();
 
-setInterval(loadQualifications,120000);
-setInterval(loadBrackets,120000);
+/* DATA REFRESH
+   Una sola richiesta al Google Sheet per ciclo:
+   gli stessi dati vengono usati sia per le qualifiche
+   sia per i bracket PRO/OPEN.
+*/
+const REFRESH_INTERVAL=120000;
+let lastSuccessfulRefresh=0;
+let refreshInProgress=false;
+
+function showDataError(error){
+  const message=safe(error.message || String(error));
+
+  const qualHtml=
+    `<div class="error">Errore caricamento dati: ${message}</div>`;
+
+  const bracketHtml=
+    `<div class="error">Errore caricamento eliminatorie: ${message}</div>`;
+
+  document.getElementById("pro-race-results").innerHTML=qualHtml;
+  document.getElementById("open-race-results").innerHTML=qualHtml;
+  document.getElementById("open-bracket-results").innerHTML=bracketHtml;
+  document.getElementById("pro-bracket-results").innerHTML=bracketHtml;
+}
+
+async function loadAllData(){
+  if(refreshInProgress){
+    return;
+  }
+
+  refreshInProgress=true;
+
+  try{
+    const allRows=await fetchRows();
+
+    renderQualificationsFromRows(allRows);
+    renderBracketsFromRows(allRows);
+
+    lastSuccessfulRefresh=Date.now();
+  }
+  catch(error){
+    console.error("F9U Live Results:",error);
+    showDataError(error);
+  }
+  finally{
+    refreshInProgress=false;
+  }
+}
+
+function refreshIfVisible(){
+  if(document.visibilityState==="visible"){
+    loadAllData();
+  }
+}
+
+/* Primo caricamento */
+loadAllData();
+
+/* Refresh automatico: una sola lettura ogni 2 minuti.
+   Se il tab è in background non vengono effettuate richieste. */
+setInterval(refreshIfVisible,REFRESH_INTERVAL);
+
+/* Quando l'utente torna sulla pagina:
+   aggiorna subito solo se i dati hanno più di 2 minuti. */
+document.addEventListener("visibilitychange",()=>{
+  if(
+    document.visibilityState==="visible" &&
+    Date.now()-lastSuccessfulRefresh>=REFRESH_INTERVAL
+  ){
+    loadAllData();
+  }
+});
 </script>
 
 </body>
