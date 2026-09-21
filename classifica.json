@@ -2,8 +2,8 @@
   "schemaVersion": 2,
   "source": {
     "standings": "https://raw.githubusercontent.com/Cube-oo/F9UTrackside/refs/heads/main/classifica.json",
-    "qualifications": "Frammenti HTML forniti dall’utente",
-    "note": "Posizioni di qualifica per categoria derivate dai tempi disponibili. Zero nella classifica originale significa risultato non disponibile; non equivale automaticamente ad assenza."
+    "qualifications": "Risultati di qualifica Gara #1, Gara #3 e Gara #4 forniti dall’utente",
+    "note": "Gara #4 integrata da tabella qualifiche e bracket forniti dall’utente. Le precedenti etichette OPEN - C e OPEN - E sono state unificate nella sola categoria OPEN. Tutti i partecipanti OPEN reali di Gara #4 sono considerati nella classifica OPEN. I valori 100:39,998/999 sono conservati come rawTime con status 'invalid'. Per gli eliminati in heat parallele allo stesso livello, l’ordine finale è stato risolto usando la posizione di qualifica come tie-break."
   },
   "championship": {
     "maxRaces": 5,
@@ -28,7 +28,7 @@
     {
       "id": "r4",
       "label": "Gara #4",
-      "qualificationAvailable": false
+      "qualificationAvailable": true
     },
     {
       "id": "r5",
@@ -92,13 +92,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 4,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 61300,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 5,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -169,13 +169,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 1,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 50904,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 1,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -246,13 +246,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 2,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 53689,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 2,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -325,13 +325,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 5,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 64453,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 7,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -402,18 +402,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 3,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 54032,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 3,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
           "displayOrder": 21,
-          "callsign": "gabruzzz"
+          "callsign": "gabruzz"
         },
         {
           "raceId": "r5",
@@ -470,13 +470,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 6,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 62263,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 6,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -547,13 +547,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 7,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 60944,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 4,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -615,13 +615,13 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 8,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 87301,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 8,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
           "categoryLabel": "PRO",
@@ -1039,18 +1039,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 2,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 70557,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 4,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 22,
-          "callsign": "Bgarage"
+          "callsign": "BGARAGE"
         },
         {
           "raceId": "r5",
@@ -1125,7 +1125,7 @@
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 26,
           "callsign": "Maska"
         },
@@ -1234,16 +1234,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 4,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 67687,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 2,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 19,
           "callsign": "Mach74"
         },
@@ -1411,16 +1411,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 8,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 116174,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 14,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 29,
           "callsign": "DarkY"
         },
@@ -1520,16 +1520,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 15,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 106886,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 13,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 28,
           "callsign": "IbboFpv"
         },
@@ -1629,16 +1629,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 3,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 70267,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 3,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 31,
           "callsign": "TonnoFPV"
         },
@@ -1738,16 +1738,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 1,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 65123,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 1,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 30,
           "callsign": "SkyMax"
         },
@@ -1761,11 +1761,11 @@
       "placeholder": false
     },
     {
-      "id": "pilota-e1",
-      "name": "Pilota E1",
-      "team": "P-ES#1",
+      "id": "prisco-casertano",
+      "name": "Prisco Casertano",
+      "team": "OkaimiFPV",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -1788,18 +1788,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 9,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 103791,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 10,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 1,
-          "callsign": "P-ES#1"
+          "callsign": "OkaimiFPV"
         },
         {
           "raceId": "r5",
@@ -1808,14 +1808,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e2",
-      "name": "Pilota E2",
-      "team": "P-ES#2",
+      "id": "raffaele-landi",
+      "name": "Raffaele Landi",
+      "team": "Raflan",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -1838,18 +1838,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 20,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 134446,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 20,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 2,
-          "callsign": "P-ES#2"
+          "callsign": "Raflan"
         },
         {
           "raceId": "r5",
@@ -1858,14 +1858,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e3",
-      "name": "Pilota E3",
-      "team": "P-ES#3",
+      "id": "fabio-marchiori",
+      "name": "Fabio Marchiori",
+      "team": "Doge",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -1888,18 +1888,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 19,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 133564,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 19,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 3,
-          "callsign": "P-ES#3"
+          "callsign": "Doge"
         },
         {
           "raceId": "r5",
@@ -1908,14 +1908,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e4",
-      "name": "Pilota E4",
-      "team": "P-ES#4",
+      "id": "leonardo-bacanelli",
+      "name": "Leonardo Bacanelli",
+      "team": "Chemardo",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -1938,18 +1938,19 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 25,
           "qualification": {
-            "status": "not_available",
+            "status": "invalid",
             "timeMs": null,
+            "rawTime": "100:39,998",
             "overallPosition": null,
-            "categoryPosition": null,
+            "categoryPosition": 25,
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 4,
-          "callsign": "P-ES#4"
+          "callsign": "Chemardo"
         },
         {
           "raceId": "r5",
@@ -1958,14 +1959,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e5",
-      "name": "Pilota E5",
-      "team": "P-ES#5",
+      "id": "maichol-di-pasquale",
+      "name": "Maichol Di Pasquale",
+      "team": "Maicholgun",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -1988,18 +1989,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 24,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 196481,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 24,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 5,
-          "callsign": "P-ES#5"
+          "callsign": "Maicholgun"
         },
         {
           "raceId": "r5",
@@ -2008,14 +2009,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e6",
-      "name": "Pilota E6",
-      "team": "P-ES#6",
+      "id": "andrea-tomellieri",
+      "name": "Andrea Tomellieri",
+      "team": "Aperol",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2038,18 +2039,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 23,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 178136,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 23,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 6,
-          "callsign": "P-ES#6"
+          "callsign": "Aperol"
         },
         {
           "raceId": "r5",
@@ -2058,14 +2059,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e7",
-      "name": "Pilota E7",
-      "team": "P-ES#7",
+      "id": "marco-saitta",
+      "name": "Marco Saitta",
+      "team": "Sekkio",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2088,18 +2089,19 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 26,
           "qualification": {
-            "status": "not_available",
+            "status": "invalid",
             "timeMs": null,
+            "rawTime": "100:39,998",
             "overallPosition": null,
-            "categoryPosition": null,
+            "categoryPosition": 26,
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 7,
-          "callsign": "P-ES#7"
+          "callsign": "Sekkio"
         },
         {
           "raceId": "r5",
@@ -2108,14 +2110,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e8",
-      "name": "Pilota E8",
-      "team": "P-ES#8",
+      "id": "federico-melzani",
+      "name": "Federico Melzani",
+      "team": "Banco",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2138,18 +2140,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 13,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 117944,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 15,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 8,
-          "callsign": "P-ES#8"
+          "callsign": "Banco"
         },
         {
           "raceId": "r5",
@@ -2158,14 +2160,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e9",
-      "name": "Pilota E9",
-      "team": "P-ES#9",
+      "id": "davide-pinatti",
+      "name": "Davide Pinatti",
+      "team": "Squalo",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2188,18 +2190,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 6,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 105149,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 12,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 9,
-          "callsign": "P-ES#9"
+          "callsign": "Squalo"
         },
         {
           "raceId": "r5",
@@ -2208,14 +2210,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e10",
-      "name": "Pilota E10",
-      "team": "P-ES#10",
+      "id": "francesco-martini",
+      "name": "Francesco Martini",
+      "team": "Rogue",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2238,18 +2240,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 18,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 130855,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 18,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 10,
-          "callsign": "P-ES#10"
+          "callsign": "Rogue"
         },
         {
           "raceId": "r5",
@@ -2258,14 +2260,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e11",
-      "name": "Pilota E11",
-      "team": "P-ES#11",
+      "id": "luca-velotti",
+      "name": "Luca Velotti",
+      "team": "Markus",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2288,18 +2290,19 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 27,
           "qualification": {
-            "status": "not_available",
+            "status": "invalid",
             "timeMs": null,
+            "rawTime": "100:39,998",
             "overallPosition": null,
-            "categoryPosition": null,
+            "categoryPosition": 27,
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 11,
-          "callsign": "P-ES#11"
+          "callsign": "Markus"
         },
         {
           "raceId": "r5",
@@ -2308,14 +2311,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e12",
-      "name": "Pilota E12",
-      "team": "P-ES#12",
+      "id": "catello-pentangelo",
+      "name": "Catello Pentangelo",
+      "team": "Mike",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2338,18 +2341,19 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 28,
           "qualification": {
-            "status": "not_available",
+            "status": "invalid",
             "timeMs": null,
+            "rawTime": "100:39,998",
             "overallPosition": null,
-            "categoryPosition": null,
+            "categoryPosition": 28,
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 12,
-          "callsign": "P-ES#12"
+          "callsign": "Mike"
         },
         {
           "raceId": "r5",
@@ -2358,14 +2362,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e13",
-      "name": "Pilota E13",
-      "team": "P-ES#13",
+      "id": "sebastiano-santaniello",
+      "name": "Sebastiano Santaniello",
+      "team": "Sebon-91",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2388,18 +2392,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 21,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 137189,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 21,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 13,
-          "callsign": "P-ES#13"
+          "callsign": "Sebon-91"
         },
         {
           "raceId": "r5",
@@ -2408,14 +2412,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e14",
-      "name": "Pilota E14",
-      "team": "P-ES#14",
+      "id": "salvatore-d-angelo",
+      "name": "Salvatore D'Angelo",
+      "team": "Satoss",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2438,18 +2442,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 22,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 165793,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 22,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 14,
-          "callsign": "P-ES#14"
+          "callsign": "Satoss"
         },
         {
           "raceId": "r5",
@@ -2458,14 +2462,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e15",
-      "name": "Pilota E15",
-      "team": "P-ES#15",
+      "id": "gabriele-de-pascalis",
+      "name": "Gabriele De Pascalis",
+      "team": "Brightburn",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2488,18 +2492,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 14,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 118722,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 16,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 15,
-          "callsign": "P-ES#15"
+          "callsign": "Brightburn"
         },
         {
           "raceId": "r5",
@@ -2508,14 +2512,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
-      "id": "pilota-e16",
-      "name": "Pilota E16",
-      "team": "P-ES#16",
+      "id": "paolo-poretta",
+      "name": "Paolo Poretta",
+      "team": "Worax-fpv",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2538,18 +2542,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 17,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 128291,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 17,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - E",
+          "categoryLabel": "OPEN",
           "displayOrder": 16,
-          "callsign": "P-ES#16"
+          "callsign": "Worax-fpv"
         },
         {
           "raceId": "r5",
@@ -2558,14 +2562,14 @@
           "registered": null
         }
       ],
-      "placeholder": true
+      "placeholder": false
     },
     {
       "id": "emilio-rapposelli",
       "name": "Emilio Rapposelli",
       "team": "BatRappo",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2588,16 +2592,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 7,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 86196,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 7,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 18,
           "callsign": "BatRappo"
         },
@@ -2615,7 +2619,7 @@
       "name": "Ivan Pizzuti",
       "team": "Fiz_fpv",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2638,18 +2642,18 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 10,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 105031,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 11,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 33,
-          "callsign": "Fiz_fpv"
+          "callsign": "Fiz_FPV"
         },
         {
           "raceId": "r5",
@@ -2665,7 +2669,7 @@
       "name": "Diego Ialonardi",
       "team": "DiegoDelgadoFPV",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2688,16 +2692,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 11,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 82876,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 6,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 34,
           "callsign": "DiegoDelgadoFPV"
         },
@@ -2715,7 +2719,7 @@
       "name": "Gabriele Principe",
       "team": "gabriprince",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2747,7 +2751,7 @@
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 35,
           "callsign": "gabriprince"
         },
@@ -2765,7 +2769,7 @@
       "name": "Stefano Rotunno",
       "team": "Neikos",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2788,16 +2792,16 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 12,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 95828,
             "overallPosition": null,
-            "categoryPosition": null,
-            "sourcePrecisionMs": null
+            "categoryPosition": 8,
+            "sourcePrecisionMs": 1
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
+          "categoryLabel": "OPEN",
           "displayOrder": 36,
           "callsign": "Neikos"
         },
@@ -2815,7 +2819,7 @@
       "name": "Daniele Cappellesso",
       "team": "Cyber",
       "category": "open",
-      "inStandings": false,
+      "inStandings": true,
       "aliases": [],
       "results": [
         {
@@ -2838,18 +2842,272 @@
         },
         {
           "raceId": "r4",
-          "finishPosition": null,
+          "finishPosition": 5,
           "qualification": {
-            "status": "not_available",
-            "timeMs": null,
+            "status": "timed",
+            "timeMs": 71481,
             "overallPosition": null,
-            "categoryPosition": null,
+            "categoryPosition": 5,
+            "sourcePrecisionMs": 1
+          },
+          "registered": true,
+          "categoryLabel": "OPEN",
+          "displayOrder": 37,
+          "callsign": "Cyber"
+        },
+        {
+          "raceId": "r5",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "id": "sharon-valaperta",
+      "name": "Sharon Valaperta",
+      "team": "Caliceamaro",
+      "category": "open",
+      "inStandings": true,
+      "aliases": [],
+      "results": [
+        {
+          "raceId": "r1",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r2",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r3",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r4",
+          "finishPosition": 29,
+          "qualification": {
+            "status": "invalid",
+            "timeMs": null,
+            "rawTime": "100:39,999",
+            "overallPosition": null,
+            "categoryPosition": 29,
             "sourcePrecisionMs": null
           },
           "registered": true,
-          "categoryLabel": "OPEN - C",
-          "displayOrder": 37,
-          "callsign": "Cyber"
+          "categoryLabel": "OPEN",
+          "callsign": "Caliceamaro",
+          "displayOrder": 29
+        },
+        {
+          "raceId": "r5",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "id": "angelo-perna",
+      "name": "Angelo Perna",
+      "team": "Anpe",
+      "category": "open",
+      "inStandings": true,
+      "aliases": [],
+      "results": [
+        {
+          "raceId": "r1",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r2",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r3",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r4",
+          "finishPosition": 30,
+          "qualification": {
+            "status": "invalid",
+            "timeMs": null,
+            "rawTime": "100:39,999",
+            "overallPosition": null,
+            "categoryPosition": 30,
+            "sourcePrecisionMs": null
+          },
+          "registered": true,
+          "categoryLabel": "OPEN",
+          "callsign": "Anpe",
+          "displayOrder": 30
+        },
+        {
+          "raceId": "r5",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "id": "aurelio-filippo-angelo",
+      "name": "Aurelio Filippo Angelo",
+      "team": "Aura",
+      "category": "open",
+      "inStandings": true,
+      "aliases": [],
+      "results": [
+        {
+          "raceId": "r1",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r2",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r3",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r4",
+          "finishPosition": 16,
+          "qualification": {
+            "status": "timed",
+            "timeMs": 101893,
+            "overallPosition": null,
+            "categoryPosition": 9,
+            "sourcePrecisionMs": 1
+          },
+          "registered": true,
+          "categoryLabel": "OPEN",
+          "callsign": "Aura",
+          "displayOrder": 9
+        },
+        {
+          "raceId": "r5",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "id": "lorenzo-neri",
+      "name": "Lorenzo Neri",
+      "team": "Lollofpv",
+      "category": "open",
+      "inStandings": true,
+      "aliases": [],
+      "results": [
+        {
+          "raceId": "r1",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r2",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r3",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r4",
+          "finishPosition": 31,
+          "qualification": {
+            "status": "invalid",
+            "timeMs": null,
+            "rawTime": "100:39,999",
+            "overallPosition": null,
+            "categoryPosition": 31,
+            "sourcePrecisionMs": null
+          },
+          "registered": true,
+          "categoryLabel": "OPEN",
+          "callsign": "Lollofpv",
+          "displayOrder": 31
+        },
+        {
+          "raceId": "r5",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        }
+      ],
+      "placeholder": false
+    },
+    {
+      "id": "cristian-benegiamo",
+      "name": "Cristian Benegiamo",
+      "team": "Chris",
+      "category": "open",
+      "inStandings": true,
+      "aliases": [],
+      "results": [
+        {
+          "raceId": "r1",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r2",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r3",
+          "finishPosition": null,
+          "qualification": null,
+          "registered": null
+        },
+        {
+          "raceId": "r4",
+          "finishPosition": 32,
+          "qualification": {
+            "status": "invalid",
+            "timeMs": null,
+            "rawTime": "100:39,999",
+            "overallPosition": null,
+            "categoryPosition": 32,
+            "sourcePrecisionMs": null
+          },
+          "registered": true,
+          "categoryLabel": "OPEN",
+          "callsign": "Chris",
+          "displayOrder": 32
         },
         {
           "raceId": "r5",
