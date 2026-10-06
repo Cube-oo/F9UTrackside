@@ -342,7 +342,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 2,
+          "categoryLabel": "PRO",
+          "callsign": "LUCA-FPV"
         }
       ],
       "placeholder": false
@@ -1251,7 +1254,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 1,
+          "categoryLabel": "OPEN",
+          "callsign": "Mach74"
         }
       ],
       "placeholder": false
