@@ -109,7 +109,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 5,
+          "categoryLabel": "PRO",
+          "callsign": "GND"
         }
       ],
       "placeholder": false
@@ -343,7 +346,7 @@
           "finishPosition": null,
           "qualification": null,
           "registered": true,
-          "displayOrder": 2,
+          "displayOrder": 1,
           "categoryLabel": "PRO",
           "callsign": "LUCA-FPV"
         }
@@ -422,7 +425,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 4,
+          "categoryLabel": "PRO",
+          "callsign": "gabruzzz"
         }
       ],
       "placeholder": false
@@ -1255,7 +1261,7 @@
           "finishPosition": null,
           "qualification": null,
           "registered": true,
-          "displayOrder": 1,
+          "displayOrder": 2,
           "categoryLabel": "OPEN",
           "callsign": "Mach74"
         }
@@ -2665,7 +2671,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 3,
+          "categoryLabel": "OPEN",
+          "callsign": "Fiz_fpv"
         }
       ],
       "placeholder": false
