@@ -189,7 +189,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 6,
+          "categoryLabel": "PRO",
+          "callsign": "LeoOnFire"
         }
       ],
       "placeholder": false
@@ -573,7 +576,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 7,
+          "categoryLabel": "PRO",
+          "callsign": "NIKFPV"
         }
       ],
       "placeholder": false
@@ -1440,7 +1446,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 9,
+          "categoryLabel": "OPEN",
+          "callsign": "DarkY"
         }
       ],
       "placeholder": false
@@ -2724,7 +2733,10 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
+          "registered": true,
+          "displayOrder": 8,
+          "categoryLabel": "OPEN",
+          "callsign": "DiegoDelgadoFPV"
         }
       ],
       "placeholder": false
