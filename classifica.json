@@ -1717,7 +1717,6 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
           "registered": true,
           "displayOrder": 11,
           "categoryLabel": "OPEN",
@@ -2634,7 +2633,6 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
           "registered": true,
           "displayOrder": 12,
           "categoryLabel": "OPEN",
@@ -2844,7 +2842,6 @@
           "raceId": "r5",
           "finishPosition": null,
           "qualification": null,
-          "registered": null
           "registered": true,
           "displayOrder": 10,
           "categoryLabel": "OPEN",
