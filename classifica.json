@@ -1718,6 +1718,10 @@
           "finishPosition": null,
           "qualification": null,
           "registered": null
+          "registered": true,
+          "displayOrder": 11,
+          "categoryLabel": "OPEN",
+          "callsign": "MINUSDREAM"
         }
       ],
       "placeholder": false
@@ -2631,6 +2635,10 @@
           "finishPosition": null,
           "qualification": null,
           "registered": null
+          "registered": true,
+          "displayOrder": 12,
+          "categoryLabel": "OPEN",
+          "callsign": "BatRappo"
         }
       ],
       "placeholder": false
@@ -2837,6 +2845,10 @@
           "finishPosition": null,
           "qualification": null,
           "registered": null
+          "registered": true,
+          "displayOrder": 10,
+          "categoryLabel": "OPEN",
+          "callsign": "Neikos"
         }
       ],
       "placeholder": false
